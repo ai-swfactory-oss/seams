@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/seams-tool-runner",
   "description": "A shared in-process seams tool runner. A fake lives under ./testing.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

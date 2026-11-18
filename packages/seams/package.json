@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/seams",
   "description": "The seams hub: environment-neutral ports, fakes and contracts. A fake lives under ./testing.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

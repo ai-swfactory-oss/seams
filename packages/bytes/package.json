@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/bytes",
   "description": "A pure base64 codec between Uint8Array and string, for the bytes ports keep in their JSON memory state.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

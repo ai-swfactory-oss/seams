@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/seams-http-server",
   "description": "The seams Node HTTP server capability. A fake lives under ./testing.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

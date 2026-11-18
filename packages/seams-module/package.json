@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/seams-module",
   "description": "The seams Node module capability. A fake lives under ./testing.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
