@@ -12,6 +12,8 @@ importers:
         specifier: ^24.0.0
         version: 24.19.2
 
+  packages/bytes: {}
+
   packages/seams:
     devDependencies:
       '@types/node':
