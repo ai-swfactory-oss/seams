@@ -1,4 +1,4 @@
-import { executionFromJson, invocationKey, invocationToJson, isPathPackage } from '../domain/json'
+import { executionFromJson, invocationKey, invocationToJson, isPathPackage, parseProcessState } from '../domain/json'
 import type { ExecutionJson, InvocationJson, Process, ProcessState } from '../types'
 
 export class UnknownInvocationError extends Error {
@@ -22,14 +22,35 @@ export class PathProgramIdentityError extends Error {
   }
 }
 
+export class InvalidProcessStateError extends Error {
+  constructor() {
+    super('the memory process state is not a process state')
+    this.name = 'InvalidProcessStateError'
+  }
+}
+
 export interface MemoryProcess extends Process {
   readonly state: () => ProcessState
 }
 
+const namesAPath = (entry: unknown): boolean => {
+  if (typeof entry !== 'object' || entry === null || !('invocation' in entry)) return false
+  const { invocation } = entry
+  if (typeof invocation !== 'object' || invocation === null || !('program' in invocation)) return false
+  const { program } = invocation
+  if (typeof program !== 'object' || program === null || !('package' in program)) return false
+  return typeof program.package === 'string' && isPathPackage(program.package)
+}
+
 export const createMemoryProcess = (state: ProcessState): MemoryProcess => {
+  const entries: unknown = state.entries
+  for (const entry of Array.isArray(entries) ? state.entries : []) {
+    if (namesAPath(entry)) throw new PathProgramIdentityError(entry.invocation)
+  }
+  const parsed = parseProcessState(state)
+  if (parsed === undefined) throw new InvalidProcessStateError()
   const table = new Map<string, ExecutionJson>()
-  for (const entry of state.entries) {
-    if (isPathPackage(entry.invocation.program.package)) throw new PathProgramIdentityError(entry.invocation)
+  for (const entry of parsed.entries) {
     const key = invocationKey(entry.invocation)
     if (table.has(key)) throw new DuplicateInvocationError(entry.invocation)
     table.set(key, entry.execution)
