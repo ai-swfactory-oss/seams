@@ -1,6 +1,7 @@
 import { decodeBase64, encodeBase64 } from '@ai-swfactory-oss/bytes'
 
 import type { Change, ChangeJson, CheckedTree, Tree, TreeEntry, TreeEntryJson, TreeJson } from '../types'
+import { duplicatePathOf } from './duplicate-path'
 import { nonEmptyDirectoryOf } from './non-empty-directory'
 import { normalisePath } from './path'
 
@@ -11,6 +12,7 @@ export const treeToJson = (tree: Tree): TreeJson => ({
 })
 
 export const treeFromJson = (json: TreeJson): CheckedTree =>
+  duplicatePathOf(json.entries) ??
   nonEmptyDirectoryOf(json.entries) ?? {
     kind: 'tree',
     tree: {

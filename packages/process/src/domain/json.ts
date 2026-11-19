@@ -33,7 +33,7 @@ export const invocationToJson = (invocation: Invocation): InvocationJson => ({
 
 export const invocationFromJson = (json: InvocationJson, location: string): CheckedInvocation => {
   const input = treeFromJson(json.input)
-  if (input.kind === 'non-empty-directory') return input
+  if (input.kind !== 'tree') return input
   return {
     kind: 'invocation',
     invocation: {
