@@ -43,6 +43,9 @@
       "path": "./packages/bytes"
     },
     {
+      "path": "./packages/clock"
+    },
+    {
       "path": "./packages/host"
     },
     {
