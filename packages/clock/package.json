@@ -1,0 +1,40 @@
+{
+  "name": "@ai-swfactory-oss/clock",
+  "description": "The clock port: now() and wait(duration), with a memory adapter that starts at a given instant and moves only on waits.",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-swfactory-oss/seams.git",
+    "directory": "packages/clock"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./memory": {
+      "source": "./src/memory/index.ts",
+      "types": "./dist/memory/index.d.ts",
+      "import": "./dist/memory/index.js"
+    },
+    "./generate": {
+      "source": "./src/generate/index.ts",
+      "types": "./dist/generate/index.d.ts",
+      "import": "./dist/generate/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/**/*.tgz"
+  ]
+}
