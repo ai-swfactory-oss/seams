@@ -1,0 +1,34 @@
+{
+  "name": "@ai-swfactory-oss/retry",
+  "description": "Retries and polling as pure decisions: failures are classified by their data, retry hints are honoured and tries are bounded; the only effect is a wait on the clock port, and the caller loops.",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-swfactory-oss/seams.git",
+    "directory": "packages/retry"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/**/*.tgz"
+  ],
+  "dependencies": {
+    "@ai-swfactory-oss/clock": "workspace:*",
+    "@ai-swfactory-oss/sdk-vocabulary": "1.0.0"
+  }
+}

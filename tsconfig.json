@@ -55,7 +55,13 @@
       "path": "./packages/http"
     },
     {
+      "path": "./packages/process"
+    },
+    {
       "path": "./packages/random"
+    },
+    {
+      "path": "./packages/retry"
     },
     {
       "path": "./packages/seams"
