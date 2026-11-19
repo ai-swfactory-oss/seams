@@ -16,6 +16,8 @@ importers:
 
   packages/host: {}
 
+  packages/random: {}
+
   packages/seams:
     devDependencies:
       '@types/node':

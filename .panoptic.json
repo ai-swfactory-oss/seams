@@ -15,6 +15,7 @@
     "@ai-swfactory-oss/seams-lint-kit": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
     "@ai-swfactory-oss/bytes": { "kind": "sdk" },
-    "@ai-swfactory-oss/host": { "kind": "sdk" }
+    "@ai-swfactory-oss/host": { "kind": "sdk" },
+    "@ai-swfactory-oss/random": { "kind": "port" }
   }
 }

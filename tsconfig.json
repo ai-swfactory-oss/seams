@@ -46,6 +46,9 @@
       "path": "./packages/host"
     },
     {
+      "path": "./packages/random"
+    },
+    {
       "path": "./packages/seams"
     },
     {
