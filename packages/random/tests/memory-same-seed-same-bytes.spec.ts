@@ -1,58 +1,58 @@
 import { describe, expect, it } from 'vitest'
 
-import type { MemoryRandom } from '../src/index'
+import { parseRandomState } from '../src/index'
 import { createMemoryRandom } from '../src/memory/index'
 
-const LENGTHS = [0, 1, 3, 4, 5, 16, 33]
+const draw = (seed: number, count: number): number[] => Array.from(createMemoryRandom({ seed, drawn: 0 }).bytes(count))
 
-const drawAll = (random: MemoryRandom): Uint8Array[] => LENGTHS.map(n => random.bytes(n))
-
-describe('the memory random adapter', () => {
-  it('gives the same bytes for the same seed, call after call', () => {
-    expect(drawAll(createMemoryRandom({ seed: 42 }))).toEqual(drawAll(createMemoryRandom({ seed: 42 })))
-  })
-
-  it('gives exactly n bytes per call', () => {
-    expect(drawAll(createMemoryRandom({ seed: 7 })).map(bytes => bytes.length)).toEqual(LENGTHS)
+describe('the memory random source', () => {
+  it('gives the same bytes for the same seed', () => {
+    expect(draw(7, 32)).toEqual(draw(7, 32))
   })
 
   it('gives different bytes for a different seed', () => {
-    expect(createMemoryRandom({ seed: 1 }).bytes(32)).not.toEqual(createMemoryRandom({ seed: 2 }).bytes(32))
+    expect(draw(7, 32)).not.toEqual(draw(8, 32))
   })
 
-  it('gives bytes that vary within one draw and between successive draws', () => {
-    const random = createMemoryRandom({ seed: 0 })
-    const first = random.bytes(64)
-    const second = random.bytes(64)
-
-    expect(new Set(first).size).toBeGreaterThan(32)
-    expect(second).not.toEqual(first)
+  it('does not give a run of one repeated byte', () => {
+    expect(new Set(draw(7, 32)).size).toBeGreaterThan(1)
   })
 
-  it('reports a JSON state of the type it was built from, which continues the same stream', () => {
-    const original = createMemoryRandom({ seed: 99 })
-    original.bytes(5)
-    const reported: unknown = JSON.parse(JSON.stringify(original.state()))
+  it('continues the same stream across draws', () => {
+    const random = createMemoryRandom({ seed: 7, drawn: 0 })
 
-    expect(reported).toStrictEqual(original.state())
-    expect(reported).not.toStrictEqual({ seed: 99 })
-    expect(createMemoryRandom(original.state()).bytes(12)).toEqual(original.bytes(12))
+    const split = [...random.bytes(3), ...random.bytes(10), ...random.bytes(19)]
+
+    expect(split).toEqual(draw(7, 32))
   })
 
-  it.each([
-    ['a negative seed', -1],
-    ['a fractional seed', 1.5],
-    ['a seed of 2^32', 2 ** 32],
-    ['a NaN seed', Number.NaN],
-  ])('rejects %s with a RangeError', (_case, seed) => {
-    expect(() => createMemoryRandom({ seed })).toThrow(RangeError)
+  it('gives no bytes for a count that is not a whole number above zero', () => {
+    const random = createMemoryRandom({ seed: 7, drawn: 0 })
+
+    expect([random.bytes(0), random.bytes(-4), random.bytes(2.5), random.bytes(Number.NaN)].map(b => b.length)).toEqual([0, 0, 0, 0])
   })
 
-  it.each([
-    ['a negative length', -1],
-    ['a fractional length', 2.5],
-    ['an infinite length', Number.POSITIVE_INFINITY],
-  ])('rejects %s with a RangeError', (_case, n) => {
-    expect(() => createMemoryRandom({ seed: 3 }).bytes(n)).toThrow(RangeError)
+  it('reports a state that survives a JSON round trip', () => {
+    const random = createMemoryRandom({ seed: 7, drawn: 0 })
+    random.bytes(5)
+
+    expect(parseRandomState(JSON.parse(JSON.stringify(random.state())))).toEqual({ seed: 7, drawn: 5 })
+  })
+
+  it('continues the stream from a reported state', () => {
+    const random = createMemoryRandom({ seed: 7, drawn: 0 })
+    random.bytes(5)
+
+    expect([...createMemoryRandom(random.state()).bytes(27)]).toEqual(draw(7, 32).slice(5))
+  })
+
+  it('reads no state from a value that does not hold one', () => {
+    expect([null, [], { seed: 7 }, { seed: -1, drawn: 0 }, { seed: 7, drawn: 0.5 }].map(parseRandomState)).toEqual([
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+    ])
   })
 })

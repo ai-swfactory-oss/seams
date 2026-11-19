@@ -1,6 +1,6 @@
 {
   "name": "@ai-swfactory-oss/random",
-  "description": "The random port: bytes(n) only, with a seeded memory adapter, a standard adapter over crypto.getRandomValues and a generator of memory state.",
+  "description": "The random port: bytes(n) only. Its memory adapter is a seeded stream: the same seed gives the same bytes.",
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
@@ -24,16 +24,6 @@
       "source": "./src/memory/index.ts",
       "types": "./dist/memory/index.d.ts",
       "import": "./dist/memory/index.js"
-    },
-    "./standard": {
-      "source": "./src/standard/index.ts",
-      "types": "./dist/standard/index.d.ts",
-      "import": "./dist/standard/index.js"
-    },
-    "./generate": {
-      "source": "./src/generate/index.ts",
-      "types": "./dist/generate/index.d.ts",
-      "import": "./dist/generate/index.js"
     },
     "./package.json": "./package.json"
   },
