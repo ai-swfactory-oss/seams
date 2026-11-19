@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { InvalidDurationError } from '../src/index'
-import { createMemoryClock } from '../src/memory/index'
+import { createMemoryClock, InvalidDurationError } from '../src/memory/index'
 
 const start = 1_767_225_600_000
 

@@ -15,14 +15,3 @@ export const nonEmptyDirectoryOf = (entries: Iterable<Listed>): NonEmptyDirector
     .sort(comparePaths)
   return path === undefined ? undefined : { kind: 'non-empty-directory', path }
 }
-
-export class NonEmptyDirectoryError extends Error {
-  constructor(
-    readonly generator: string,
-    readonly call: string,
-    readonly path: string,
-  ) {
-    super(`${generator} refuses ${call}: its input holds the non-empty directory ${path}`)
-    this.name = 'NonEmptyDirectoryError'
-  }
-}
