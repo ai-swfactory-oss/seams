@@ -25,3 +25,9 @@ export interface ContentStore {
   readonly put: (tree: Tree) => Promise<Put>
   readonly get: (digest: string) => Promise<Got>
 }
+
+export interface RootRefused {
+  readonly kind: 'refused'
+  readonly reason: 'invalid-root'
+  readonly root: string
+}

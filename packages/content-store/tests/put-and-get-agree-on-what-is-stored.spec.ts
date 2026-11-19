@@ -1,7 +1,8 @@
 import { type Tree, treeDigest, type TreeEntryJson } from '@ai-swfactory-oss/files'
 import { describe, expect, it } from 'vitest'
 
-import { type ContentStore, createContentStoreSdk, type Put } from '../src/index'
+import type { ContentStore, Put } from '../src/index'
+import { contentStoreAt } from './content-store-at'
 import { memoryFilesOver } from './memory-files'
 
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
@@ -12,7 +13,7 @@ const TREE: Tree = { entries: [{ path: 'a', kind: 'file', content: bytes('a'), e
 
 const storeOn = (initial: readonly TreeEntryJson[] = []) => {
   const files = memoryFilesOver({ entries: initial })
-  return { files, store: createContentStoreSdk({ root: 'store' }, { files }) }
+  return { files, store: contentStoreAt('store', files) }
 }
 
 const agreement = async (store: ContentStore, tree: Tree): Promise<Put | string> => {

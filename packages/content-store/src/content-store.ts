@@ -11,7 +11,7 @@ import {
   treeOfEntries,
 } from '@ai-swfactory-oss/files'
 
-import type { ContentStore, ContentStoreData, ContentStorePorts, Got, Refused } from './types'
+import type { ContentStore, ContentStoreData, ContentStorePorts, Got, Refused, RootRefused } from './types'
 
 const MISSING: Got = { kind: 'missing' }
 
@@ -46,8 +46,9 @@ const treeAt = async (at: string, digest: string, entries: readonly TreeEntry[])
   return (await treeDigest(tree)) === digest ? { kind: 'tree', tree } : MISSING
 }
 
-export const createContentStoreSdk = (data: ContentStoreData, { files }: ContentStorePorts): ContentStore => {
-  const root = normalisePath(data.root) ?? data.root
+export const createContentStoreSdk = (data: ContentStoreData, { files }: ContentStorePorts): ContentStore | RootRefused => {
+  const root = normalisePath(data.root)
+  if (root === undefined) return { kind: 'refused', reason: 'invalid-root', root: data.root }
   return {
     put: async tree => {
       const refused = refusalOf(tree)
