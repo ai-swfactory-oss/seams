@@ -39,7 +39,8 @@
   ],
   "dependencies": {
     "@ai-swfactory-oss/bytes": "workspace:*",
-    "@ai-swfactory-oss/files": "workspace:*"
+    "@ai-swfactory-oss/files": "workspace:*",
+    "@ai-swfactory-oss/host": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^24.0.0"

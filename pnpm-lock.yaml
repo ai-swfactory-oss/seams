@@ -63,6 +63,9 @@ importers:
       '@ai-swfactory-oss/files':
         specifier: workspace:*
         version: link:../files
+      '@ai-swfactory-oss/host':
+        specifier: workspace:*
+        version: link:../host
     devDependencies:
       '@types/node':
         specifier: ^24.0.0
