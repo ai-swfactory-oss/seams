@@ -58,6 +58,12 @@
       "path": "./packages/ids"
     },
     {
+      "path": "./packages/logging"
+    },
+    {
+      "path": "./packages/process"
+    },
+    {
       "path": "./packages/random"
     },
     {
