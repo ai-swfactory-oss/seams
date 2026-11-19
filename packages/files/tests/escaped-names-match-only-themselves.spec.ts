@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { globMatcher } from '../src/domain/glob'
 import { escapeGlob, type TreeEntryJson } from '../src/index'
-import { createMemoryFiles } from '../src/memory/index'
+import { memoryFilesOver } from './memory-files'
 
 const NAMES = ['star*.txt', 'what?.txt', '{a,b}.txt', 'a.txt', 'b.txt', '[x].txt', 'back\\slash.txt', 'back\\', 'dir*/**', '**']
 
@@ -27,7 +27,7 @@ describe('escapeGlob', () => {
 
   it('narrows a snapshot to exactly the named entries', async () => {
     const content = 'eA=='
-    const files = createMemoryFiles({
+    const files = memoryFilesOver({
       entries: NAMES.filter(name => !name.includes('/')).map((path): TreeEntryJson => ({ path, kind: 'file', content, executable: false })),
     })
 

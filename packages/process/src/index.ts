@@ -1,5 +1,6 @@
 export { executionFromJson, executionToJson, invocationFromJson, invocationToJson, parseProcessState } from './domain/json'
 export type {
+  CheckedInvocation,
   Ending,
   Execution,
   ExecutionJson,

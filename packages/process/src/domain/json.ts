@@ -10,6 +10,7 @@ import {
 } from '@ai-swfactory-oss/files'
 
 import type {
+  CheckedInvocation,
   Execution,
   ExecutionJson,
   Invocation,
@@ -30,16 +31,25 @@ export const invocationToJson = (invocation: Invocation): InvocationJson => ({
   ...(invocation.timeLimitMs === undefined ? {} : { timeLimitMs: invocation.timeLimitMs }),
 })
 
-export const invocationFromJson = (json: InvocationJson, location: string): Invocation => ({
-  program: json.program,
-  location,
-  args: json.args,
-  cwd: json.cwd,
-  env: json.env,
-  input: treeFromJson(json.input),
-  ...(json.stdin === undefined ? {} : { stdin: decodeBase64(json.stdin) }),
-  ...(json.timeLimitMs === undefined ? {} : { timeLimitMs: json.timeLimitMs }),
-})
+export const invocationFromJson = (json: InvocationJson, location: string): CheckedInvocation => {
+  const input = treeFromJson(json.input)
+  if (input.kind === 'non-empty-directory') return input
+  return {
+    kind: 'invocation',
+    invocation: {
+      program: json.program,
+      location,
+      args: json.args,
+      cwd: json.cwd,
+      env: json.env,
+      input: input.tree,
+      ...(json.stdin === undefined ? {} : { stdin: decodeBase64(json.stdin) }),
+      ...(json.timeLimitMs === undefined ? {} : { timeLimitMs: json.timeLimitMs }),
+    },
+  }
+}
+
+export const invocationCall = (json: InvocationJson): string => `${json.program.package}@${json.program.version} ${json.args.join(' ')}`
 
 export const executionToJson = (execution: Execution): ExecutionJson =>
   execution.kind === 'not-started'
@@ -128,6 +138,7 @@ const invocationJsonOf = (value: unknown): InvocationJson | undefined => {
   const stdin: unknown = 'stdin' in value ? value.stdin : undefined
   const timeLimitMs: unknown = 'timeLimitMs' in value ? value.timeLimitMs : undefined
   if (program === undefined || args === undefined || env === undefined || input === undefined) return undefined
+  if (treeFromJson(input).kind === 'non-empty-directory') return undefined
   if (typeof cwd !== 'string') return undefined
   if (stdin !== undefined && typeof stdin !== 'string') return undefined
   if (timeLimitMs !== undefined && typeof timeLimitMs !== 'number') return undefined

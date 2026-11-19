@@ -22,6 +22,13 @@ export interface Tree {
   readonly entries: readonly TreeEntry[]
 }
 
+export interface NonEmptyDirectory {
+  readonly kind: 'non-empty-directory'
+  readonly path: string
+}
+
+export type CheckedTree = { readonly kind: 'tree'; readonly tree: Tree } | NonEmptyDirectory
+
 export interface Selection {
   readonly root: string
   readonly include: readonly string[]

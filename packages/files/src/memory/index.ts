@@ -1,14 +1,16 @@
 import { applyInOrder } from '../domain/apply'
 import { treeFromJson, treeToJson } from '../domain/json'
 import { snapshotOf, stepOf, treeOfVolume, type Volume, volumeOf } from '../domain/volume'
-import type { Files, TreeJson } from '../types'
+import type { Files, NonEmptyDirectory, Tree, TreeJson } from '../types'
 
 export interface MemoryFiles extends Files {
   readonly state: () => TreeJson
 }
 
-export const createMemoryFiles = (initial: TreeJson): MemoryFiles => {
-  let volume: Volume = volumeOf(treeFromJson(initial))
+export type CreatedMemoryFiles = { readonly kind: 'files'; readonly files: MemoryFiles } | NonEmptyDirectory
+
+const memoryFilesOf = (initial: Tree): MemoryFiles => {
+  let volume: Volume = volumeOf(initial)
   return {
     snapshot: selection => Promise.resolve(snapshotOf(volume, selection)),
     apply: changes =>
@@ -20,4 +22,9 @@ export const createMemoryFiles = (initial: TreeJson): MemoryFiles => {
       }),
     state: () => treeToJson(treeOfVolume(volume)),
   }
+}
+
+export const createMemoryFiles = (initial: TreeJson): CreatedMemoryFiles => {
+  const checked = treeFromJson(initial)
+  return checked.kind === 'tree' ? { kind: 'files', files: memoryFilesOf(checked.tree) } : checked
 }

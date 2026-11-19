@@ -1,4 +1,4 @@
-import type { Change, ChangeJson, Tree, TreeJson } from '@ai-swfactory-oss/files'
+import type { Change, ChangeJson, NonEmptyDirectory, Tree, TreeJson } from '@ai-swfactory-oss/files'
 
 export interface ProgramIdentity {
   readonly package: string
@@ -49,6 +49,8 @@ export interface InvocationJson {
   readonly stdin?: string
   readonly timeLimitMs?: number
 }
+
+export type CheckedInvocation = { readonly kind: 'invocation'; readonly invocation: Invocation } | NonEmptyDirectory
 
 export type ExecutionJson =
   | (Ending & { readonly stdout: string; readonly stderr: string; readonly changes: readonly ChangeJson[] })

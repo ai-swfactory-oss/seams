@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { type Change, type Tree, treeToJson } from '../src/index'
-import { createMemoryFiles } from '../src/memory/index'
+import { memoryFilesOver } from './memory-files'
 
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
 
@@ -18,7 +18,7 @@ const SETUP: Tree = {
 
 const everything = { root: '', include: [], exclude: [] }
 
-const files = () => createMemoryFiles(treeToJson(SETUP))
+const files = () => memoryFilesOver(treeToJson(SETUP))
 
 describe('the memory files snapshot', () => {
   it('lists every entry sorted by path, with only empty directories listed', async () => {

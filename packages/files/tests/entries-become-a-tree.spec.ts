@@ -5,10 +5,9 @@ import { treeOfEntries, treeToJson } from '../src/index'
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
 
 describe('treeOfEntries', () => {
-  it('sorts by path, lets a later entry win and lists a directory only while it is empty', () => {
+  it('sorts by path, lets a later entry win and lists an empty directory', () => {
     const result = treeOfEntries([
       { path: 'b', kind: 'file', content: bytes('first'), executable: false },
-      { path: 'a', kind: 'directory' },
       { path: 'a/c', kind: 'symlink', target: '../b' },
       { path: 'empty', kind: 'directory' },
       { path: 'b', kind: 'file', content: bytes('second'), executable: true },

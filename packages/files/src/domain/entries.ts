@@ -1,8 +1,9 @@
-import type { Tree, TreeEntry } from '../types'
+import type { CheckedTree, TreeEntry } from '../types'
+import { nonEmptyDirectoryOf } from './non-empty-directory'
 import { comparePaths, parentsOf } from './path'
 import { listedTree } from './volume'
 
-export type TreeOfEntries = { readonly kind: 'tree'; readonly tree: Tree } | { readonly kind: 'not-a-directory'; readonly path: string }
+export type TreeOfEntries = CheckedTree | { readonly kind: 'not-a-directory'; readonly path: string }
 
 export const treeOfEntries = (entries: Iterable<TreeEntry>): TreeOfEntries => {
   const byPath = new Map<string, TreeEntry>()
@@ -14,5 +15,5 @@ export const treeOfEntries = (entries: Iterable<TreeEntry>): TreeOfEntries => {
     })
     if (blocked !== undefined) return { kind: 'not-a-directory', path: blocked }
   }
-  return { kind: 'tree', tree: listedTree(byPath.values(), () => true) }
+  return nonEmptyDirectoryOf(byPath.values()) ?? { kind: 'tree', tree: listedTree(byPath.values(), () => true) }
 }

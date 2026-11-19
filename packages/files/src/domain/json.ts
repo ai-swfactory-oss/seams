@@ -1,6 +1,7 @@
 import { decodeBase64, encodeBase64 } from '@ai-swfactory-oss/bytes'
 
-import type { Change, ChangeJson, Tree, TreeEntry, TreeEntryJson, TreeJson } from '../types'
+import type { Change, ChangeJson, CheckedTree, Tree, TreeEntry, TreeEntryJson, TreeJson } from '../types'
+import { nonEmptyDirectoryOf } from './non-empty-directory'
 import { normalisePath } from './path'
 
 export const treeToJson = (tree: Tree): TreeJson => ({
@@ -9,14 +10,18 @@ export const treeToJson = (tree: Tree): TreeJson => ({
   ),
 })
 
-export const treeFromJson = (json: TreeJson): Tree => ({
-  entries: json.entries.map(
-    (entry): TreeEntry =>
-      entry.kind === 'file'
-        ? { path: entry.path, kind: 'file', content: decodeBase64(entry.content), executable: entry.executable }
-        : entry,
-  ),
-})
+export const treeFromJson = (json: TreeJson): CheckedTree =>
+  nonEmptyDirectoryOf(json.entries) ?? {
+    kind: 'tree',
+    tree: {
+      entries: json.entries.map(
+        (entry): TreeEntry =>
+          entry.kind === 'file'
+            ? { path: entry.path, kind: 'file', content: decodeBase64(entry.content), executable: entry.executable }
+            : entry,
+      ),
+    },
+  }
 
 export const changesToJson = (changes: readonly Change[]): ChangeJson[] =>
   changes.map(change => (change.kind === 'write' ? { ...change, content: encodeBase64(change.content) } : change))

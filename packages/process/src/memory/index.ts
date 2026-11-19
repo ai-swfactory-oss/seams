@@ -1,16 +1,24 @@
-import { executionFromJson, invocationKey, invocationToJson, isPathPackage, parseProcessState, repeatedInputPath } from '../domain/json'
+import {
+  executionFromJson,
+  invocationCall,
+  invocationKey,
+  invocationToJson,
+  isPathPackage,
+  parseProcessState,
+  repeatedInputPath,
+} from '../domain/json'
 import type { ExecutionJson, InvocationJson, Process, ProcessState } from '../types'
 
 export class UnknownInvocationError extends Error {
   constructor(readonly invocation: InvocationJson) {
-    super(`no entry for ${invocation.program.package}@${invocation.program.version} ${invocation.args.join(' ')}`)
+    super(`no entry for ${invocationCall(invocation)}`)
     this.name = 'UnknownInvocationError'
   }
 }
 
 export class DuplicateInvocationError extends Error {
   constructor(readonly invocation: InvocationJson) {
-    super(`two entries for ${invocation.program.package}@${invocation.program.version} ${invocation.args.join(' ')}`)
+    super(`two entries for ${invocationCall(invocation)}`)
     this.name = 'DuplicateInvocationError'
   }
 }
