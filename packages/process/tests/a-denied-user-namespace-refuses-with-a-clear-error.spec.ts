@@ -27,6 +27,18 @@ describe('a denied user namespace', () => {
     expect(refusals.map(refusal => refusal instanceof UserNamespacesUnavailableError)).toEqual([true, true])
   })
 
+  it('refuses the same way when the kernel denies creating the user namespace at all', () => {
+    const refusals = [
+      launchRefusal({ exitCode: 1, stderr: 'unshare: unshare failed: Operation not permitted\n' }),
+      launchRefusal({ exitCode: 1, stderr: 'unshare: unshare failed: No space left on device\n' }),
+    ]
+
+    expect(refusals.map(refusal => refusal?.message)).toEqual([
+      'user namespaces unavailable: unshare: unshare failed: Operation not permitted',
+      'user namespaces unavailable: unshare: unshare failed: No space left on device',
+    ])
+  })
+
   it('does not take any other launch failure for a denied user namespace', () => {
     const others = [
       launchRefusal({ exitCode: 0, stderr: '' }),
