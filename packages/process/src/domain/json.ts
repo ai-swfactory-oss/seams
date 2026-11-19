@@ -57,6 +57,15 @@ export const executionFromJson = (json: ExecutionJson): Execution => {
   return { ...json, stdout: decodeBase64(json.stdout), stderr: decodeBase64(json.stderr), changes }
 }
 
+export const repeatedInputPath = (json: InvocationJson): string | undefined => {
+  const seen = new Set<string>()
+  for (const { path } of json.input.entries) {
+    if (seen.has(path)) return path
+    seen.add(path)
+  }
+  return undefined
+}
+
 export const invocationKey = (json: InvocationJson): string =>
   JSON.stringify([
     json.program.package,

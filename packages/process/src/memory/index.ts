@@ -1,4 +1,4 @@
-import { executionFromJson, invocationKey, invocationToJson, isPathPackage, parseProcessState } from '../domain/json'
+import { executionFromJson, invocationKey, invocationToJson, isPathPackage, parseProcessState, repeatedInputPath } from '../domain/json'
 import type { ExecutionJson, InvocationJson, Process, ProcessState } from '../types'
 
 export class UnknownInvocationError extends Error {
@@ -19,6 +19,16 @@ export class PathProgramIdentityError extends Error {
   constructor(readonly invocation: InvocationJson) {
     super(`program identity names a path, not a package: ${invocation.program.package}@${invocation.program.version}`)
     this.name = 'PathProgramIdentityError'
+  }
+}
+
+export class RepeatedInputPathError extends Error {
+  constructor(
+    readonly invocation: InvocationJson,
+    readonly path: string,
+  ) {
+    super(`the input tree holds two entries at ${path}`)
+    this.name = 'RepeatedInputPathError'
   }
 }
 
@@ -51,6 +61,8 @@ export const createMemoryProcess = (state: ProcessState): MemoryProcess => {
   if (parsed === undefined) throw new InvalidProcessStateError()
   const table = new Map<string, ExecutionJson>()
   for (const entry of parsed.entries) {
+    const repeated = repeatedInputPath(entry.invocation)
+    if (repeated !== undefined) throw new RepeatedInputPathError(entry.invocation, repeated)
     const key = invocationKey(entry.invocation)
     if (table.has(key)) throw new DuplicateInvocationError(entry.invocation)
     table.set(key, entry.execution)
@@ -58,6 +70,8 @@ export const createMemoryProcess = (state: ProcessState): MemoryProcess => {
   return {
     execute: invocation => {
       const json = invocationToJson(invocation)
+      const repeated = repeatedInputPath(json)
+      if (repeated !== undefined) return Promise.reject(new RepeatedInputPathError(json, repeated))
       const execution = table.get(invocationKey(json))
       if (execution === undefined) return Promise.reject(new UnknownInvocationError(json))
       return Promise.resolve(executionFromJson(execution))
