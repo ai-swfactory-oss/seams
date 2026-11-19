@@ -1,0 +1,10 @@
+{
+  "input": "first line\nsecond line\n",
+  "output": [
+    {
+      "stream": "stderr",
+      "text": "to a reader that is there\n"
+    }
+  ],
+  "closed": ["stdout"]
+}

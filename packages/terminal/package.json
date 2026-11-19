@@ -1,0 +1,48 @@
+{
+  "name": "@ai-swfactory-oss/terminal",
+  "description": "The terminal port: write(stream, text), readLine() and readAll(), with a broken pipe as data. Its memory adapter replays scripted input and collects output.",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-swfactory-oss/seams.git",
+    "directory": "packages/terminal"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./memory": {
+      "source": "./src/memory/index.ts",
+      "types": "./dist/memory/index.d.ts",
+      "import": "./dist/memory/index.js"
+    },
+    "./node": {
+      "source": "./src/node/index.ts",
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js"
+    },
+    "./generate": {
+      "source": "./src/generate/index.ts",
+      "types": "./dist/generate/index.d.ts",
+      "import": "./dist/generate/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/**/*.tgz"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.0"
+  }
+}

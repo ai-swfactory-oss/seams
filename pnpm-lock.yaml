@@ -14,6 +14,8 @@ importers:
 
   packages/bytes: {}
 
+  packages/clock: {}
+
   packages/random: {}
 
   packages/seams:
@@ -77,6 +79,12 @@ importers:
         version: 24.19.2
 
   packages/seams-tool-runner:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.2
+
+  packages/terminal:
     devDependencies:
       '@types/node':
         specifier: ^24.0.0

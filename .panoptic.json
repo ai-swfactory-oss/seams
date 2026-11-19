@@ -2,6 +2,15 @@
   "version": 4,
   "defaultBranch": "main",
   "guard": {},
+  "generators": {
+    "terminal-broken-pipe": {
+      "kind": "module",
+      "module": "packages/terminal/tools/generate-broken-pipe.mjs",
+      "inputs": ["packages/terminal/src/**", "packages/terminal/tools/**"],
+      "outputs": ["packages/terminal/tests/generated/broken-pipe.json"],
+      "tool": "node"
+    }
+  },
   "packages": {
     "@ai-swfactory-oss/seams": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-host": { "kind": "sdk" },
@@ -15,6 +24,8 @@
     "@ai-swfactory-oss/seams-lint-kit": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
     "@ai-swfactory-oss/bytes": { "kind": "sdk" },
-    "@ai-swfactory-oss/random": { "kind": "port" }
+    "@ai-swfactory-oss/clock": { "kind": "port" },
+    "@ai-swfactory-oss/random": { "kind": "port" },
+    "@ai-swfactory-oss/terminal": { "kind": "port" }
   }
 }
