@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/logging",
   "description": "Logging as a pure library: log records are data, formatted as a level label, a message and key=value fields, and written to stderr through the terminal port, with TTY and colour taken from host facts.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
