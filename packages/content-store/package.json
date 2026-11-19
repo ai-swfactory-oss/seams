@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/content-store",
   "description": "A content-addressed store of Trees over the files port: createContentStoreSdk({ root }, { files }) puts a Tree under its Tree digest and gets it back by that digest.",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
