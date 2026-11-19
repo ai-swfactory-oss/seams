@@ -1,0 +1,35 @@
+{
+  "name": "@ai-swfactory-oss/random",
+  "description": "The random port: bytes(n) only. Its memory adapter is a seeded stream: the same seed gives the same bytes.",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-swfactory-oss/seams.git",
+    "directory": "packages/random"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./memory": {
+      "source": "./src/memory/index.ts",
+      "types": "./dist/memory/index.d.ts",
+      "import": "./dist/memory/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/**/*.tgz"
+  ]
+}

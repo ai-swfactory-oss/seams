@@ -43,6 +43,12 @@
       "path": "./packages/bytes"
     },
     {
+      "path": "./packages/files"
+    },
+    {
+      "path": "./packages/random"
+    },
+    {
       "path": "./packages/seams"
     },
     {

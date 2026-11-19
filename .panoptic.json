@@ -14,6 +14,8 @@
     "@ai-swfactory-oss/seams-retry": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-lint-kit": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
-    "@ai-swfactory-oss/bytes": { "kind": "sdk" }
+    "@ai-swfactory-oss/bytes": { "kind": "sdk" },
+    "@ai-swfactory-oss/random": { "kind": "port" },
+    "@ai-swfactory-oss/files": { "kind": "port" }
   }
 }
