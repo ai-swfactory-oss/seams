@@ -49,6 +49,9 @@
       "path": "./packages/files"
     },
     {
+      "path": "./packages/host"
+    },
+    {
       "path": "./packages/random"
     },
     {
