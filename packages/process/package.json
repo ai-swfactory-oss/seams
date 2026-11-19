@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/process",
   "description": "The process port: an invocation in, an execution out, with file changes returned. Its memory adapter answers from a lookup table that ignores the program's location.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "license": "MIT",
   "repository": {
