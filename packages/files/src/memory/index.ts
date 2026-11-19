@@ -1,13 +1,13 @@
 import { applyInOrder } from '../domain/apply'
 import { treeFromJson, treeToJson } from '../domain/json'
 import { snapshotOf, stepOf, treeOfVolume, type Volume, volumeOf } from '../domain/volume'
-import type { Files, NonEmptyDirectory, Tree, TreeJson } from '../types'
+import type { DuplicatePath, Files, NonEmptyDirectory, Tree, TreeJson } from '../types'
 
 export interface MemoryFiles extends Files {
   readonly state: () => TreeJson
 }
 
-export type CreatedMemoryFiles = { readonly kind: 'files'; readonly files: MemoryFiles } | NonEmptyDirectory
+export type CreatedMemoryFiles = { readonly kind: 'files'; readonly files: MemoryFiles } | NonEmptyDirectory | DuplicatePath
 
 const memoryFilesOf = (initial: Tree): MemoryFiles => {
   let volume: Volume = volumeOf(initial)

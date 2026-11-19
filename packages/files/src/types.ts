@@ -27,7 +27,12 @@ export interface NonEmptyDirectory {
   readonly path: string
 }
 
-export type CheckedTree = { readonly kind: 'tree'; readonly tree: Tree } | NonEmptyDirectory
+export interface DuplicatePath {
+  readonly kind: 'duplicate-path'
+  readonly path: string
+}
+
+export type CheckedTree = { readonly kind: 'tree'; readonly tree: Tree } | NonEmptyDirectory | DuplicatePath
 
 export interface Selection {
   readonly root: string

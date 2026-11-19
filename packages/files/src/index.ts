@@ -10,6 +10,7 @@ export type {
   ChangeOutcome,
   CheckedTree,
   DirectoryEntry,
+  DuplicatePath,
   FileEntry,
   Files,
   NonEmptyDirectory,

@@ -5,6 +5,6 @@ import { createMemoryFiles, type MemoryFiles } from '../src/memory/index'
 
 export const memoryFilesOver = (initial: TreeJson): MemoryFiles => {
   const created = createMemoryFiles(initial)
-  assert(created.kind === 'files', 'the initial tree holds a non-empty directory')
+  assert(created.kind === 'files', 'the initial tree is refused')
   return created.files
 }
