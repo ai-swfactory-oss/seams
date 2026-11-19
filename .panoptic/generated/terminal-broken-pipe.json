@@ -1,6 +1,6 @@
 {
   "kind": "module",
-  "toolVersion": "v24.21.0",
+  "toolVersion": "v24.11.1",
   "inputsDigest": "21147fdfd28a6c630d3227c471e209e1987dd59ebe073cfaf2a441bed38d1062",
   "outputsDigest": "d9ca3a493e5ae4ee8fc153e35fe7a1de769c942454792e6947870642e37d0f4b",
   "source": "repository"
