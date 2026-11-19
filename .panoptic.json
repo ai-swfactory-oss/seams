@@ -29,6 +29,7 @@
     "@ai-swfactory-oss/random": { "kind": "port" },
     "@ai-swfactory-oss/files": { "kind": "port" },
     "@ai-swfactory-oss/http": { "kind": "port" },
-    "@ai-swfactory-oss/terminal": { "kind": "port" }
+    "@ai-swfactory-oss/terminal": { "kind": "port" },
+    "@ai-swfactory-oss/logging": { "kind": "sdk" }
   }
 }
