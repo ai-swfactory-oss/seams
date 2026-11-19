@@ -16,6 +16,8 @@ importers:
 
   packages/clock: {}
 
+  packages/random: {}
+
   packages/seams:
     devDependencies:
       '@types/node':
