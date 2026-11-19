@@ -16,6 +16,12 @@ importers:
 
   packages/clock: {}
 
+  packages/content-store:
+    dependencies:
+      '@ai-swfactory-oss/files':
+        specifier: workspace:*
+        version: link:../files
+
   packages/files:
     dependencies:
       '@ai-swfactory-oss/bytes':
