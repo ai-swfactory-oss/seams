@@ -21,7 +21,7 @@ const read = async (files: Files, root: string, digest: string): Promise<Got> =>
   return (await treeDigest(tree)) === digest ? { kind: 'tree', tree } : MISSING
 }
 
-export const createContentStore = (data: ContentStoreData, { files }: ContentStorePorts): ContentStore => {
+export const createContentStoreSdk = (data: ContentStoreData, { files }: ContentStorePorts): ContentStore => {
   const root = normalisePath(data.root) ?? data.root
   return {
     put: async tree => {

@@ -1,12 +1,12 @@
 import type { Clock } from '@ai-swfactory-oss/clock'
 import type { Failure } from '@ai-swfactory-oss/sdk-vocabulary'
 
-import { createRetry, nextCheck, nextStep, type Outcome, type PollPolicy, type RetryPolicy } from '../src/index'
+import { createRetrySdk, nextCheck, nextStep, type Outcome, type PollPolicy, type RetryPolicy } from '../src/index'
 
 export type Tried<T> = { readonly ok: true; readonly value: T } | { readonly ok: false; readonly failure: Failure }
 
 export const retried = async <T>(policy: RetryPolicy, clock: Clock, attempt: () => Promise<Tried<T>>): Promise<Outcome<T>> => {
-  const { waitFor } = createRetry(policy, { clock })
+  const { waitFor } = createRetrySdk(policy, { clock })
   for (let attempts = 1; ; attempts += 1) {
     const tried = await attempt()
     if (tried.ok) return { ok: true, value: tried.value, attempts }
@@ -22,7 +22,7 @@ export type Checked<T> =
   | { readonly kind: 'failed'; readonly failure: Failure }
 
 export const polled = async <T>(policy: PollPolicy, clock: Clock, check: () => Promise<Checked<T>>): Promise<Outcome<T>> => {
-  const { waitFor } = createRetry(policy, { clock })
+  const { waitFor } = createRetrySdk(policy, { clock })
   const start = clock.now()
   for (let checks = 1; ; checks += 1) {
     const checked = await check()

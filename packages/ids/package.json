@@ -1,6 +1,6 @@
 {
   "name": "@ai-swfactory-oss/ids",
-  "description": "UUIDs built from the random port's bytes: createIds(data, { random }) returns the id operations, which take data only.",
+  "description": "UUIDs built from the random port's bytes: createIdsSdk(data, { random }) returns the id operations, which take data only.",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",

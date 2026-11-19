@@ -1,2 +1,2 @@
-export { createIds } from './ids'
+export { createIdsSdk } from './ids'
 export type { Ids, IdsData, IdsPorts } from './types'
