@@ -43,6 +43,9 @@
       "path": "./packages/bytes"
     },
     {
+      "path": "./packages/host"
+    },
+    {
       "path": "./packages/seams"
     },
     {
