@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/random",
   "description": "The random port: bytes(n) only. Its memory adapter is a seeded stream: the same seed gives the same bytes, and a generator records a memory state seeded from a real adapter.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "license": "MIT",
   "repository": {
