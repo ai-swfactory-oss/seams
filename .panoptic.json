@@ -18,6 +18,7 @@
     "@ai-swfactory-oss/clock": { "kind": "port" },
     "@ai-swfactory-oss/host": { "kind": "sdk" },
     "@ai-swfactory-oss/random": { "kind": "port" },
-    "@ai-swfactory-oss/files": { "kind": "port" }
+    "@ai-swfactory-oss/files": { "kind": "port" },
+    "@ai-swfactory-oss/http": { "kind": "port" }
   }
 }

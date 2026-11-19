@@ -52,6 +52,9 @@
       "path": "./packages/host"
     },
     {
+      "path": "./packages/http"
+    },
+    {
       "path": "./packages/random"
     },
     {

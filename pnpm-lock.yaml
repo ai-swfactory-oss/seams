@@ -28,6 +28,12 @@ importers:
 
   packages/host: {}
 
+  packages/http:
+    dependencies:
+      '@ai-swfactory-oss/bytes':
+        specifier: workspace:*
+        version: link:../bytes
+
   packages/random: {}
 
   packages/seams:
