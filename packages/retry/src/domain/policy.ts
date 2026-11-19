@@ -6,28 +6,32 @@ export class InvalidPolicyError extends Error {
   constructor(
     readonly field: string,
     readonly value: number,
+    readonly least: 'zero or more' | 'more than zero',
   ) {
-    super(`A policy's ${field} is a finite number, zero or more; got ${String(value)}.`)
+    super(`A policy's ${field} is a finite number, ${least}; got ${String(value)}.`)
   }
 }
 
-const isUsable = (value: number | undefined): boolean => value === undefined || (Number.isFinite(value) && value >= 0)
+type Field = readonly [string, number | undefined, 'zero or more' | 'more than zero']
 
-const fieldsOf = (policy: RetryPolicy | PollPolicy): readonly (readonly [string, number | undefined])[] =>
+const isUsable = ([, value, least]: Field): boolean =>
+  value === undefined || (Number.isFinite(value) && (least === 'zero or more' ? value >= 0 : value > 0))
+
+const fieldsOf = (policy: RetryPolicy | PollPolicy): readonly Field[] =>
   'maxAttempts' in policy
     ? [
-        ['maxAttempts', policy.maxAttempts],
-        ['backoffMs', policy.backoffMs],
-        ['multiplier', policy.multiplier],
-        ['maxBackoffMs', policy.maxBackoffMs],
+        ['maxAttempts', policy.maxAttempts, 'zero or more'],
+        ['backoffMs', policy.backoffMs, 'zero or more'],
+        ['multiplier', policy.multiplier, 'zero or more'],
+        ['maxBackoffMs', policy.maxBackoffMs, 'zero or more'],
       ]
     : [
-        ['intervalMs', policy.intervalMs],
-        ['timeoutMs', policy.timeoutMs],
+        ['intervalMs', policy.intervalMs, 'more than zero'],
+        ['timeoutMs', policy.timeoutMs, 'zero or more'],
       ]
 
 export const checkedPolicy = <P extends RetryPolicy | PollPolicy>(policy: P): P => {
-  const refused = fieldsOf(policy).find(([, value]) => !isUsable(value))
-  if (refused !== undefined) throw new InvalidPolicyError(refused[0], refused[1] ?? Number.NaN)
+  const refused = fieldsOf(policy).find(field => !isUsable(field))
+  if (refused !== undefined) throw new InvalidPolicyError(refused[0], refused[1] ?? Number.NaN, refused[2])
   return policy
 }

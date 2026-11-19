@@ -9,8 +9,12 @@ export const backoffAfter = (policy: RetryPolicy, attempts: number): number => {
   return policy.maxBackoffMs === undefined ? raw : Math.min(raw, policy.maxBackoffMs)
 }
 
+const LONGEST_WAIT = Number.MAX_SAFE_INTEGER
+
+const usableWait = (planned: number): number => (Number.isNaN(planned) || planned <= 0 ? 0 : Math.min(planned, LONGEST_WAIT))
+
 export const honouringHint = (planned: number, failure: Failure | undefined): number =>
-  Math.max(planned, failure?.retryHint?.minimumWaitMs ?? 0)
+  Math.max(usableWait(planned), usableWait(failure?.retryHint?.minimumWaitMs ?? 0))
 
 export const attemptLimit = (policy: RetryPolicy): number =>
   Number.isFinite(policy.maxAttempts) ? Math.max(1, Math.floor(policy.maxAttempts)) : 1

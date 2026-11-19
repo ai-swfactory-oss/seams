@@ -62,7 +62,8 @@ describe('only createRetry takes the clock port', () => {
       { maxAttempts: 1, backoffMs: 0, multiplier: Number.POSITIVE_INFINITY },
       { maxAttempts: 1, backoffMs: 0, maxBackoffMs: -5 },
       { intervalMs: -1, timeoutMs: 0 },
-      { intervalMs: 0, timeoutMs: Number.NaN },
+      { intervalMs: 0, timeoutMs: 1_000 },
+      { intervalMs: 1, timeoutMs: Number.NaN },
     ].map(policy => {
       try {
         createRetry(policy, { clock })
@@ -72,6 +73,6 @@ describe('only createRetry takes the clock port', () => {
       }
     })
 
-    expect(refused).toEqual(['maxAttempts', 'backoffMs', 'multiplier', 'maxBackoffMs', 'intervalMs', 'timeoutMs'])
+    expect(refused).toEqual(['maxAttempts', 'backoffMs', 'multiplier', 'maxBackoffMs', 'intervalMs', 'intervalMs', 'timeoutMs'])
   })
 })

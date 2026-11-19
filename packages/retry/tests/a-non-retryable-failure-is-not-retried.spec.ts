@@ -27,6 +27,17 @@ describe('nextStep', () => {
     expect(nextStep(POLICY, 3, UNAVAILABLE)).toEqual({ stop: { ok: false, failure: UNAVAILABLE, attempts: 3 } })
   })
 
+  it('asks only for finite waits of zero or more, even from a policy the entry would refuse', () => {
+    const waits = [
+      { maxAttempts: 2, backoffMs: -100 },
+      { maxAttempts: 2, backoffMs: Number.NaN },
+      { maxAttempts: 2, backoffMs: Number.POSITIVE_INFINITY },
+      { maxAttempts: 2_000, backoffMs: 100, multiplier: 10 },
+    ].map((policy, index) => nextStep(policy, index === 3 ? 1_000 : 1, UNAVAILABLE))
+
+    expect(waits).toEqual([{ wait: 0 }, { wait: 0 }, { wait: Number.MAX_SAFE_INTEGER }, { wait: Number.MAX_SAFE_INTEGER }])
+  })
+
   it('always allows one try, and never more than a whole number of tries', () => {
     const allowed = [0, -1, Number.NaN, Number.POSITIVE_INFINITY, 2.9].map(
       maxAttempts => [1, 2, 3].filter(attempts => 'wait' in nextStep({ maxAttempts, backoffMs: 0 }, attempts, UNAVAILABLE)).length + 1,

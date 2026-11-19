@@ -55,6 +55,9 @@
       "path": "./packages/http"
     },
     {
+      "path": "./packages/logging"
+    },
+    {
       "path": "./packages/process"
     },
     {

@@ -3,8 +3,8 @@
 Retries and polling as a pure library over the clock port. The library decides each step; the caller loops.
 
 - `nextStep(policy, attempts, lastFailure)` says what to do after a failed try: `{ wait }` milliseconds, or `{ stop }` with how it gave up. It takes no port. A failure whose `retryable` is false stops at once, a failure's retry hint is a minimum wait, and the tries are bounded; running out of them is returned as data, with the last failure.
-- `nextCheck(policy, checks, elapsedMs, lastFailure)` does the same for polling a condition: one check per interval (or per hint, when that is longer), within a time limit. When time runs out with no failure it stops with a failure whose `detail.code` is `condition-not-held` (exported as `CONDITION_NOT_HELD`).
-- `createRetry(policy, { clock })` is the only entry that takes a port. It refuses a policy whose numbers are not finite and zero or more, with an `InvalidPolicyError`, and returns `{ waitFor }`: `waitFor(step)` waits out a `{ wait }` step on the clock, the library's only effect.
+- `nextCheck(policy, checks, elapsedMs, lastFailure)` does the same for polling a condition: one check per interval (or per hint, when that is longer), within a time limit. Every wait it or `nextStep` asks for is finite and zero or more. When time runs out after a retryable failure it stops with that failure; when it runs out with no failure it stops with a failure whose `detail.code` is `condition-not-held` (exported as `CONDITION_NOT_HELD`).
+- `createRetry(policy, { clock })` is the only entry that takes a port. It refuses a policy whose numbers are not finite and zero or more, or a poll interval that is not more than zero, with an `InvalidPolicyError`, and returns `{ waitFor }`: `waitFor(step)` waits out a `{ wait }` step on the clock, the library's only effect.
 
 Failures are `Failure` data from `@ai-swfactory-oss/sdk-vocabulary`; nothing is thrown for a failed try.
 

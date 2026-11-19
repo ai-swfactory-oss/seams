@@ -2,7 +2,7 @@ import { createMemoryClock } from '@ai-swfactory-oss/clock/memory'
 import type { Failure } from '@ai-swfactory-oss/sdk-vocabulary'
 import { describe, expect, it } from 'vitest'
 
-import { CONDITION_NOT_HELD } from '../src/index'
+import { CONDITION_NOT_HELD, createRetry, InvalidPolicyError, nextCheck } from '../src/index'
 import { type Checked, polled } from './loop'
 
 const NOT_YET: Checked<string> = { kind: 'not-yet' }
@@ -68,7 +68,8 @@ describe('the poll loop', () => {
     })
   })
 
-  it('checks once when no time would pass between checks', async () => {
-    expect(await run([NOT_YET, HELD], 0, 60_000)).toMatchObject({ outcome: { ok: false, attempts: 1 }, checkedAt: [0] })
+  it('decides a single check when no time would pass between checks, which the entry refuses', () => {
+    expect(nextCheck({ intervalMs: 0, timeoutMs: 60_000 }, 1, 0, undefined)).toMatchObject({ stop: { ok: false, attempts: 1 } })
+    expect(() => createRetry({ intervalMs: 0, timeoutMs: 60_000 }, { clock: createMemoryClock({ now: 0 }) })).toThrow(InvalidPolicyError)
   })
 })
