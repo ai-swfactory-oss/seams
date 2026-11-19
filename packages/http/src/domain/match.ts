@@ -8,4 +8,4 @@ const sameHeaders = (a: HttpHeaders, b: HttpHeaders): boolean =>
   })
 
 export const sameRequest = (a: HttpRequestJson, b: HttpRequestJson): boolean =>
-  a.method === b.method && a.url === b.url && (a.body ?? '') === (b.body ?? '') && sameHeaders(a.headers, b.headers)
+  a.method === b.method && a.url === b.url && a.body === b.body && sameHeaders(a.headers, b.headers)

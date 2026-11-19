@@ -69,6 +69,12 @@ describe('the memory http adapter', () => {
     await expect(http.send({ ...post, method: 'PUT' })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
   })
 
+  it('tells an absent body from an empty one', async () => {
+    const http = createMemoryHttp(STATE)
+
+    await expect(http.send({ ...get, body: new Uint8Array() })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
+  })
+
   it('throws the named error once no exchange is left', async () => {
     const http = createMemoryHttp({ exchanges: [] })
 

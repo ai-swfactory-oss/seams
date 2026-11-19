@@ -14,6 +14,8 @@ importers:
 
   packages/bytes: {}
 
+  packages/clock: {}
+
   packages/http:
     dependencies:
       '@ai-swfactory-oss/bytes':

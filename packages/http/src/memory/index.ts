@@ -21,15 +21,15 @@ export interface MemoryHttp extends Http {
 }
 
 export const createMemoryHttp = (initial: HttpState): MemoryHttp => {
-  let exchanges = initial.exchanges
+  let exchanges = structuredClone(initial.exchanges)
   const send = (request: HttpRequest): Promise<HttpOutcome> => {
     const sent = requestToJson(request)
     const [next, ...rest] = exchanges
     if (next === undefined || !sameRequest(sent, next.request)) {
-      return Promise.reject(new UnmatchedHttpRequestError(sent, next?.request))
+      return Promise.reject(new UnmatchedHttpRequestError(sent, next === undefined ? undefined : structuredClone(next.request)))
     }
     exchanges = rest
-    return Promise.resolve(outcomeFromJson(next.outcome))
+    return Promise.resolve(outcomeFromJson(structuredClone(next.outcome)))
   }
-  return { send, state: () => ({ exchanges }) }
+  return { send, state: () => ({ exchanges: structuredClone(exchanges) }) }
 }

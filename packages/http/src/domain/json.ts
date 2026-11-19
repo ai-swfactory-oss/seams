@@ -39,6 +39,20 @@ const reasonOf = (value: unknown): HttpFailureReason | undefined => REASONS.find
 
 const isList = (value: unknown): value is readonly unknown[] => Array.isArray(value)
 
+const isBase64 = (value: unknown): value is string => {
+  if (typeof value !== 'string') return false
+  try {
+    decodeBase64(value)
+    return true
+  } catch {
+    return false
+  }
+}
+
+const isStatus = (value: unknown): value is number => typeof value === 'number' && Number.isInteger(value) && value >= 100 && value <= 599
+
+const isTimeLimit = (value: unknown): value is number => typeof value === 'number' && Number.isInteger(value) && value >= 0
+
 const headersOf = (value: unknown): HttpHeaders | undefined => {
   if (!isList(value)) return undefined
   const pairs: (readonly [string, string])[] = []
@@ -59,8 +73,8 @@ const requestJsonOf = (value: unknown): HttpRequestJson | undefined => {
   if (typeof method !== 'string' || typeof url !== 'string' || headers === undefined) return undefined
   const body = 'body' in value ? value.body : undefined
   const timeLimitMs = 'timeLimitMs' in value ? value.timeLimitMs : undefined
-  if (body !== undefined && typeof body !== 'string') return undefined
-  if (timeLimitMs !== undefined && typeof timeLimitMs !== 'number') return undefined
+  if (body !== undefined && !isBase64(body)) return undefined
+  if (timeLimitMs !== undefined && !isTimeLimit(timeLimitMs)) return undefined
   return {
     method,
     url,
@@ -80,7 +94,7 @@ const outcomeJsonOf = (value: unknown): HttpOutcomeJson | undefined => {
   if (value.kind !== 'response' || !('status' in value) || !('headers' in value) || !('body' in value)) return undefined
   const { status, body } = value
   const headers = headersOf(value.headers)
-  if (typeof status !== 'number' || typeof body !== 'string' || headers === undefined) return undefined
+  if (!isStatus(status) || !isBase64(body) || headers === undefined) return undefined
   return { kind: 'response', status, headers, body }
 }
 
