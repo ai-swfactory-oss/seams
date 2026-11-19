@@ -9,17 +9,15 @@ const CLOSED: WriteOutcome = { kind: 'closed' }
 
 const readerGone = (error: Error): boolean => 'code' in error && (error.code === 'EPIPE' || error.code === 'ERR_STREAM_DESTROYED')
 
+const ignoreError = (): void => undefined
+
 const writeTo = (target: Writable, text: string): Promise<WriteOutcome> =>
   new Promise((resolve, reject) => {
     if (!target.writable) {
       resolve(CLOSED)
       return
     }
-
-    const onError = (): void => undefined
-    target.once('error', onError)
     target.write(text, error => {
-      if (error == null) target.off('error', onError)
       if (error == null) resolve(WRITTEN)
       else if (readerGone(error)) resolve(CLOSED)
       else reject(error)
@@ -28,6 +26,10 @@ const writeTo = (target: Writable, text: string): Promise<WriteOutcome> =>
 
 const nextChunk = (source: Readable): Promise<string | undefined> =>
   new Promise((resolve, reject) => {
+    if (source.errored !== null) {
+      reject(source.errored)
+      return
+    }
     const attempt = (): void => {
       const chunk: unknown = source.read()
       if (typeof chunk === 'string') {
@@ -58,34 +60,37 @@ const nextChunk = (source: Readable): Promise<string | undefined> =>
     attempt()
   })
 
-const readLineFrom = async (source: Readable): Promise<string | undefined> => {
+const readerOf = (source: Readable): Pick<Terminal, 'readLine' | 'readAll'> => {
   let buffered = ''
-  for (;;) {
-    const chunk = await nextChunk(source)
-    if (chunk === undefined) return takeLine(buffered).line
-    buffered += chunk
-    if (buffered.includes('\n')) {
+  return {
+    readLine: async () => {
+      while (!buffered.includes('\n')) {
+        const chunk = await nextChunk(source)
+        if (chunk === undefined) break
+        buffered += chunk
+      }
       const { line, rest } = takeLine(buffered)
-      if (rest !== '') source.unshift(rest)
+      buffered = rest
       return line
-    }
+    },
+    readAll: async () => {
+      for (let chunk = await nextChunk(source); chunk !== undefined; chunk = await nextChunk(source)) {
+        buffered += chunk
+      }
+      const all = buffered
+      buffered = ''
+      return all
+    },
   }
-}
-
-const readAllFrom = async (source: Readable): Promise<string> => {
-  let all = ''
-  for (let chunk = await nextChunk(source); chunk !== undefined; chunk = await nextChunk(source)) {
-    all += chunk
-  }
-  return all
 }
 
 export const createNodeTerminal = (): Terminal => {
   process.stdin.setEncoding('utf8')
   const targets: Readonly<Record<TerminalStream, Writable>> = { stdout: process.stdout, stderr: process.stderr }
+  targets.stdout.on('error', ignoreError)
+  targets.stderr.on('error', ignoreError)
   return {
     write: (stream, text) => writeTo(targets[stream], text),
-    readLine: () => readLineFrom(process.stdin),
-    readAll: () => readAllFrom(process.stdin),
+    ...readerOf(process.stdin),
   }
 }

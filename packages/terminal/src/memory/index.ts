@@ -25,6 +25,6 @@ export const createMemoryTerminal = (initial: TerminalState): MemoryTerminal => 
       input = ''
       return Promise.resolve(all)
     },
-    state: () => ({ input, output, closed }),
+    state: () => ({ input, output: output.map(write => ({ ...write })), closed: [...closed] }),
   }
 }

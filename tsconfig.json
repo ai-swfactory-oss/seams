@@ -46,6 +46,9 @@
       "path": "./packages/clock"
     },
     {
+      "path": "./packages/host"
+    },
+    {
       "path": "./packages/random"
     },
     {

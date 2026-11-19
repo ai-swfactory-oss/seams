@@ -3,10 +3,11 @@ export interface TakenLine {
   readonly rest: string
 }
 
+const withoutCarriageReturn = (line: string): string => (line.endsWith('\r') ? line.slice(0, -1) : line)
+
 export const takeLine = (input: string): TakenLine => {
   if (input === '') return { line: undefined, rest: '' }
   const end = input.indexOf('\n')
-  if (end === -1) return { line: input, rest: '' }
-  const line = input.slice(0, end)
-  return { line: line.endsWith('\r') ? line.slice(0, -1) : line, rest: input.slice(end + 1) }
+  if (end === -1) return { line: withoutCarriageReturn(input), rest: '' }
+  return { line: withoutCarriageReturn(input.slice(0, end)), rest: input.slice(end + 1) }
 }
