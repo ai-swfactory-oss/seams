@@ -34,6 +34,12 @@ importers:
         specifier: workspace:*
         version: link:../bytes
 
+  packages/ids:
+    dependencies:
+      '@ai-swfactory-oss/random':
+        specifier: workspace:*
+        version: link:../random
+
   packages/logging:
     dependencies:
       '@ai-swfactory-oss/host':
