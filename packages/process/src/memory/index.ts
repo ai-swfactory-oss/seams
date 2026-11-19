@@ -1,4 +1,4 @@
-import { executionFromJson, invocationKey, invocationToJson } from '../domain/json'
+import { executionFromJson, invocationKey, invocationToJson, isPathPackage } from '../domain/json'
 import type { ExecutionJson, InvocationJson, Process, ProcessState } from '../types'
 
 export class UnknownInvocationError extends Error {
@@ -15,6 +15,13 @@ export class DuplicateInvocationError extends Error {
   }
 }
 
+export class PathProgramIdentityError extends Error {
+  constructor(readonly invocation: InvocationJson) {
+    super(`program identity names a path, not a package: ${invocation.program.package}@${invocation.program.version}`)
+    this.name = 'PathProgramIdentityError'
+  }
+}
+
 export interface MemoryProcess extends Process {
   readonly state: () => ProcessState
 }
@@ -22,6 +29,7 @@ export interface MemoryProcess extends Process {
 export const createMemoryProcess = (state: ProcessState): MemoryProcess => {
   const table = new Map<string, ExecutionJson>()
   for (const entry of state.entries) {
+    if (isPathPackage(entry.invocation.program.package)) throw new PathProgramIdentityError(entry.invocation)
     const key = invocationKey(entry.invocation)
     if (table.has(key)) throw new DuplicateInvocationError(entry.invocation)
     table.set(key, entry.execution)

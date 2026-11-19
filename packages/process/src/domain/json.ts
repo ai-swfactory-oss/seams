@@ -79,10 +79,21 @@ const strings = (value: unknown): string[] | undefined => {
   return out
 }
 
+export const isPathPackage = (name: string): boolean => {
+  if (name === '') return false
+  if (name.includes('\\')) return true
+  const segments = name.split('/')
+  if (segments.some(segment => segment === '' || segment === '.' || segment === '..')) return true
+  if (segments.length === 1) return false
+  const [scope] = segments
+  return !(segments.length === 2 && scope !== undefined && scope.length > 1 && scope.startsWith('@'))
+}
+
 const programOf = (value: unknown): ProgramIdentity | undefined => {
   if (typeof value !== 'object' || value === null || !('package' in value) || !('version' in value)) return undefined
   const { package: name, version } = value
-  return typeof name === 'string' && typeof version === 'string' ? { package: name, version } : undefined
+  if (typeof name !== 'string' || typeof version !== 'string' || isPathPackage(name)) return undefined
+  return { package: name, version }
 }
 
 const envOf = (value: unknown): Record<string, string> | undefined => {
