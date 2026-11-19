@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/host",
   "description": "Host facts (env, OS and architecture, home, TTY, time zone, locale) as one plain data type, with pure derivations such as the user cache base.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
