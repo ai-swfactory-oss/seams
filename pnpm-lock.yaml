@@ -43,6 +43,19 @@ importers:
         specifier: workspace:*
         version: link:../terminal
 
+  packages/process:
+    dependencies:
+      '@ai-swfactory-oss/bytes':
+        specifier: workspace:*
+        version: link:../bytes
+      '@ai-swfactory-oss/files':
+        specifier: workspace:*
+        version: link:../files
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.2
+
   packages/random: {}
 
   packages/seams:

@@ -58,6 +58,9 @@
       "path": "./packages/logging"
     },
     {
+      "path": "./packages/process"
+    },
+    {
       "path": "./packages/random"
     },
     {
