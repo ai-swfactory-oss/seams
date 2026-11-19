@@ -16,6 +16,7 @@
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
     "@ai-swfactory-oss/bytes": { "kind": "sdk" },
     "@ai-swfactory-oss/clock": { "kind": "port" },
+    "@ai-swfactory-oss/host": { "kind": "sdk" },
     "@ai-swfactory-oss/random": { "kind": "port" },
     "@ai-swfactory-oss/http": { "kind": "port" }
   }
