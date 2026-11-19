@@ -1,22 +1,39 @@
 # seams
 
-The seams hub: environment-neutral ports, fakes and contracts, plus the Node runtime capabilities (host, process, logger, module, http-server) and shared in-process helpers.
-
-This repository holds only a guarded skeleton for now. Each package's code arrives by migration from the private monorepo `ai-swfactory/seams`.
+The seams hub: side effects go through ports, and libraries are built over them as pure code. Each port package holds the port's types, its JSON forms and a memory adapter, and most hold a generator that records a memory state from a real adapter.
 
 ## Packages
 
-- `@ai-swfactory-oss/seams`: environment-neutral ports, fakes and contracts.
-- `@ai-swfactory-oss/seams-host`: the Node host capability.
-- `@ai-swfactory-oss/seams-process`: the Node process capability.
-- `@ai-swfactory-oss/seams-logger`: the Node logger capability.
-- `@ai-swfactory-oss/seams-module`: the Node module capability.
-- `@ai-swfactory-oss/seams-http-server`: the Node HTTP server capability.
-- `@ai-swfactory-oss/seams-tool-runner`: a shared in-process tool runner.
-- `@ai-swfactory-oss/seams-node-runtime`: the Node runtime that assembles the capabilities.
-- `@ai-swfactory-oss/seams-retry`: a shared in-process retry helper.
-- `@ai-swfactory-oss/seams-lint-kit`: a shared in-process lint kit.
-- `@ai-swfactory-oss/seams-archive`: a shared in-process archive helper.
+Ports:
+
+- `@ai-swfactory-oss/clock`: the clock port, `now()` and `wait(duration)`, with a memory adapter that moves only on waits.
+- `@ai-swfactory-oss/files`: the files port, a rooted snapshot in and a list of changes out, with a memory adapter that holds one Tree.
+- `@ai-swfactory-oss/http`: the http port, `send(request)` returning a response or a typed network failure, with a memory adapter that replays ordered exchanges.
+- `@ai-swfactory-oss/process`: the process port, an invocation in and an execution out, with a memory adapter that answers from a lookup table.
+- `@ai-swfactory-oss/random`: the random port, `bytes(n)` only, with a seeded memory adapter.
+- `@ai-swfactory-oss/terminal`: the terminal port, `write`, `readLine` and `readAll` with a broken pipe as data, with a memory adapter and a Node adapter over the process's standard streams.
+
+Libraries:
+
+- `@ai-swfactory-oss/bytes`: pure byte helpers: a base64 codec, hex encoding and concatenation.
+- `@ai-swfactory-oss/host`: host facts as one plain data type, with pure derivations such as the user cache base.
+- `@ai-swfactory-oss/ids`: UUIDs built from the random port's bytes.
+- `@ai-swfactory-oss/logging`: log records as data, formatted and written to stderr through the terminal port.
+- `@ai-swfactory-oss/retry`: retries and polling as pure decisions, waiting only on the clock port.
+
+Placeholders, each holding only a stub that describes its own name and a fake of it under `./testing`, to be deprecated once their replacements are released:
+
+- `@ai-swfactory-oss/seams`
+- `@ai-swfactory-oss/seams-archive`
+- `@ai-swfactory-oss/seams-host`
+- `@ai-swfactory-oss/seams-http-server`
+- `@ai-swfactory-oss/seams-lint-kit`
+- `@ai-swfactory-oss/seams-logger`
+- `@ai-swfactory-oss/seams-module`
+- `@ai-swfactory-oss/seams-node-runtime`
+- `@ai-swfactory-oss/seams-process`
+- `@ai-swfactory-oss/seams-retry`
+- `@ai-swfactory-oss/seams-tool-runner`
 
 ## Licence
 

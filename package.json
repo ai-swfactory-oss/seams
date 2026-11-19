@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
-  "description": "seams workspace: environment-neutral ports, fakes and contracts, the Node runtime capabilities and shared in-process helpers.",
+  "description": "seams workspace: the side-effect ports with their memory adapters, the pure libraries built over them, and placeholder packages awaiting deprecation.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ai-swfactory-oss/seams.git"

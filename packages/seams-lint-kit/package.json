@@ -1,6 +1,6 @@
 {
   "name": "@ai-swfactory-oss/seams-lint-kit",
-  "description": "A shared in-process seams lint kit. A fake lives under ./testing.",
+  "description": "A placeholder holding only a stub that describes its own name, with a fake under ./testing. It is to be deprecated once its replacement is released.",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@ai-swfactory-oss/seams-node-runtime",
-  "description": "The seams Node runtime that assembles the Node capabilities. A fake lives under ./testing.",
+  "description": "A placeholder holding only a stub that describes its own name, with a fake under ./testing. It is to be deprecated once its replacement is released.",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
