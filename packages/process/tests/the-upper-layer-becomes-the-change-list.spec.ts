@@ -41,7 +41,7 @@ describe('the upper layer becomes the change list', () => {
     ])
   })
 
-  it('lists a mode-only change as a stat-only change carrying no content', () => {
+  it('a mode-only change is listed as a stat-only change carrying no content', () => {
     const upper: readonly UpperEntry[] = [{ path: 'bin/run', kind: 'file', content: text('#!/bin/sh\n'), executable: false }]
 
     expect(changesFromUpper(upper, LOWER)).toStrictEqual([{ kind: 'stat', path: 'bin/run', executable: false }])
