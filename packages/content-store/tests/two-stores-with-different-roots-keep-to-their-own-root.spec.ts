@@ -1,7 +1,7 @@
 import { type Tree, treeDigest } from '@ai-swfactory-oss/files'
 import { describe, expect, it } from 'vitest'
 
-import { createContentStore } from '../src/index'
+import { contentStoreAt } from './content-store-at'
 import { memoryFilesOver } from './memory-files'
 
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
@@ -13,8 +13,8 @@ const twoStores = () => {
   const files = memoryFilesOver({ entries: [] })
   return {
     files,
-    first: createContentStore({ root: 'first/store' }, { files }),
-    second: createContentStore({ root: 'second/store' }, { files }),
+    first: contentStoreAt('first/store', files),
+    second: contentStoreAt('second/store', files),
   }
 }
 

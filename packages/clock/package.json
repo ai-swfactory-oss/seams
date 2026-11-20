@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/clock",
   "description": "The clock port: now() and wait(duration), with a memory adapter that starts at a given instant and moves only on waits, and a generator that records a memory state from a real adapter.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

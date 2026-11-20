@@ -58,9 +58,6 @@
     },
     {
       "path": "../files"
-    },
-    {
-      "path": "../host"
     }
   ],
   "include": [

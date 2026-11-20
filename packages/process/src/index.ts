@@ -1,4 +1,4 @@
-export { captureFor, type CaptureMode } from './domain/capture'
+export { captureFor, type CaptureMode, type HostFacts } from './domain/capture'
 export { executionFromJson, executionToJson, invocationFromJson, invocationToJson, parseProcessState } from './domain/json'
 export { type Launch, launchRefusal, UserNamespacesUnavailableError } from './domain/namespace'
 export { applyBackPlan, type ApplyStep, changesFromUpper, type UpperEntry } from './domain/overlay'

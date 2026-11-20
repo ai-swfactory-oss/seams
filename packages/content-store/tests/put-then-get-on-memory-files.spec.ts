@@ -1,7 +1,7 @@
 import { type Tree, treeDigest } from '@ai-swfactory-oss/files'
 import { describe, expect, it } from 'vitest'
 
-import { createContentStore } from '../src/index'
+import { contentStoreAt } from './content-store-at'
 import { memoryFilesOver } from './memory-files'
 
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
@@ -15,7 +15,7 @@ const TREE: Tree = {
   ],
 }
 
-const storeOn = (files = memoryFilesOver({ entries: [] })) => ({ files, store: createContentStore({ root: 'store' }, { files }) })
+const storeOn = (files = memoryFilesOver({ entries: [] })) => ({ files, store: contentStoreAt('store', files) })
 
 describe('put then get on memory files', () => {
   it('puts a tree under the Tree digest the files package exports', async () => {

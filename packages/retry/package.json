@@ -1,7 +1,7 @@
 {
   "name": "@ai-swfactory-oss/retry",
   "description": "Retries and polling as pure decisions: failures are classified by their data, retry hints are honoured and tries are bounded; the only effect is a wait on the clock port, and the caller loops.",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "type": "module",
   "license": "MIT",
   "repository": {

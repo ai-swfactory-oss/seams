@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { InvalidClockStateError, parseClockState } from '../src/index'
+import { parseClockState } from '../src/index'
 import { createMemoryClock } from '../src/memory/index'
 
 const start = 1_767_225_600_000
@@ -22,22 +22,21 @@ describe('the memory clock state', () => {
     const first = createMemoryClock({ now: start })
     await first.wait(42)
 
-    const resumed = createMemoryClock(parseClockState(JSON.parse(JSON.stringify(first.state()))))
+    const parsed = parseClockState(JSON.parse(JSON.stringify(first.state())))
+    const resumed = createMemoryClock(parsed ?? { now: 0 })
     await resumed.wait(8)
 
-    expect([first.now(), resumed.now(), resumed.state()]).toEqual([start + 42, start + 50, { now: start + 50 }])
+    expect([parsed, first.now(), resumed.now(), resumed.state()]).toEqual([
+      { now: start + 42 },
+      start + 42,
+      start + 50,
+      { now: start + 50 },
+    ])
   })
 
-  it('is refused when it is not a state, so a clock is never built from one', () => {
-    const refused = [null, [], {}, { now: '0' }, { now: Number.NaN }].map(value => {
-      try {
-        parseClockState(value)
-        return 'parsed'
-      } catch (error) {
-        return error instanceof InvalidClockStateError
-      }
-    })
+  it('is refused as data when it is not a state, so a clock is never built from one', () => {
+    const refused = [null, [], {}, { now: '0' }, { now: Number.NaN }].map(value => parseClockState(value))
 
-    expect(refused).toEqual([true, true, true, true, true])
+    expect(refused).toEqual([undefined, undefined, undefined, undefined, undefined])
   })
 })

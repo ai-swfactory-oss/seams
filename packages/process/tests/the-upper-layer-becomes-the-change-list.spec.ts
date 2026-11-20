@@ -53,7 +53,7 @@ describe('the upper layer becomes the change list', () => {
 
   it('leaves the merged result when the list is applied to the lower tree', async () => {
     const created = createMemoryFiles(treeToJson(LOWER))
-    if (created.kind === 'non-empty-directory') throw new Error(`the lower tree holds the non-empty directory ${created.path}`)
+    if (created.kind !== 'files') throw new Error(`the lower tree is refused as ${created.kind} at ${created.path}`)
 
     const outcomes = await created.files.apply(changesFromUpper(UPPER, LOWER))
 

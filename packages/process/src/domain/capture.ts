@@ -1,4 +1,7 @@
-import type { HostFacts } from '@ai-swfactory-oss/host'
+export interface HostFacts {
+  readonly os: string
+  readonly arch: string
+}
 
 export type CaptureMode = 'in-place' | 'overlay'
 

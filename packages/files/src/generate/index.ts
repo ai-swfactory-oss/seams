@@ -1,6 +1,5 @@
 import { changesFromJson, treeFromJson, treeToJson } from '../domain/json'
-import { NonEmptyDirectoryError } from '../domain/non-empty-directory'
-import type { Change, ChangeJson, ChangeOutcome, Files, Selection, Tree, TreeJson } from '../types'
+import type { Change, ChangeJson, ChangeOutcome, DuplicatePath, Files, NonEmptyDirectory, Selection, Tree, TreeJson } from '../types'
 
 export interface FilesGeneration {
   readonly setup: TreeJson
@@ -15,6 +14,8 @@ export interface FilesResults {
   readonly after: TreeJson
 }
 
+export type GeneratedFilesResults = { readonly kind: 'results'; readonly results: FilesResults } | NonEmptyDirectory | DuplicatePath
+
 const writesOf = (tree: Tree): Change[] =>
   tree.entries.map(entry =>
     entry.kind === 'file'
@@ -24,9 +25,9 @@ const writesOf = (tree: Tree): Change[] =>
         : { kind: 'mkdir', path: entry.path },
   )
 
-export const generateFilesResults = async (call: FilesGeneration, ports: { readonly files: Files }): Promise<FilesResults> => {
+export const generateFilesResults = async (call: FilesGeneration, ports: { readonly files: Files }): Promise<GeneratedFilesResults> => {
   const checked = treeFromJson(call.setup)
-  if (checked.kind === 'non-empty-directory') throw new NonEmptyDirectoryError('generateFilesResults', 'the setup', checked.path)
+  if (checked.kind !== 'tree') return checked
   const setup = checked.tree
   const changes = changesFromJson(call.changes)
   const { files } = ports
@@ -34,5 +35,5 @@ export const generateFilesResults = async (call: FilesGeneration, ports: { reado
   const snapshot = await files.snapshot(call.selection)
   const outcomes = await files.apply(changes)
   const after = await files.snapshot(call.selection)
-  return { setup: call.setup, snapshot: treeToJson(snapshot), outcomes, after: treeToJson(after) }
+  return { kind: 'results', results: { setup: call.setup, snapshot: treeToJson(snapshot), outcomes, after: treeToJson(after) } }
 }

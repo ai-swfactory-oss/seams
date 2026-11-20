@@ -1,12 +1,12 @@
 import { createMemoryRandom } from '@ai-swfactory-oss/random/memory'
 import { describe, expect, it } from 'vitest'
 
-import { createIds } from '../src/index'
+import { createIdsSdk } from '../src/index'
 
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
 
 const uuids = (seed: number, count: number): string[] => {
-  const ids = createIds({}, { random: createMemoryRandom({ seed, drawn: 0 }) })
+  const ids = createIdsSdk({}, { random: createMemoryRandom({ seed, drawn: 0 }) })
   return Array.from({ length: count }, () => ids.uuid())
 }
 
@@ -31,7 +31,7 @@ describe('a v4 UUID from the seeded memory random', () => {
 
   it('draws sixteen bytes from the random port for each UUID', () => {
     const random = createMemoryRandom({ seed: 7, drawn: 0 })
-    const ids = createIds({}, { random })
+    const ids = createIdsSdk({}, { random })
 
     ids.uuid()
     ids.uuid()

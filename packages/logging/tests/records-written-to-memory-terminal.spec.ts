@@ -1,7 +1,7 @@
 import { createMemoryTerminal } from '@ai-swfactory-oss/terminal/memory'
 import { describe, expect, it } from 'vitest'
 
-import { createLogging, formatRecord, lineStyleOf, type LoggingData } from '../src/index'
+import { createLoggingSdk, formatRecord, lineStyleOf, type LoggingData } from '../src/index'
 
 const plain: LoggingData['facts'] = { env: {}, tty: { stdin: false, stdout: false, stderr: false, columns: undefined } }
 
@@ -13,7 +13,7 @@ const onTty = (env: LoggingData['facts']['env'], stderr: boolean): LoggingData['
 describe('records written to the memory terminal', () => {
   it('writes a record as one stderr line: the level label, the message, then key=value fields in order', async () => {
     const terminal = createMemoryTerminal({ input: '', output: [], closed: [] })
-    const logging = createLogging({ facts: plain }, { ports: { terminal } })
+    const logging = createLoggingSdk({ facts: plain }, { terminal })
 
     const outcome = await logging.log({
       level: 'info',
@@ -29,7 +29,7 @@ describe('records written to the memory terminal', () => {
 
   it('labels each level, and writes nothing to stdout', async () => {
     const terminal = createMemoryTerminal({ input: '', output: [], closed: [] })
-    const logging = createLogging({ facts: plain }, { ports: { terminal } })
+    const logging = createLoggingSdk({ facts: plain }, { terminal })
 
     await logging.log({ level: 'debug', message: 'a' })
     await logging.log({ level: 'info', message: 'b' })
@@ -46,7 +46,7 @@ describe('records written to the memory terminal', () => {
 
   it('adds no time to a record; a caller that wants one puts it in the fields', async () => {
     const terminal = createMemoryTerminal({ input: '', output: [], closed: [] })
-    const logging = createLogging({ facts: plain }, { ports: { terminal } })
+    const logging = createLoggingSdk({ facts: plain }, { terminal })
 
     await logging.log({ level: 'info', message: 'tick' })
     await logging.log({ level: 'info', message: 'tick', fields: { at: '2026-11-19T00:00:00.000Z' } })
@@ -72,7 +72,7 @@ describe('records written to the memory terminal', () => {
       lineStyleOf(onTty({ NO_COLOR: '' }, true)),
     ]
     const terminal = createMemoryTerminal({ input: '', output: [], closed: [] })
-    const logging = createLogging({ facts: onTty({}, true) }, { ports: { terminal } })
+    const logging = createLoggingSdk({ facts: onTty({}, true) }, { terminal })
 
     await logging.log({ level: 'error', message: 'failed', fields: { code: 2 } })
 
@@ -84,7 +84,7 @@ describe('records written to the memory terminal', () => {
 
   it('answers a record written after stderr has closed as closed, and collects nothing for it', async () => {
     const terminal = createMemoryTerminal({ input: '', output: [], closed: ['stderr'] })
-    const logging = createLogging({ facts: plain }, { ports: { terminal } })
+    const logging = createLoggingSdk({ facts: plain }, { terminal })
 
     expect([await logging.log({ level: 'info', message: 'lost' }), terminal.state().output]).toEqual([{ kind: 'closed' }, []])
   })
