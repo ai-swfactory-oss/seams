@@ -41,10 +41,10 @@ describe('the upper layer becomes the change list', () => {
     ])
   })
 
-  it('lists a mode change on a copied-up file as a write', () => {
+  it('lists a mode-only change as a stat-only change carrying no content', () => {
     const upper: readonly UpperEntry[] = [{ path: 'bin/run', kind: 'file', content: text('#!/bin/sh\n'), executable: false }]
 
-    expect(changesFromUpper(upper, LOWER)).toEqual([{ kind: 'write', path: 'bin/run', content: text('#!/bin/sh\n'), executable: false }])
+    expect(changesFromUpper(upper, LOWER)).toStrictEqual([{ kind: 'stat', path: 'bin/run', executable: false }])
   })
 
   it('lists nothing for an empty upper layer', () => {
@@ -55,9 +55,12 @@ describe('the upper layer becomes the change list', () => {
     const created = createMemoryFiles(treeToJson(LOWER))
     if (created.kind !== 'files') throw new Error(`the lower tree is refused as ${created.kind} at ${created.path}`)
 
-    const outcomes = await created.files.apply(changesFromUpper(UPPER, LOWER))
+    const changes = changesFromUpper(UPPER, LOWER)
+    const fileChanges = changes.flatMap(change => (change.kind === 'stat' ? [] : [change]))
+    const outcomes = await created.files.apply(fileChanges)
 
-    expect([outcomes.every(outcome => outcome.kind === 'applied'), created.files.state()]).toEqual([
+    expect([fileChanges.length === changes.length, outcomes.every(outcome => outcome.kind === 'applied'), created.files.state()]).toEqual([
+      true,
       true,
       treeToJson({
         entries: [

@@ -6,7 +6,9 @@ export type UpperEntry =
   | { readonly path: string; readonly kind: 'directory'; readonly opaque: boolean }
   | { readonly path: string; readonly kind: 'whiteout' }
 
-export type ApplyStep = Change | { readonly kind: 'move-from-upper'; readonly path: string }
+export type OverlayChange = Change | { readonly kind: 'stat'; readonly path: string; readonly executable: boolean }
+
+export type ApplyStep = OverlayChange | { readonly kind: 'move-from-upper'; readonly path: string }
 
 type LowerAt = TreeEntry | undefined
 
@@ -34,12 +36,14 @@ const lowerView = (upper: readonly UpperEntry[], lower: Tree): ((path: string) =
 const replacing = (existing: LowerAt, change: Change & { readonly path: string }): Change[] =>
   existing === undefined ? [change] : [{ kind: 'delete', path: change.path }, change]
 
-const leafChanges = (entry: Exclude<UpperEntry, { readonly kind: 'directory' }>, existing: LowerAt): Change[] => {
+const leafChanges = (entry: Exclude<UpperEntry, { readonly kind: 'directory' }>, existing: LowerAt): OverlayChange[] => {
   switch (entry.kind) {
     case 'whiteout':
       return existing === undefined ? [] : [{ kind: 'delete', path: entry.path }]
     case 'file':
-      if (existing?.kind === 'file' && existing.executable === entry.executable && sameBytes(existing.content, entry.content)) return []
+      if (existing?.kind === 'file' && sameBytes(existing.content, entry.content)) {
+        return existing.executable === entry.executable ? [] : [{ kind: 'stat', path: entry.path, executable: entry.executable }]
+      }
       return replacing(existing?.kind === 'file' ? undefined : existing, {
         kind: 'write',
         path: entry.path,
@@ -56,9 +60,9 @@ const directoryIsNew = (entry: { readonly opaque: boolean }, existing: LowerAt):
 
 const sortedByPath = (upper: readonly UpperEntry[]): UpperEntry[] => [...upper].sort((a, b) => comparePaths(a.path, b.path))
 
-export const changesFromUpper = (upper: readonly UpperEntry[], lower: Tree): Change[] => {
+export const changesFromUpper = (upper: readonly UpperEntry[], lower: Tree): OverlayChange[] => {
   const lowerAt = lowerView(upper, lower)
-  return sortedByPath(upper).flatMap((entry): Change[] => {
+  return sortedByPath(upper).flatMap((entry): OverlayChange[] => {
     const existing = lowerAt(entry.path)
     if (entry.kind !== 'directory') return leafChanges(entry, existing)
     return directoryIsNew(entry, existing) ? replacing(existing, { kind: 'mkdir', path: entry.path }) : []
