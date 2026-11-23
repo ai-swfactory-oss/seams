@@ -5,18 +5,27 @@ import { createMemoryHttp, UnmatchedHttpRequestError } from '../src/memory/index
 
 const text = (value: string): Uint8Array => new TextEncoder().encode(value)
 
-const get: HttpRequest = { method: 'GET', url: 'https://api.example/items', headers: [['authorization', 'token REF']] }
+const LIMIT = 5_000
+
+const get: HttpRequest = {
+  method: 'GET',
+  url: 'https://api.example/items',
+  headers: [['authorization', 'token REF']],
+  body: new Uint8Array(),
+  timeLimitMs: LIMIT,
+}
 const post: HttpRequest = {
   method: 'POST',
   url: 'https://api.example/items',
   headers: [['content-type', 'application/json']],
   body: text('{"a":1}'),
+  timeLimitMs: LIMIT,
 }
 
 const STATE: HttpState = {
   exchanges: [
     {
-      request: { method: 'GET', url: 'https://api.example/items', headers: [['authorization', 'token REF']] },
+      request: { method: 'GET', url: 'https://api.example/items', headers: [['authorization', 'token REF']], body: '', timeLimitMs: LIMIT },
       outcome: { kind: 'response', status: 200, headers: [['content-type', 'application/json']], body: 'W10=' },
     },
     {
@@ -25,6 +34,7 @@ const STATE: HttpState = {
         url: 'https://api.example/items',
         headers: [['content-type', 'application/json']],
         body: 'eyJhIjoxfQ==',
+        timeLimitMs: LIMIT,
       },
       outcome: { kind: 'response', status: 422, headers: [], body: '' },
     },
@@ -43,10 +53,11 @@ describe('the memory http adapter', () => {
     ])
   })
 
-  it('ignores the time limit when it matches, since it is never sent', async () => {
-    const outcome = await createMemoryHttp(STATE).send({ ...get, timeLimitMs: 5_000 })
+  it('replays an exchange only to a request with the same time limit, and consumes nothing otherwise', async () => {
+    const http = createMemoryHttp(STATE)
 
-    expect(outcome.kind).toBe('response')
+    await expect(http.send({ ...get, timeLimitMs: LIMIT + 1 })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
+    expect(http.state()).toEqual(STATE)
   })
 
   it('throws the named error for a request out of order, and consumes nothing', async () => {
@@ -62,17 +73,18 @@ describe('the memory http adapter', () => {
     await expect(http.send({ ...get, headers: [['authorization', 'token OTHER']] })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
   })
 
-  it('throws the named error for a body or a method that differs', async () => {
+  it('replays an exchange only to a request with the same body, and throws the named error for a method that differs', async () => {
     const http = createMemoryHttp({ exchanges: STATE.exchanges.slice(1) })
 
     await expect(http.send({ ...post, body: text('{"a":2}') })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
     await expect(http.send({ ...post, method: 'PUT' })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
   })
 
-  it('tells an absent body from an empty one', async () => {
+  it('records an empty body as no body, and replays it only to a request whose body is empty', async () => {
     const http = createMemoryHttp(STATE)
 
-    await expect(http.send({ ...get, body: new Uint8Array() })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
+    await expect(http.send({ ...get, body: text('x') })).rejects.toBeInstanceOf(UnmatchedHttpRequestError)
+    expect([STATE.exchanges[0]?.request.body, (await http.send(get)).kind]).toEqual(['', 'response'])
   })
 
   it('throws the named error once no exchange is left', async () => {

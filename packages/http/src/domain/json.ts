@@ -15,16 +15,16 @@ export const requestToJson = (request: HttpRequest): HttpRequestJson => ({
   method: request.method,
   url: request.url,
   headers: request.headers,
-  ...(request.body === undefined ? {} : { body: encodeBase64(request.body) }),
-  ...(request.timeLimitMs === undefined ? {} : { timeLimitMs: request.timeLimitMs }),
+  body: encodeBase64(request.body),
+  timeLimitMs: request.timeLimitMs,
 })
 
 export const requestFromJson = (json: HttpRequestJson): HttpRequest => ({
   method: json.method,
   url: json.url,
   headers: json.headers,
-  ...(json.body === undefined ? {} : { body: decodeBase64(json.body) }),
-  ...(json.timeLimitMs === undefined ? {} : { timeLimitMs: json.timeLimitMs }),
+  body: decodeBase64(json.body),
+  timeLimitMs: json.timeLimitMs,
 })
 
 export const outcomeToJson = (outcome: HttpOutcome): HttpOutcomeJson =>
@@ -33,7 +33,7 @@ export const outcomeToJson = (outcome: HttpOutcome): HttpOutcomeJson =>
 export const outcomeFromJson = (json: HttpOutcomeJson): HttpOutcome =>
   json.kind === 'failure' ? json : { ...json, body: decodeBase64(json.body) }
 
-const REASONS: readonly HttpFailureReason[] = ['dns', 'refused', 'reset', 'tls', 'timed-out', 'other']
+const REASONS: readonly HttpFailureReason[] = ['dns', 'refused', 'reset', 'tls', 'timed-out', 'other', 'missing-body', 'missing-time-limit']
 
 const reasonOf = (value: unknown): HttpFailureReason | undefined => REASONS.find(reason => reason === value)
 
@@ -71,17 +71,10 @@ const requestJsonOf = (value: unknown): HttpRequestJson | undefined => {
   const { method, url } = value
   const headers = headersOf(value.headers)
   if (typeof method !== 'string' || typeof url !== 'string' || headers === undefined) return undefined
-  const body = 'body' in value ? value.body : undefined
-  const timeLimitMs = 'timeLimitMs' in value ? value.timeLimitMs : undefined
-  if (body !== undefined && !isBase64(body)) return undefined
-  if (timeLimitMs !== undefined && !isTimeLimit(timeLimitMs)) return undefined
-  return {
-    method,
-    url,
-    headers,
-    ...(body === undefined ? {} : { body }),
-    ...(timeLimitMs === undefined ? {} : { timeLimitMs }),
-  }
+  if (!('body' in value) || !('timeLimitMs' in value)) return undefined
+  const { body, timeLimitMs } = value
+  if (!isBase64(body) || !isTimeLimit(timeLimitMs)) return undefined
+  return { method, url, headers, body, timeLimitMs }
 }
 
 const outcomeJsonOf = (value: unknown): HttpOutcomeJson | undefined => {

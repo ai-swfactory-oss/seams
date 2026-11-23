@@ -4,9 +4,8 @@ export interface HttpRequest {
   readonly method: string
   readonly url: string
   readonly headers: HttpHeaders
-  readonly body?: Uint8Array
-
-  readonly timeLimitMs?: number
+  readonly body: Uint8Array
+  readonly timeLimitMs: number
 }
 
 export interface HttpResponse {
@@ -16,7 +15,7 @@ export interface HttpResponse {
   readonly body: Uint8Array
 }
 
-export type HttpFailureReason = 'dns' | 'refused' | 'reset' | 'tls' | 'timed-out' | 'other'
+export type HttpFailureReason = 'dns' | 'refused' | 'reset' | 'tls' | 'timed-out' | 'other' | 'missing-body' | 'missing-time-limit'
 
 export interface HttpFailure {
   readonly kind: 'failure'
@@ -34,8 +33,8 @@ export interface HttpRequestJson {
   readonly method: string
   readonly url: string
   readonly headers: HttpHeaders
-  readonly body?: string
-  readonly timeLimitMs?: number
+  readonly body: string
+  readonly timeLimitMs: number
 }
 
 export type HttpOutcomeJson = (Omit<HttpResponse, 'body'> & { readonly body: string }) | HttpFailure

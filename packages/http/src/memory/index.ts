@@ -1,5 +1,6 @@
 import { outcomeFromJson, requestToJson } from '../domain/json'
 import { sameRequest } from '../domain/match'
+import { missingRequestFieldOf } from '../domain/request'
 import type { Http, HttpOutcome, HttpRequest, HttpRequestJson, HttpState } from '../types'
 
 export class UnmatchedHttpRequestError extends Error {
@@ -23,6 +24,8 @@ export interface MemoryHttp extends Http {
 export const createMemoryHttp = (initial: HttpState): MemoryHttp => {
   let exchanges = structuredClone(initial.exchanges)
   const send = (request: HttpRequest): Promise<HttpOutcome> => {
+    const missing = missingRequestFieldOf(request)
+    if (missing !== undefined) return Promise.resolve(missing)
     const sent = requestToJson(request)
     const [next, ...rest] = exchanges
     if (next === undefined || !sameRequest(sent, next.request)) {

@@ -8,7 +8,7 @@ Ports:
 
 - `@ai-swfactory-oss/clock`: the clock port, `now()` and `wait(duration)`, with a memory adapter that moves only on waits.
 - `@ai-swfactory-oss/files`: the files port, a rooted snapshot in and a list of changes out, with a memory adapter that holds one Tree.
-- `@ai-swfactory-oss/http`: the http port, `send(request)` returning a response or a typed network failure, with a memory adapter that replays ordered exchanges.
+- `@ai-swfactory-oss/http`: the http port, `send(request)` returning a response or a typed network failure, where every request carries a body (empty means none) and a time limit, with a memory adapter that replays ordered exchanges.
 - `@ai-swfactory-oss/process`: the process port, an invocation in and an execution out, with a memory adapter that answers from a lookup table.
 - `@ai-swfactory-oss/random`: the random port, `bytes(n)` only, with a seeded memory adapter.
 - `@ai-swfactory-oss/terminal`: the terminal port, `write`, `readLine` and `readAll` with a broken pipe as data, with a memory adapter and a Node adapter over the process's standard streams.
