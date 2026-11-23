@@ -18,43 +18,49 @@ const NATIVE = {
   env: { GIT_EXEC_PATH: 'git/libexec/git-core', GIT_TEMPLATE_DIR: 'git/share/git-core/templates' },
 }
 
-const ACCEPTED: readonly (readonly [string, Location])[] = [
-  ['a native target table', NATIVE],
-  ['a native target table with an unscoped package', { anchor: ANCHOR, targets: { 'win32-x64': 'git-win32-x64/git.exe' }, env: {} }],
-  ['a module entry', { anchor: ANCHOR, module: '@ai-swfactory-oss/yamllint/dist/cli.js' }],
-  ['an unscoped module entry', { anchor: ANCHOR, module: 'typescript/bin/tsc' }],
-  ['a path inside the adapter root', 'bin/git'],
-  ['a file at the adapter root', 'run.sh'],
+const ACCEPTED: readonly { readonly name: string; readonly location: Location }[] = [
+  { name: 'a native target table', location: NATIVE },
+  {
+    name: 'a native target table with an unscoped package',
+    location: { anchor: ANCHOR, targets: { 'win32-x64': 'git-win32-x64/git.exe' }, env: {} },
+  },
+  { name: 'a module entry', location: { anchor: ANCHOR, module: '@ai-swfactory-oss/yamllint/dist/cli.js' } },
+  { name: 'an unscoped module entry', location: { anchor: ANCHOR, module: 'typescript/bin/tsc' } },
+  { name: 'a path inside the adapter root', location: 'bin/git' },
+  { name: 'a file at the adapter root', location: 'run.sh' },
 ]
 
 const WITHOUT_ENV = { anchor: NATIVE.anchor, targets: NATIVE.targets }
 
-const REFUSED: readonly (readonly [string, unknown])[] = [
-  ['an absolute path', '/usr/bin/git'],
-  ['a path that leaves the root', '../bin/git'],
-  ['a path through a parent folder', 'bin/../../git'],
-  ['a path with an empty segment', 'bin//git'],
-  ['a path with a backslash', 'bin\\git'],
-  ['the empty path', ''],
-  ['the root itself', '.'],
-  ['a number', 7],
-  ['null', null],
-  ['an array', ['bin/git']],
-  ['an object of no form', { path: 'bin/git' }],
-  ['a native target table without its env map', WITHOUT_ENV],
-  ['a native target table whose env map is not a map', { ...NATIVE, env: ['GIT_EXEC_PATH'] }],
-  ['a native target table whose env path leaves the tree', { ...NATIVE, env: { GIT_EXEC_PATH: '../libexec' } }],
-  ['a native target table whose env names no variable', { ...NATIVE, env: { 'GIT EXEC': 'libexec' } }],
-  ['a native target table whose target names no subpath', { ...NATIVE, targets: { 'linux-x64': '@ai-swfactory-oss/git-linux-x64' } }],
-  ['a native target table whose target is absolute', { ...NATIVE, targets: { 'linux-x64': '/usr/bin/git' } }],
-  ['a native target table that also names a module', { ...NATIVE, module: 'git/bin/git' }],
-  ['a native target table without an anchor', { targets: NATIVE.targets, env: NATIVE.env }],
-  ['a native target table whose anchor is not a URL', { ...NATIVE, anchor: '/app/index.js' }],
-  ['a module entry without an anchor', { module: 'typescript/bin/tsc' }],
-  ['a module entry that names only a package', { anchor: ANCHOR, module: 'typescript' }],
-  ['a module entry that names only a scoped package', { anchor: ANCHOR, module: '@ai-swfactory-oss/yamllint' }],
-  ['a module entry that is a relative path', { anchor: ANCHOR, module: './bin/tsc' }],
-  ['a module entry that is not a string', { anchor: ANCHOR, module: 3 }],
+const REFUSED: readonly { readonly name: string; readonly location: unknown }[] = [
+  { name: 'an absolute path', location: '/usr/bin/git' },
+  { name: 'a path that leaves the root', location: '../bin/git' },
+  { name: 'a path through a parent folder', location: 'bin/../../git' },
+  { name: 'a path with an empty segment', location: 'bin//git' },
+  { name: 'a path with a backslash', location: 'bin\\git' },
+  { name: 'the empty path', location: '' },
+  { name: 'the root itself', location: '.' },
+  { name: 'a number', location: 7 },
+  { name: 'null', location: null },
+  { name: 'an array', location: ['bin/git'] },
+  { name: 'an object of no form', location: { path: 'bin/git' } },
+  { name: 'a native target table without its env map', location: WITHOUT_ENV },
+  { name: 'a native target table whose env map is not a map', location: { ...NATIVE, env: ['GIT_EXEC_PATH'] } },
+  { name: 'a native target table whose env path leaves the tree', location: { ...NATIVE, env: { GIT_EXEC_PATH: '../libexec' } } },
+  { name: 'a native target table whose env names no variable', location: { ...NATIVE, env: { 'GIT EXEC': 'libexec' } } },
+  {
+    name: 'a native target table whose target names no subpath',
+    location: { ...NATIVE, targets: { 'linux-x64': '@ai-swfactory-oss/git-linux-x64' } },
+  },
+  { name: 'a native target table whose target is absolute', location: { ...NATIVE, targets: { 'linux-x64': '/usr/bin/git' } } },
+  { name: 'a native target table that also names a module', location: { ...NATIVE, module: 'git/bin/git' } },
+  { name: 'a native target table without an anchor', location: { targets: NATIVE.targets, env: NATIVE.env } },
+  { name: 'a native target table whose anchor is not a URL', location: { ...NATIVE, anchor: '/app/index.js' } },
+  { name: 'a module entry without an anchor', location: { module: 'typescript/bin/tsc' } },
+  { name: 'a module entry that names only a package', location: { anchor: ANCHOR, module: 'typescript' } },
+  { name: 'a module entry that names only a scoped package', location: { anchor: ANCHOR, module: '@ai-swfactory-oss/yamllint' } },
+  { name: 'a module entry that is a relative path', location: { anchor: ANCHOR, module: './bin/tsc' } },
+  { name: 'a module entry that is not a string', location: { anchor: ANCHOR, module: 3 } },
 ]
 
 const TARGET_KEYS = ['linux', 'linux-amd64', 'Linux-x64', 'linux-x64-gnu', 'linux-x64-glibc-2', 'macos-arm64', 'linux_x64', '']
@@ -63,15 +69,15 @@ const TARGETS_ACCEPTED = ['linux-x64', 'linux-arm64', 'darwin-arm64', 'darwin-x6
 
 describe('a location takes one of three forms', () => {
   it.each(ACCEPTED)(
-    "a location that is a native target table, a module entry, or a path inside the adapter's root is accepted: %s",
-    (_, location) => {
+    "a location that is a native target table, a module entry, or a path inside the adapter's root is accepted: $name",
+    ({ location }) => {
       expect(checkLocation(location)).toStrictEqual({ kind: 'location', location })
     },
   )
 
   it.each(REFUSED)(
-    'a location that matches none of the three forms is refused as data, and the refusal names the location: %s',
-    (_, location) => {
+    'a location that matches none of the three forms is refused as data, and the refusal names the location: $name',
+    ({ location }) => {
       expect(checkLocation(location)).toStrictEqual({
         kind: 'unknown-location',
         location: typeof location === 'object' && location !== null ? JSON.stringify(location) : String(location),
