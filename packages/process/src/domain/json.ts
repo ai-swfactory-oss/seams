@@ -15,11 +15,13 @@ import type {
   ExecutionJson,
   Invocation,
   InvocationJson,
+  Location,
   NotStartedReason,
   ProcessEntryJson,
   ProcessState,
   ProgramIdentity,
 } from '../types'
+import { checkLocation } from './location'
 
 export const invocationToJson = (invocation: Invocation): InvocationJson => ({
   program: invocation.program,
@@ -31,14 +33,16 @@ export const invocationToJson = (invocation: Invocation): InvocationJson => ({
   ...(invocation.timeLimitMs === undefined ? {} : { timeLimitMs: invocation.timeLimitMs }),
 })
 
-export const invocationFromJson = (json: InvocationJson, location: string): CheckedInvocation => {
+export const invocationFromJson = (json: InvocationJson, location: Location): CheckedInvocation => {
+  const checked = checkLocation(location)
+  if (checked.kind !== 'location') return checked
   const input = treeFromJson(json.input)
   if (input.kind !== 'tree') return input
   return {
     kind: 'invocation',
     invocation: {
       program: json.program,
-      location,
+      location: checked.location,
       args: json.args,
       cwd: json.cwd,
       env: json.env,

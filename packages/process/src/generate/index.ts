@@ -1,18 +1,18 @@
 import type { DuplicatePath, NonEmptyDirectory } from '@ai-swfactory-oss/files'
 
 import { executionToJson, invocationFromJson } from '../domain/json'
-import type { Invocation, InvocationJson, Process, ProcessEntryJson, ProcessState } from '../types'
+import type { Invocation, InvocationJson, Location, LocationRefusal, Process, ProcessEntryJson, ProcessState } from '../types'
 
 export interface ProcessRun {
   readonly invocation: InvocationJson
-  readonly location: string
+  readonly location: Location
 }
 
 export interface ProcessGeneration {
   readonly runs: readonly ProcessRun[]
 }
 
-export type RefusedRun = (NonEmptyDirectory | DuplicatePath) & { readonly run: number }
+export type RefusedRun = (NonEmptyDirectory | DuplicatePath | LocationRefusal) & { readonly run: number }
 
 export type GeneratedProcessEntries = { readonly kind: 'entries'; readonly state: ProcessState } | RefusedRun
 

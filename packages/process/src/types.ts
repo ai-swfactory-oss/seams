@@ -5,9 +5,29 @@ export interface ProgramIdentity {
   readonly version: string
 }
 
+export interface NativeTargetsLocation {
+  readonly anchor: string
+  readonly targets: Readonly<Record<string, string>>
+  readonly env: Readonly<Record<string, string>>
+}
+
+export interface ModuleEntryLocation {
+  readonly anchor: string
+  readonly module: string
+}
+
+export type Location = NativeTargetsLocation | ModuleEntryLocation | string
+
+export type CheckedLocation =
+  | { readonly kind: 'location'; readonly location: Location }
+  | { readonly kind: 'unknown-location'; readonly location: string }
+  | { readonly kind: 'unknown-target'; readonly target: string }
+
+export type LocationRefusal = Exclude<CheckedLocation, { readonly kind: 'location' }>
+
 export interface Invocation {
   readonly program: ProgramIdentity
-  readonly location: string
+  readonly location: Location
   readonly args: readonly string[]
   readonly cwd: string
   readonly env: Readonly<Record<string, string>>
@@ -50,7 +70,11 @@ export interface InvocationJson {
   readonly timeLimitMs?: number
 }
 
-export type CheckedInvocation = { readonly kind: 'invocation'; readonly invocation: Invocation } | NonEmptyDirectory | DuplicatePath
+export type CheckedInvocation =
+  | { readonly kind: 'invocation'; readonly invocation: Invocation }
+  | NonEmptyDirectory
+  | DuplicatePath
+  | LocationRefusal
 
 export type ExecutionJson =
   | (Ending & { readonly stdout: string; readonly stderr: string; readonly changes: readonly ChangeJson[] })

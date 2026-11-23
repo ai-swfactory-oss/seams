@@ -4,7 +4,14 @@ export const text = (value: string): Uint8Array => new TextEncoder().encode(valu
 
 export const LINT: Invocation = {
   program: { package: '@ai-swfactory-oss/yamllint', version: '1.37.1' },
-  location: '/opt/bundles/yamllint/bin/yamllint',
+  location: {
+    anchor: 'file:///app/node_modules/@ai-swfactory-oss/yamllint/dist/index.js',
+    targets: {
+      'linux-x64-glibc': '@ai-swfactory-oss/yamllint-linux-x64-glibc/bin/yamllint',
+      'darwin-arm64': '@ai-swfactory-oss/yamllint-darwin-arm64/bin/yamllint',
+    },
+    env: {},
+  },
   args: ['-f', 'parsable', 'a.yaml'],
   cwd: '',
   env: { HOME: '/nonexistent', LANG: 'C.UTF-8' },
