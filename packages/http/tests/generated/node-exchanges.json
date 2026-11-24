@@ -1,0 +1,239 @@
+{
+  "cases": [
+    {
+      "name": "a request sent exactly as given",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "POST",
+              "url": "http://127.0.0.1:PORT/items?q=1",
+              "headers": [
+                ["content-type", "application/json"],
+                ["x-trace", "abc"]
+              ],
+              "body": "eyJhIjoxfQ==",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "response",
+              "status": 204,
+              "headers": [
+                ["connection", "close"],
+                ["content-length", "0"]
+              ],
+              "body": ""
+            }
+          }
+        ]
+      },
+      "received": [
+        {
+          "method": "POST",
+          "url": "/items?q=1",
+          "headers": [
+            ["host", "127.0.0.1:PORT"],
+            ["connection", "keep-alive"],
+            ["content-type", "application/json"],
+            ["x-trace", "abc"],
+            ["accept", "*/*"],
+            ["accept-language", "*"],
+            ["sec-fetch-mode", "cors"],
+            ["user-agent", "node"],
+            ["accept-encoding", "gzip, deflate"],
+            ["content-length", "7"]
+          ],
+          "body": "eyJhIjoxfQ=="
+        }
+      ]
+    },
+    {
+      "name": "a response answered as received",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:PORT/answer",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "response",
+              "status": 201,
+              "headers": [
+                ["connection", "close"],
+                ["content-length", "5"],
+                ["content-type", "text/plain"],
+                ["x-answer", "42"]
+              ],
+              "body": "aGVsbG8="
+            }
+          }
+        ]
+      },
+      "received": [
+        {
+          "method": "GET",
+          "url": "/answer",
+          "headers": [
+            ["host", "127.0.0.1:PORT"],
+            ["connection", "keep-alive"],
+            ["accept", "*/*"],
+            ["accept-language", "*"],
+            ["sec-fetch-mode", "cors"],
+            ["user-agent", "node"],
+            ["accept-encoding", "gzip, deflate"]
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "a redirect answered as that response",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:PORT/from",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "response",
+              "status": 302,
+              "headers": [
+                ["connection", "close"],
+                ["content-length", "0"],
+                ["location", "/elsewhere"]
+              ],
+              "body": ""
+            }
+          }
+        ]
+      },
+      "received": [
+        {
+          "method": "GET",
+          "url": "/from",
+          "headers": [
+            ["host", "127.0.0.1:PORT"],
+            ["connection", "keep-alive"],
+            ["accept", "*/*"],
+            ["accept-language", "*"],
+            ["sec-fetch-mode", "cors"],
+            ["user-agent", "node"],
+            ["accept-encoding", "gzip, deflate"]
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "a request whose tls handshake fails",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "https://127.0.0.1:PORT",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "failure",
+              "reason": "tls",
+              "message": "fetch failed: 00DD2B5690750000:error:0A0000C6:SSL routines:tls_get_more_records:packet length too long:../deps/openssl/openssl/ssl/record/methods/tls_common.c:662:\n"
+            }
+          }
+        ]
+      },
+      "received": []
+    },
+    {
+      "name": "a request that outlives its time limit",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:PORT/slow",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 200
+            },
+            "outcome": {
+              "kind": "failure",
+              "reason": "timed-out",
+              "message": "The operation was aborted due to timeout"
+            }
+          }
+        ]
+      },
+      "received": [
+        {
+          "method": "GET",
+          "url": "/slow",
+          "headers": [
+            ["host", "127.0.0.1:PORT"],
+            ["connection", "keep-alive"],
+            ["accept", "*/*"],
+            ["accept-language", "*"],
+            ["sec-fetch-mode", "cors"],
+            ["user-agent", "node"],
+            ["accept-encoding", "gzip, deflate"]
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "a request to a refused port",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:PORT/",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "failure",
+              "reason": "refused",
+              "message": "fetch failed: connect ECONNREFUSED 127.0.0.1:PORT"
+            }
+          }
+        ]
+      },
+      "received": []
+    },
+    {
+      "name": "a request to an unresolvable host",
+      "state": {
+        "exchanges": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://unresolvable.invalid/",
+              "headers": [],
+              "body": "",
+              "timeLimitMs": 5000
+            },
+            "outcome": {
+              "kind": "failure",
+              "reason": "dns",
+              "message": "fetch failed: getaddrinfo ENOTFOUND unresolvable.invalid"
+            }
+          }
+        ]
+      },
+      "received": []
+    }
+  ]
+}

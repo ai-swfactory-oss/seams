@@ -25,6 +25,11 @@
       "types": "./dist/memory/index.d.ts",
       "import": "./dist/memory/index.js"
     },
+    "./node": {
+      "source": "./src/node/index.ts",
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js"
+    },
     "./generate": {
       "source": "./src/generate/index.ts",
       "types": "./dist/generate/index.d.ts",

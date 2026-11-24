@@ -9,6 +9,13 @@
       "inputs": ["packages/terminal/src/**", "packages/terminal/tools/**"],
       "outputs": ["packages/terminal/tests/generated/broken-pipe.json"],
       "tool": "node"
+    },
+    "http-node-exchanges": {
+      "kind": "module",
+      "module": "packages/http/tools/generate-node-exchanges.mjs",
+      "inputs": ["packages/http/src/**", "packages/http/tools/**"],
+      "outputs": ["packages/http/tests/generated/node-exchanges.json"],
+      "tool": "node"
     }
   },
   "packages": {
