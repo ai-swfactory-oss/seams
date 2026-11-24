@@ -30,6 +30,11 @@
       "types": "./dist/generate/index.d.ts",
       "import": "./dist/generate/index.js"
     },
+    "./standard": {
+      "source": "./src/standard/index.ts",
+      "types": "./dist/standard/index.d.ts",
+      "import": "./dist/standard/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
