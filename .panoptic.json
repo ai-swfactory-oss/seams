@@ -53,6 +53,7 @@
     "@ai-swfactory-oss/terminal": { "kind": "port" },
     "@ai-swfactory-oss/logging": { "kind": "sdk" },
     "@ai-swfactory-oss/process": { "kind": "port" },
-    "@ai-swfactory-oss/content-store": { "kind": "sdk" }
+    "@ai-swfactory-oss/content-store": { "kind": "sdk" },
+    "@ai-swfactory-oss/archive": { "kind": "sdk" }
   }
 }

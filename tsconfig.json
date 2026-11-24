@@ -40,6 +40,9 @@
   "files": [],
   "references": [
     {
+      "path": "./packages/archive"
+    },
+    {
       "path": "./packages/bytes"
     },
     {

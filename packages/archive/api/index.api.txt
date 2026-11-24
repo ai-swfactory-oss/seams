@@ -1,0 +1,20 @@
+Extracted: type Extracted = { readonly kind: 'changes'; readonly changes: readonly Change[]; } | MalformedTar;
+GzipFailure: type GzipFailure = 'not-gzip' | 'bad-header' | 'truncated' | 'bad-deflate' | 'bad-crc' | 'bad-size';
+Inflated: type Inflated = { readonly kind: 'bytes'; readonly bytes: Uint8Array; } | MalformedGzip | TooLarge;
+ListedEntry: interface ListedEntry { readonly path: string; readonly kind: 'file' | 'symlink' | 'directory' | 'pipe'; readonly size: number; }
+Listing: type Listing = { readonly kind: 'entries'; readonly entries: readonly ListedEntry[]; } | MalformedTar | MalformedGzip | TooLarge | TooManyEntries;
+ListingLimits: interface ListingLimits { readonly maxBytes: number; readonly maxEntries: number; }
+MalformedGzip: interface MalformedGzip { readonly kind: 'malformed'; readonly reason: GzipFailure; }
+MalformedTar: interface MalformedTar { readonly kind: 'malformed'; readonly reason: TarFailure; readonly offset: number; }
+TarFailure: type TarFailure = 'truncated' | 'bad-checksum' | 'not-ustar' | 'bad-number' | 'bad-pax-record' | 'invalid-path' | 'unsupported-entry-type' | 'not-a-directory';
+TooLarge: interface TooLarge { readonly kind: 'too-large'; readonly limit: number; }
+TooManyEntries: interface TooManyEntries { readonly kind: 'too-many-entries'; readonly limit: number; }
+Unpacked: type Unpacked = { readonly kind: 'tree'; readonly tree: Tree; } | MalformedTar;
+deflateRaw: const deflateRaw: (bytes: Uint8Array) => Promise<Uint8Array>
+extractTar: const extractTar: (bytes: Uint8Array, at: string) => Extracted
+gunzip: const gunzip: (bytes: Uint8Array, limit?: number) => Promise<Inflated>
+gzip: const gzip: (bytes: Uint8Array) => Promise<Uint8Array>
+inflateRaw: const inflateRaw: (bytes: Uint8Array, limit?: number) => Promise<Inflated>
+listTgz: const listTgz: (bytes: Uint8Array, limits: ListingLimits) => Promise<Listing>
+packTar: const packTar: (tree: Tree) => Uint8Array
+unpackTar: const unpackTar: (bytes: Uint8Array) => Unpacked

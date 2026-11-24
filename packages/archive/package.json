@@ -1,0 +1,34 @@
+{
+  "name": "@ai-swfactory-oss/archive",
+  "description": "A pure tar, gzip and raw deflate library over bytes and files Trees: packs a Tree into tar bytes and unpacks it back, gzips and gunzips, raw-deflates and inflates, and lists a .tgz within stated limits, with no port.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-swfactory-oss/seams.git",
+    "directory": "packages/archive"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "tag": "latest"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/**/*.tgz"
+  ],
+  "dependencies": {
+    "@ai-swfactory-oss/bytes": "workspace:*",
+    "@ai-swfactory-oss/files": "workspace:*"
+  }
+}
