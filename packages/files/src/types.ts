@@ -53,12 +53,24 @@ export type Change =
   | { readonly kind: 'mkdir'; readonly path: string }
   | { readonly kind: 'pipe'; readonly path: string }
 
-export type ChangeFailure = 'invalid-path' | 'not-found' | 'not-a-directory' | 'is-a-directory' | 'exists' | 'permission-denied'
+export type KnownChangeFailure =
+  | 'invalid-path'
+  | 'not-found'
+  | 'not-a-directory'
+  | 'is-a-directory'
+  | 'exists'
+  | 'permission-denied'
+  | 'unsupported'
 
-export type ChangeOutcome =
-  | { readonly kind: 'applied' }
-  | { readonly kind: 'failed'; readonly reason: ChangeFailure }
-  | { readonly kind: 'skipped' }
+export type ChangeFailure = KnownChangeFailure | 'unrecognised'
+
+export type FailedChange =
+  | { readonly kind: 'failed'; readonly reason: KnownChangeFailure }
+  | { readonly kind: 'failed'; readonly reason: 'unrecognised'; readonly code: string }
+
+export type ChangeOutcome = { readonly kind: 'applied' } | FailedChange | { readonly kind: 'skipped' }
+
+export type Snapshot = { readonly kind: 'snapshot'; readonly tree: Tree } | FailedChange
 
 export type WriteLineOutcome =
   | { readonly kind: 'written' }
@@ -66,7 +78,7 @@ export type WriteLineOutcome =
   | { readonly kind: 'failed'; readonly reason: 'not-a-pipe' }
 
 export interface Files {
-  readonly snapshot: (selection: Selection) => Promise<Tree>
+  readonly snapshot: (selection: Selection) => Promise<Snapshot>
   readonly apply: (changes: readonly Change[]) => Promise<readonly ChangeOutcome[]>
   readonly readLines: (path: string, options: { readonly signal: AbortSignal }) => AsyncIterable<string>
   readonly writeLine: (path: string, line: string) => Promise<WriteLineOutcome>

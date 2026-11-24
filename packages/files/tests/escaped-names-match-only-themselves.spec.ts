@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { globMatcher } from '../src/domain/glob'
 import { escapeGlob, type TreeEntryJson } from '../src/index'
-import { memoryFilesOver } from './memory-files'
+import { entriesOf, memoryFilesOver } from './memory-files'
 
 const NAMES = ['star*.txt', 'what?.txt', '{a,b}.txt', 'a.txt', 'b.txt', '[x].txt', 'back\\slash.txt', 'back\\', 'dir*/**', '**']
 
@@ -31,8 +31,8 @@ describe('escapeGlob', () => {
       entries: NAMES.filter(name => !name.includes('/')).map((path): TreeEntryJson => ({ path, kind: 'file', content, executable: false })),
     })
 
-    const tree = await files.snapshot({ root: '', include: ['{a,b}.txt', 'back\\slash.txt'].map(escapeGlob), exclude: [] })
+    const entries = entriesOf(await files.snapshot({ root: '', include: ['{a,b}.txt', 'back\\slash.txt'].map(escapeGlob), exclude: [] }))
 
-    expect(tree.entries.map(entry => entry.path)).toEqual(['back\\slash.txt', '{a,b}.txt'])
+    expect(entries.map(entry => entry.path)).toEqual(['back\\slash.txt', '{a,b}.txt'])
   })
 })

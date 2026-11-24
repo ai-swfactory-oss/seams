@@ -27,6 +27,20 @@ A `{kind: 'pipe', path}` change makes a named pipe, and fails with `exists` on a
 - `readLines(path, {signal})` yields each line written to the pipe, in order and without its newline, until `signal` aborts.
 - `writeLine(path, line)` never blocks. It resolves `{kind: 'written'}` when a reader holds the pipe, and `{kind: 'no-reader'}` at once when none does; that line is dropped. On a path that is not a named pipe it resolves `{kind: 'failed', reason: 'not-a-pipe'}`.
 
+## The node adapter
+
+`createNodeFiles({ root })`, from `@ai-swfactory-oss/files/node`, is the files port over the disk under the absolute folder `root`. Every path the port takes is relative to it.
+
+- **Snapshot:** the files, symlinks and empty directories under the selection's root that its include and exclude patterns select, sorted by path. Each file carries its content and whether its owner may execute it. A symlink is listed with its target and never followed, so a root that is a symlink selects nothing. The snapshot is answered as `{ kind: 'snapshot', tree }`, or, when the disk cannot be read, as failed with its reason in the same form a failed change takes.
+- **Apply:** each change in order, answered by one outcome: applied, failed with its reason, or skipped once an earlier change has failed. A failure the disk reports with a code the port has no reason for is answered as `unrecognised`, carrying that code.
+  - A write replaces a file or symlink at its path, sets the mode to `0755` or `0644`, and creates missing parent directories.
+  - A path under a file or a symlink fails with `not-a-directory`, so no change reaches outside `root` through a symlink.
+  - A delete removes a directory with everything under it, and a move renames in one step.
+  - A `pipe` change fails with `unsupported`: Node has no call that creates a named pipe, and ai-swfactory-oss/seams#131 moves creating one to the process port.
+- **Named pipes:** `readLines` opens a named pipe on the disk for reading and writing, so it never waits for a writer and never ends until its signal aborts. `writeLine` opens the pipe for writing without blocking and answers `no-reader` when no reader holds it.
+
+The memory adapter gives the same results: `tests/generated/node-results.json` records real runs of the node adapter, and a spec replays each of them over the memory adapter. The `pipe` change is the one result it names as different.
+
 ## Licence
 
 MIT

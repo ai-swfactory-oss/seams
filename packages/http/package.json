@@ -1,7 +1,6 @@
 {
   "name": "@ai-swfactory-oss/http",
   "description": "The http port: send(request) returns a response or a typed network failure. Its memory adapter replays ordered exchanges and reports the leftovers, and its generator records exchanges from a real adapter.",
-  "version": "2.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -24,6 +23,11 @@
       "source": "./src/memory/index.ts",
       "types": "./dist/memory/index.d.ts",
       "import": "./dist/memory/index.js"
+    },
+    "./node": {
+      "source": "./src/node/index.ts",
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js"
     },
     "./generate": {
       "source": "./src/generate/index.ts",

@@ -1,3 +1,0 @@
-PackageDescription: interface PackageDescription { readonly name: string; }
-SeamsRetry: interface SeamsRetry { readonly describe: () => PackageDescription; }
-createSeamsRetry: const createSeamsRetry: () => SeamsRetry

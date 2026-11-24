@@ -1,0 +1,3565 @@
+{
+  "cases": [
+    {
+      "name": "snapshot of every entry",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": []
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "snapshot under a root by include and exclude patterns",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "src",
+          "include": ["**/*.ts"],
+          "exclude": ["*.spec.ts"]
+        },
+        "changes": []
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [],
+        "after": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "snapshot of a root that is a symlink to a directory",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "linked-dir",
+          "include": [],
+          "exclude": []
+        },
+        "changes": []
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": []
+        },
+        "outcomes": [],
+        "after": {
+          "entries": []
+        }
+      }
+    },
+    {
+      "name": "every kind of change applied",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "new/nested/c.ts",
+            "content": "Ywo=",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "src/a.ts",
+            "content": "ZXhwb3J0IGNvbnN0IGEgPSAzCg==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "bin/tool",
+            "content": "IyEvYmluL3NoCg==",
+            "executable": true
+          },
+          {
+            "kind": "write",
+            "path": "bin/run",
+            "content": "bm8gbG9uZ2VyIGV4ZWN1dGFibGUK",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "link",
+            "content": "YSBmaWxlIHdoZXJlIHRoZSBzeW1saW5rIHdhcwo=",
+            "executable": false
+          },
+          {
+            "kind": "symlink",
+            "path": "links/to-b",
+            "target": "../src/deep/b.ts"
+          },
+          {
+            "kind": "mkdir",
+            "path": "made/here"
+          },
+          {
+            "kind": "mkdir",
+            "path": "src"
+          },
+          {
+            "kind": "delete",
+            "path": "src/a.spec.ts"
+          },
+          {
+            "kind": "delete",
+            "path": "empty"
+          },
+          {
+            "kind": "move",
+            "from": "src/deep",
+            "to": "lib/moved"
+          },
+          {
+            "kind": "move",
+            "from": "new/nested/c.ts",
+            "to": "c.ts"
+          },
+          {
+            "kind": "delete",
+            "path": "linked-dir"
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          },
+          {
+            "kind": "applied"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "bm8gbG9uZ2VyIGV4ZWN1dGFibGUK",
+              "executable": false
+            },
+            {
+              "path": "bin/tool",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCg==",
+              "executable": true
+            },
+            {
+              "path": "c.ts",
+              "kind": "file",
+              "content": "Ywo=",
+              "executable": false
+            },
+            {
+              "path": "lib/moved/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "link",
+              "kind": "file",
+              "content": "YSBmaWxlIHdoZXJlIHRoZSBzeW1saW5rIHdhcwo=",
+              "executable": false
+            },
+            {
+              "path": "links/to-b",
+              "kind": "symlink",
+              "target": "../src/deep/b.ts"
+            },
+            {
+              "path": "made/here",
+              "kind": "directory"
+            },
+            {
+              "path": "new/nested",
+              "kind": "directory"
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAzCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "an absolute path fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "/abs",
+            "content": "eA==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "invalid-path"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a path that leaves the root fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "../out",
+            "content": "eA==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "invalid-path"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "the root itself fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "delete",
+            "path": ""
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "invalid-path"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a delete of a missing path fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "delete",
+            "path": "missing"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "not-found"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a symlink over an existing file fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "symlink",
+            "path": "src/a.ts",
+            "target": "x"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "exists"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a mkdir over an existing file fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "mkdir",
+            "path": "bin/run"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "exists"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a write over a directory fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "src",
+            "content": "eA==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "is-a-directory"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a write under a file fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "src/a.ts/x",
+            "content": "eA==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "not-a-directory"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a write under a symlink to a directory fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "write",
+            "path": "linked-dir/x.ts",
+            "content": "eA==",
+            "executable": false
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "not-a-directory"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a move into itself fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "move",
+            "from": "src",
+            "to": "src/inner"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "invalid-path"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a move of a missing path fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "move",
+            "from": "missing",
+            "to": "there"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "not-found"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a move onto an existing path fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "move",
+            "from": "src/a.ts",
+            "to": "bin/run"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "exists"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a move under a file fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "move",
+            "from": "src/a.ts",
+            "to": "bin/run/a.ts"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "not-a-directory"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "a pipe change fails, and the change after it is skipped",
+      "generation": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "selection": {
+          "root": "",
+          "include": [],
+          "exclude": []
+        },
+        "changes": [
+          {
+            "kind": "pipe",
+            "path": "events"
+          },
+          {
+            "kind": "write",
+            "path": "after.txt",
+            "content": "YWZ0ZXIK",
+            "executable": false
+          }
+        ]
+      },
+      "results": {
+        "setup": {
+          "entries": [
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            },
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            }
+          ]
+        },
+        "snapshot": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "kind": "failed",
+            "reason": "unsupported"
+          },
+          {
+            "kind": "skipped"
+          }
+        ],
+        "after": {
+          "entries": [
+            {
+              "path": "bin/run",
+              "kind": "file",
+              "content": "IyEvYmluL3NoCmVjaG8gcnVuCg==",
+              "executable": true
+            },
+            {
+              "path": "empty",
+              "kind": "directory"
+            },
+            {
+              "path": "link",
+              "kind": "symlink",
+              "target": "src/a.ts"
+            },
+            {
+              "path": "linked-dir",
+              "kind": "symlink",
+              "target": "src"
+            },
+            {
+              "path": "src/a.spec.ts",
+              "kind": "file",
+              "content": "YSBzcGVjCg==",
+              "executable": false
+            },
+            {
+              "path": "src/a.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGEgPSAxCg==",
+              "executable": false
+            },
+            {
+              "path": "src/deep/b.ts",
+              "kind": "file",
+              "content": "ZXhwb3J0IGNvbnN0IGIgPSAyCg==",
+              "executable": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "pipe": {
+    "reading": {
+      "written": [
+        {
+          "kind": "written"
+        },
+        {
+          "kind": "written"
+        }
+      ],
+      "lines": ["first", "second", "third"],
+      "ended": true
+    },
+    "noReader": {
+      "kind": "no-reader"
+    }
+  }
+}

@@ -19,7 +19,6 @@ Libraries:
 - `@ai-swfactory-oss/host`: host facts as one plain data type, with pure derivations such as the user cache base.
 - `@ai-swfactory-oss/ids`: UUIDs built from the random port's bytes.
 - `@ai-swfactory-oss/logging`: log records as data, formatted and written to stderr through the terminal port.
-- `@ai-swfactory-oss/retry`: retries and polling as pure decisions, waiting only on the clock port.
 
 Placeholders, each holding only a stub that describes its own name and a fake of it under `./testing`, to be deprecated once their replacements are released:
 
@@ -32,7 +31,6 @@ Placeholders, each holding only a stub that describes its own name and a fake of
 - `@ai-swfactory-oss/seams-module`
 - `@ai-swfactory-oss/seams-node-runtime`
 - `@ai-swfactory-oss/seams-process`
-- `@ai-swfactory-oss/seams-retry`
 - `@ai-swfactory-oss/seams-tool-runner`
 
 ## Licence

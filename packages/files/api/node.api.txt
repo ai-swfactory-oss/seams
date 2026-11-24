@@ -1,0 +1,2 @@
+NodeFilesOptions: interface NodeFilesOptions { readonly root: string; }
+createNodeFiles: const createNodeFiles: (options: NodeFilesOptions) => Files

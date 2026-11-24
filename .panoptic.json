@@ -9,6 +9,20 @@
       "inputs": ["packages/terminal/src/**", "packages/terminal/tools/**"],
       "outputs": ["packages/terminal/tests/generated/broken-pipe.json"],
       "tool": "node"
+    },
+    "files-node-results": {
+      "kind": "module",
+      "module": "packages/files/tools/generate-node-results.mjs",
+      "inputs": ["packages/files/src/**", "packages/files/tools/**"],
+      "outputs": ["packages/files/tests/generated/node-results.json"],
+      "tool": "node"
+    },
+    "http-node-exchanges": {
+      "kind": "module",
+      "module": "packages/http/tools/generate-node-exchanges.mjs",
+      "inputs": ["packages/http/src/**", "packages/http/tools/**"],
+      "outputs": ["packages/http/tests/generated/node-exchanges.json"],
+      "tool": "node"
     }
   },
   "packages": {
@@ -20,7 +34,6 @@
     "@ai-swfactory-oss/seams-http-server": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-tool-runner": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-node-runtime": { "kind": "sdk" },
-    "@ai-swfactory-oss/seams-retry": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-lint-kit": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
     "@ai-swfactory-oss/bytes": { "kind": "sdk" },
@@ -33,7 +46,6 @@
     "@ai-swfactory-oss/terminal": { "kind": "port" },
     "@ai-swfactory-oss/logging": { "kind": "sdk" },
     "@ai-swfactory-oss/process": { "kind": "port" },
-    "@ai-swfactory-oss/retry": { "kind": "sdk" },
     "@ai-swfactory-oss/content-store": { "kind": "sdk" }
   }
 }

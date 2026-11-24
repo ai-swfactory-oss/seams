@@ -5,6 +5,7 @@ import {
   type Files,
   joinPath,
   normalisePath,
+  type Snapshot,
   type Tree,
   treeDigest,
   type TreeEntry,
@@ -36,8 +37,8 @@ const refusalOf = (tree: Tree): Refused | undefined => {
   return checked.kind === 'tree' ? undefined : { kind: 'refused', reason: checked.kind, path: checked.path }
 }
 
-const held = async (files: Files, root: string, digest: string): Promise<readonly TreeEntry[]> =>
-  (await files.snapshot({ root, include: [`${escapeGlob(digest)}/**`], exclude: [] })).entries
+const held = (files: Files, root: string, digest: string): Promise<Snapshot> =>
+  files.snapshot({ root, include: [`${escapeGlob(digest)}/**`], exclude: [] })
 
 const treeAt = async (at: string, digest: string, entries: readonly TreeEntry[]): Promise<Got> => {
   if (entries.length === 0 || entries.some(entry => entry.path === at && entry.kind !== 'directory')) return MISSING
@@ -56,13 +57,18 @@ export const createContentStoreSdk = (data: ContentStoreData, { files }: Content
       if (refused !== undefined) return refused
       const digest = await treeDigest(tree)
       const at = joinPath(root, digest)
-      const existing = await held(files, root, digest)
+      const snapshot = await held(files, root, digest)
+      if (snapshot.kind === 'failed') return snapshot
+      const existing = snapshot.tree.entries
       if ((await treeAt(at, digest, existing)).kind === 'tree') return { kind: 'stored', digest }
       const cleared: readonly Change[] = existing.length === 0 ? [] : [{ kind: 'delete', path: at }]
       const outcomes = await files.apply([...cleared, { kind: 'mkdir', path: at }, ...tree.entries.map(entry => changeOf(at, entry))])
-      const [reason] = outcomes.flatMap(outcome => (outcome.kind === 'failed' ? [outcome.reason] : []))
-      return reason === undefined ? { kind: 'stored', digest } : { kind: 'failed', reason }
+      const [failure] = outcomes.flatMap(outcome => (outcome.kind === 'failed' ? [outcome] : []))
+      return failure ?? { kind: 'stored', digest }
     },
-    get: async digest => treeAt(joinPath(root, digest), digest, await held(files, root, digest)),
+    get: async digest => {
+      const snapshot = await held(files, root, digest)
+      return snapshot.kind === 'failed' ? snapshot : treeAt(joinPath(root, digest), digest, snapshot.tree.entries)
+    },
   }
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { type Change, type Tree, treeToJson } from '../src/index'
-import { memoryFilesOver } from './memory-files'
+import { entriesOf, memoryFilesOver } from './memory-files'
 
 const bytes = (text: string): Uint8Array => new TextEncoder().encode(text)
 
@@ -22,9 +22,9 @@ const files = () => memoryFilesOver(treeToJson(SETUP))
 
 describe('the memory files snapshot', () => {
   it('lists every entry sorted by path, with only empty directories listed', async () => {
-    const tree = await files().snapshot(everything)
+    const entries = entriesOf(await files().snapshot(everything))
 
-    expect(tree.entries.map(entry => `${entry.kind} ${entry.path}`)).toEqual([
+    expect(entries.map(entry => `${entry.kind} ${entry.path}`)).toEqual([
       'file bin/run',
       'directory empty',
       'symlink link',
@@ -35,9 +35,9 @@ describe('the memory files snapshot', () => {
   })
 
   it('selects under its root by include and exclude patterns relative to that root', async () => {
-    const tree = await files().snapshot({ root: 'src', include: ['*.ts'], exclude: ['*.spec.ts'] })
+    const entries = entriesOf(await files().snapshot({ root: 'src', include: ['*.ts'], exclude: ['*.spec.ts'] }))
 
-    expect(tree.entries.map(entry => entry.path)).toEqual(['src/a.ts', 'src/b.ts'])
+    expect(entries.map(entry => entry.path)).toEqual(['src/a.ts', 'src/b.ts'])
   })
 
   it('selects nothing from a root that breaks the path rules or does not exist', async () => {
@@ -45,7 +45,11 @@ describe('the memory files snapshot', () => {
 
     const trees = await Promise.all(['../x', '/abs', 'missing'].map(root => memory.snapshot({ root, include: [], exclude: [] })))
 
-    expect(trees).toEqual([{ entries: [] }, { entries: [] }, { entries: [] }])
+    expect(trees).toEqual([
+      { kind: 'snapshot', tree: { entries: [] } },
+      { kind: 'snapshot', tree: { entries: [] } },
+      { kind: 'snapshot', tree: { entries: [] } },
+    ])
   })
 })
 
@@ -59,9 +63,9 @@ describe('the memory files apply', () => {
       { kind: 'delete', path: 'bin' },
       { kind: 'mkdir', path: 'empty' },
     ])
-    const tree = await memory.snapshot(everything)
+    const entries = entriesOf(await memory.snapshot(everything))
 
-    expect([outcomes, tree.entries.map(entry => entry.path)]).toEqual([
+    expect([outcomes, entries.map(entry => entry.path)]).toEqual([
       [{ kind: 'applied' }, { kind: 'applied' }, { kind: 'applied' }, { kind: 'applied' }],
       ['empty', 'lib/b.ts', 'link', 'out/new.txt', 'src/a.spec.ts', 'src/a.ts'],
     ])
@@ -75,9 +79,9 @@ describe('the memory files apply', () => {
       { kind: 'delete', path: 'missing' },
       { kind: 'write', path: 'never.txt', content: bytes('never'), executable: false },
     ])
-    const tree = await memory.snapshot({ root: '', include: ['*.txt'], exclude: [] })
+    const entries = entriesOf(await memory.snapshot({ root: '', include: ['*.txt'], exclude: [] }))
 
-    expect([outcomes, tree.entries.map(entry => entry.path)]).toEqual([
+    expect([outcomes, entries.map(entry => entry.path)]).toEqual([
       [{ kind: 'applied' }, { kind: 'failed', reason: 'not-found' }, { kind: 'skipped' }],
       ['kept.txt'],
     ])

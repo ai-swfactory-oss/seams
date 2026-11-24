@@ -1,7 +1,6 @@
 {
   "name": "@ai-swfactory-oss/files",
   "description": "The files port: a rooted snapshot in, a list of changes out. Its memory adapter holds one Tree, and its generator records results from a real adapter.",
-  "version": "5.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -24,6 +23,11 @@
       "source": "./src/memory/index.ts",
       "types": "./dist/memory/index.d.ts",
       "import": "./dist/memory/index.js"
+    },
+    "./node": {
+      "source": "./src/node/index.ts",
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js"
     },
     "./generate": {
       "source": "./src/generate/index.ts",
