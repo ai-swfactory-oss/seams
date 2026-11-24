@@ -1,8 +1,8 @@
-import type { Change, ChangeFailure, ChangeOutcome } from '../types'
+import type { Change, ChangeOutcome, FailedChange } from '../types'
 
 export const applyInOrder = async (
   changes: readonly Change[],
-  step: (change: Change) => Promise<ChangeFailure | undefined>,
+  step: (change: Change) => Promise<FailedChange | undefined>,
 ): Promise<readonly ChangeOutcome[]> => {
   const outcomes: ChangeOutcome[] = []
   let failed = false
@@ -16,7 +16,7 @@ export const applyInOrder = async (
       outcomes.push({ kind: 'applied' })
     } else {
       failed = true
-      outcomes.push({ kind: 'failed', reason: failure })
+      outcomes.push(failure)
     }
   }
   return outcomes

@@ -1,4 +1,4 @@
 FilesGeneration: interface FilesGeneration { readonly setup: TreeJson; readonly selection: Selection; readonly changes: readonly ChangeJson[]; }
 FilesResults: interface FilesResults { readonly setup: TreeJson; readonly snapshot: TreeJson; readonly outcomes: readonly ChangeOutcome[]; readonly after: TreeJson; }
-GeneratedFilesResults: type GeneratedFilesResults = { readonly kind: 'results'; readonly results: FilesResults; } | NonEmptyDirectory | DuplicatePath;
+GeneratedFilesResults: type GeneratedFilesResults = { readonly kind: 'results'; readonly results: FilesResults; } | NonEmptyDirectory | DuplicatePath | FailedChange;
 generateFilesResults: const generateFilesResults: (call: FilesGeneration, ports: { readonly files: Files; }) => Promise<GeneratedFilesResults>

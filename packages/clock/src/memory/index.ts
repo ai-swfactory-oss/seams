@@ -1,13 +1,7 @@
-import { advance, isDuration } from '../domain/duration'
+import { advance, durationRefusal } from '../domain/duration'
 import type { Clock, ClockState, Duration } from '../index'
 
-export class InvalidDurationError extends Error {
-  override readonly name = 'InvalidDurationError'
-
-  constructor(readonly duration: number) {
-    super(`A duration is a finite number of milliseconds, zero or more; got ${String(duration)}.`)
-  }
-}
+export { InvalidDurationError } from '../domain/duration'
 
 export interface MemoryClock extends Clock {
   readonly state: () => ClockState
@@ -19,8 +13,9 @@ export const createMemoryClock = (initial: ClockState): MemoryClock => {
     now: () => current.now,
     wait: (duration: Duration) =>
       new Promise<void>((resolve, reject) => {
-        if (!isDuration(duration)) {
-          reject(new InvalidDurationError(duration))
+        const refusal = durationRefusal(duration)
+        if (refusal !== null) {
+          reject(refusal)
           return
         }
         current = advance(current, duration)

@@ -31,11 +31,11 @@ const memoryFilesOf = (initial: Tree): MemoryFiles => {
       for (const part of line.split('\n')) reader.deliver(part)
       return Promise.resolve({ kind: 'written' })
     },
-    snapshot: selection => Promise.resolve(snapshotOf(volume, selection)),
+    snapshot: selection => Promise.resolve({ kind: 'snapshot', tree: snapshotOf(volume, selection) }),
     apply: changes =>
       applyInOrder(changes, change => {
         const step = stepOf(volume, change)
-        if (step.failure !== undefined) return Promise.resolve(step.failure)
+        if (step.failure !== undefined) return Promise.resolve({ kind: 'failed', reason: step.failure })
         volume = step.volume
         return Promise.resolve(undefined)
       }),

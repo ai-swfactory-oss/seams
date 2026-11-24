@@ -1,4 +1,4 @@
-import type { Change, ChangeFailure, Selection, Tree, TreeEntry } from '../types'
+import type { Change, KnownChangeFailure, Selection, Tree, TreeEntry } from '../types'
 import { comparePaths, isWithin, normalisePath, parentsOf } from './path'
 import { selectionMatcher } from './selection'
 
@@ -38,9 +38,9 @@ export const snapshotOf = (volume: Volume, selection: Selection): Tree => {
   return selects === undefined ? { entries: [] } : treeOf(volume, selects)
 }
 
-type Step = { readonly volume: Volume; readonly failure?: undefined } | { readonly failure: ChangeFailure }
+type Step = { readonly volume: Volume; readonly failure?: undefined } | { readonly failure: KnownChangeFailure }
 
-const parentFailure = (volume: Volume, path: string): ChangeFailure | undefined =>
+const parentFailure = (volume: Volume, path: string): KnownChangeFailure | undefined =>
   parentsOf(path).some(parent => {
     const entry = volume.get(parent)
     return entry !== undefined && entry.kind !== 'directory'

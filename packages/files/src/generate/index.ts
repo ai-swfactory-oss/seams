@@ -4,6 +4,7 @@ import type {
   ChangeJson,
   ChangeOutcome,
   DuplicatePath,
+  FailedChange,
   Files,
   NonEmptyDirectory,
   Selection,
@@ -25,7 +26,11 @@ export interface FilesResults {
   readonly after: TreeJson
 }
 
-export type GeneratedFilesResults = { readonly kind: 'results'; readonly results: FilesResults } | NonEmptyDirectory | DuplicatePath
+export type GeneratedFilesResults =
+  | { readonly kind: 'results'; readonly results: FilesResults }
+  | NonEmptyDirectory
+  | DuplicatePath
+  | FailedChange
 
 const writeOf = (entry: TreeEntry): Change => {
   switch (entry.kind) {
@@ -50,7 +55,12 @@ export const generateFilesResults = async (call: FilesGeneration, ports: { reado
   const { files } = ports
   await files.apply(writesOf(setup))
   const snapshot = await files.snapshot(call.selection)
+  if (snapshot.kind === 'failed') return snapshot
   const outcomes = await files.apply(changes)
   const after = await files.snapshot(call.selection)
-  return { kind: 'results', results: { setup: call.setup, snapshot: treeToJson(snapshot), outcomes, after: treeToJson(after) } }
+  if (after.kind === 'failed') return after
+  return {
+    kind: 'results',
+    results: { setup: call.setup, snapshot: treeToJson(snapshot.tree), outcomes, after: treeToJson(after.tree) },
+  }
 }

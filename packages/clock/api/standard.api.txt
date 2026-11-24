@@ -1,0 +1,2 @@
+InvalidDurationError: class InvalidDurationError extends Error { readonly duration: number; readonly name = "InvalidDurationError"; constructor(duration: number); }
+createStandardClock: const createStandardClock: () => Clock

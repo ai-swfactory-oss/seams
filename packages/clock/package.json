@@ -1,7 +1,6 @@
 {
   "name": "@ai-swfactory-oss/clock",
   "description": "The clock port: now() and wait(duration), with a memory adapter that starts at a given instant and moves only on waits, and a generator that records a memory state from a real adapter.",
-  "version": "2.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -29,6 +28,11 @@
       "source": "./src/generate/index.ts",
       "types": "./dist/generate/index.d.ts",
       "import": "./dist/generate/index.js"
+    },
+    "./standard": {
+      "source": "./src/standard/index.ts",
+      "types": "./dist/standard/index.d.ts",
+      "import": "./dist/standard/index.js"
     },
     "./package.json": "./package.json"
   },

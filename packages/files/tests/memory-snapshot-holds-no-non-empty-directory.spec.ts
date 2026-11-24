@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { memoryFilesOver } from './memory-files'
+import { entriesOf, memoryFilesOver } from './memory-files'
 
 describe('the memory files snapshot', () => {
   it('holds no non-empty directory: after mkdir a and write a/b it lists a/b only', async () => {
@@ -10,8 +10,8 @@ describe('the memory files snapshot', () => {
       { kind: 'mkdir', path: 'a' },
       { kind: 'write', path: 'a/b', content: new TextEncoder().encode('b'), executable: false },
     ])
-    const tree = await files.snapshot({ root: '', include: [], exclude: [] })
+    const entries = entriesOf(await files.snapshot({ root: '', include: [], exclude: [] }))
 
-    expect(tree.entries.map(entry => entry.path)).toEqual(['a/b'])
+    expect(entries.map(entry => entry.path)).toEqual(['a/b'])
   })
 })

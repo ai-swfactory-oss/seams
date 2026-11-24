@@ -1,4 +1,4 @@
-import type { ChangeFailure, Files, Tree } from '@ai-swfactory-oss/files'
+import type { FailedChange, Files, Tree } from '@ai-swfactory-oss/files'
 
 export interface ContentStoreData {
   readonly root: string
@@ -14,12 +14,9 @@ export interface Refused {
   readonly path: string
 }
 
-export type Put =
-  | { readonly kind: 'stored'; readonly digest: string }
-  | { readonly kind: 'failed'; readonly reason: ChangeFailure }
-  | Refused
+export type Put = { readonly kind: 'stored'; readonly digest: string } | FailedChange | Refused
 
-export type Got = { readonly kind: 'tree'; readonly tree: Tree } | { readonly kind: 'missing' }
+export type Got = { readonly kind: 'tree'; readonly tree: Tree } | { readonly kind: 'missing' } | FailedChange
 
 export interface ContentStore {
   readonly put: (tree: Tree) => Promise<Put>
