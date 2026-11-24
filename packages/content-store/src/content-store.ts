@@ -40,10 +40,13 @@ const refusalOf = (tree: Tree): Refused | undefined => {
 const held = (files: Files, root: string, digest: string): Promise<Snapshot> =>
   files.snapshot({ root, include: [`${escapeGlob(digest)}/**`], exclude: [] })
 
+const storedEntryOf = (path: string, entry: TreeEntry): TreeEntry =>
+  entry.kind === 'file' ? { path, kind: 'file', content: entry.content, executable: entry.executable } : { ...entry, path }
+
 const treeAt = async (at: string, digest: string, entries: readonly TreeEntry[]): Promise<Got> => {
   if (entries.length === 0 || entries.some(entry => entry.path === at && entry.kind !== 'directory')) return MISSING
   const tree = {
-    entries: entries.flatMap(entry => (entry.path === at ? [] : [{ ...entry, path: entry.path.slice(at.length + 1) }])),
+    entries: entries.flatMap(entry => (entry.path === at ? [] : [storedEntryOf(entry.path.slice(at.length + 1), entry)])),
   }
   return (await treeDigest(tree)) === digest ? { kind: 'tree', tree } : MISSING
 }

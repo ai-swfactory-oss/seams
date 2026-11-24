@@ -1,12 +1,13 @@
-import type { ChangeOutcome, KnownChangeFailure, Tree, TreeEntry } from '../src/index'
+import { type ChangeOutcome, comparePaths, type KnownChangeFailure, type Tree, type TreeEntry } from '../src/index'
 
 const text = (value: string): Uint8Array => new TextEncoder().encode(value)
 
-export const file = (path: string, content: string, executable = false): TreeEntry => ({
+export const file = (path: string, content: string, executable = false, links = 1): TreeEntry => ({
   path,
   kind: 'file',
   content: text(content),
   executable,
+  links,
 })
 
 export const REAL_FOLDER: Tree = {
@@ -49,3 +50,15 @@ export const UNPERFORMABLE_CHANGES: readonly Unperformable[] = [
 export const failedCaseName = (name: string): string => `${name} fails, and the change after it is skipped`
 
 export const PIPE_CHANGE_CASE = failedCaseName('a pipe change')
+
+export const A_TS = 'export const a = 1\n'
+
+export const LINK_CASE = 'a link change gives a file a second name'
+
+export const LINKED_WRITE_CASE = 'a write to one name of a linked file leaves the other name unchanged'
+
+export const LINKED_DELETE_CASE = 'a delete of one name of a linked file leaves the other name'
+
+export const folderWithLinked = (entries: readonly TreeEntry[]): Tree => ({
+  entries: [...REAL_FOLDER.entries.filter(entry => entry.path !== 'src/a.ts'), ...entries].sort((a, b) => comparePaths(a.path, b.path)),
+})

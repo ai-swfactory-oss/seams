@@ -78,7 +78,18 @@ const CASES = [
     ['a move onto an existing path', { kind: 'move', from: 'src/a.ts', to: 'bin/run' }],
     ['a move under a file', { kind: 'move', from: 'src/a.ts', to: 'bin/run/a.ts' }],
     ['a pipe change', { kind: 'pipe', path: 'events' }],
+    ['a link from a missing path', { kind: 'link', from: 'missing', to: 'there' }],
+    ['a link from a directory', { kind: 'link', from: 'src/deep', to: 'there' }],
+    ['a link onto an existing path', { kind: 'link', from: 'src/a.ts', to: 'bin/run' }],
   ].map(([name, change]) => ({ name: `${name} fails, and the change after it is skipped`, generation: afterwards(change) })),
+  ...[
+    ['a link change gives a file a second name', []],
+    ['a write to one name of a linked file leaves the other name unchanged', [write('src/a.ts', 'export const a = 4\n')]],
+    ['a delete of one name of a linked file leaves the other name', [{ kind: 'delete', path: 'src/a.ts' }]],
+  ].map(([name, then]) => ({
+    name,
+    generation: { setup: SETUP, selection: EVERYTHING, changes: [{ kind: 'link', from: 'src/a.ts', to: 'names/a.ts' }, ...then] },
+  })),
 ]
 
 const { generateFilesResults } = await import(join(PACKAGE, 'dist', 'generate', 'index.js'))

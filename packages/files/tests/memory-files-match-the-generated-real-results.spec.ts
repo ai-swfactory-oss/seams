@@ -46,7 +46,7 @@ describe('memory files match the generated real results', () => {
 
     expect({ read: NODE_CASES_READING.kind, cases: NODE_CASES.length, diverging: [...DIVERGENCES.keys()], replayed }).toStrictEqual({
       read: 'cases',
-      cases: 18,
+      cases: 24,
       diverging: [PIPE_CHANGE_CASE],
       replayed: NODE_CASES.map(real => ({
         name: real.name,

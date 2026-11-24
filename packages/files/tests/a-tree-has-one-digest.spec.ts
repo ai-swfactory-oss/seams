@@ -56,4 +56,12 @@ describe('a Tree has one digest', () => {
   it('gives the same digest for the same entries in another order', async () => {
     expect(await treeDigest({ entries: [...FILES_ONLY.entries].reverse() })).toBe(FILES_ONLY_DIGEST)
   })
+
+  it("a tree's digest does not depend on its files' link counts", async () => {
+    const counted: Tree = {
+      entries: FILES_ONLY.entries.map((entry, index) => (entry.kind === 'file' ? { ...entry, links: index + 2 } : entry)),
+    }
+
+    expect(await treeDigest(counted)).toBe(FILES_ONLY_DIGEST)
+  })
 })

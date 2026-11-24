@@ -5,9 +5,14 @@ import { duplicatePathOf } from './duplicate-path'
 import { nonEmptyDirectoryOf } from './non-empty-directory'
 import { normalisePath } from './path'
 
+const linksOf = (entry: { readonly links?: number }): { readonly links?: number } =>
+  entry.links === undefined ? {} : { links: entry.links }
+
 export const treeToJson = (tree: Tree): TreeJson => ({
   entries: tree.entries.map(entry =>
-    entry.kind === 'file' ? { path: entry.path, kind: 'file', content: encodeBase64(entry.content), executable: entry.executable } : entry,
+    entry.kind === 'file'
+      ? { path: entry.path, kind: 'file', content: encodeBase64(entry.content), executable: entry.executable, ...linksOf(entry) }
+      : entry,
   ),
 })
 
@@ -19,7 +24,7 @@ export const treeFromJson = (json: TreeJson): CheckedTree =>
       entries: json.entries.map(
         (entry): TreeEntry =>
           entry.kind === 'file'
-            ? { path: entry.path, kind: 'file', content: decodeBase64(entry.content), executable: entry.executable }
+            ? { path: entry.path, kind: 'file', content: decodeBase64(entry.content), executable: entry.executable, ...linksOf(entry) }
             : entry,
       ),
     },
@@ -43,7 +48,9 @@ const entryJsonOf = (value: unknown): TreeEntryJson | undefined => {
   if (kind !== 'file' || !('content' in value) || !('executable' in value)) return undefined
   const { content, executable } = value
   if (typeof content !== 'string' || typeof executable !== 'boolean') return undefined
-  return { path, kind, content, executable }
+  if (!('links' in value)) return { path, kind, content, executable }
+  const { links } = value
+  return typeof links === 'number' && Number.isInteger(links) && links >= 1 ? { path, kind, content, executable, links } : undefined
 }
 
 const changeJsonOf = (value: unknown): ChangeJson | undefined => {
@@ -53,12 +60,13 @@ const changeJsonOf = (value: unknown): ChangeJson | undefined => {
     return typeof field === 'string' ? field : undefined
   }
   const path = text('path')
+  const from = text('from')
+  const to = text('to')
   switch (value.kind) {
-    case 'move': {
-      const from = text('from')
-      const to = text('to')
+    case 'move':
       return from === undefined || to === undefined ? undefined : { kind: 'move', from, to }
-    }
+    case 'link':
+      return from === undefined || to === undefined ? undefined : { kind: 'link', from, to }
     case 'delete':
       return path === undefined ? undefined : { kind: 'delete', path }
     case 'mkdir':

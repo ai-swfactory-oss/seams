@@ -3,6 +3,7 @@ export interface FileEntry {
   readonly kind: 'file'
   readonly content: Uint8Array
   readonly executable: boolean
+  readonly links?: number
 }
 
 export interface SymlinkEntry {
@@ -50,6 +51,7 @@ export type Change =
   | { readonly kind: 'symlink'; readonly path: string; readonly target: string }
   | { readonly kind: 'delete'; readonly path: string }
   | { readonly kind: 'move'; readonly from: string; readonly to: string }
+  | { readonly kind: 'link'; readonly from: string; readonly to: string }
   | { readonly kind: 'mkdir'; readonly path: string }
   | { readonly kind: 'pipe'; readonly path: string }
 
@@ -85,7 +87,7 @@ export interface Files {
 }
 
 export type TreeEntryJson =
-  | { readonly path: string; readonly kind: 'file'; readonly content: string; readonly executable: boolean }
+  | { readonly path: string; readonly kind: 'file'; readonly content: string; readonly executable: boolean; readonly links?: number }
   | SymlinkEntry
   | DirectoryEntry
   | PipeEntry

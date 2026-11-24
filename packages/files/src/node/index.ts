@@ -1,5 +1,5 @@
 import { closeSync, constants, fstatSync, openSync, type Stats } from 'node:fs'
-import { chmod, lstat, mkdir, open, readdir, readFile, readlink, rename, rm, symlink, writeFile } from 'node:fs/promises'
+import { chmod, link, lstat, mkdir, open, readdir, readFile, readlink, rename, rm, symlink, writeFile } from 'node:fs/promises'
 import { Socket } from 'node:net'
 import { join } from 'node:path'
 import { createInterface } from 'node:readline'
@@ -133,7 +133,7 @@ const nodeFilesOf = (root: string): Files => {
         into.push({ path, kind: 'symlink', target: await readlink(at(path)) })
       } else if (stats.isFile()) {
         const content = selects(path) ? new Uint8Array(await readFile(at(path))) : new Uint8Array()
-        into.push({ path, kind: 'file', content, executable: isExecutable(stats) })
+        into.push({ path, kind: 'file', content, executable: isExecutable(stats), links: stats.nlink })
       }
     }
   }
@@ -174,7 +174,7 @@ const nodeFilesOf = (root: string): Files => {
     return undefined
   }
 
-  const link = async (path: string, target: string): Promise<FailedChange | undefined> => {
+  const symlinkAt = async (path: string, target: string): Promise<FailedChange | undefined> => {
     const existing = await entryAt(path)
     if (existing.kind === 'failed') return existing
     if (existing.kind === 'found') return failed('exists')
@@ -221,15 +221,34 @@ const nodeFilesOf = (root: string): Files => {
     return undefined
   }
 
+  const hardLink = async (rawFrom: string, rawTo: string): Promise<FailedChange | undefined> => {
+    const from = normalisePath(rawFrom)
+    const to = normalisePath(rawTo)
+    if (from === undefined || to === undefined || from === '' || to === '') return failed('invalid-path')
+    const source = await entryAt(from)
+    if (source.kind === 'failed') return source
+    if (source.kind === 'absent') return failed('not-found')
+    if (isDirectory(source)) return failed('is-a-directory')
+    const target = await entryAt(to)
+    if (target.kind === 'failed') return target
+    if (target.kind === 'found') return failed('exists')
+    const failure = await parentFailure(to)
+    if (failure !== undefined) return failure
+    await makeParents(to)
+    await link(at(from), at(to))
+    return undefined
+  }
+
   const stepOf = (change: Change): Promise<FailedChange | undefined> => {
     if (change.kind === 'move') return move(change.from, change.to)
+    if (change.kind === 'link') return hardLink(change.from, change.to)
     const path = normalisePath(change.path)
     if (path === undefined || path === '') return Promise.resolve(failed('invalid-path'))
     switch (change.kind) {
       case 'write':
         return write(path, change.content, change.executable)
       case 'symlink':
-        return link(path, change.target)
+        return symlinkAt(path, change.target)
       case 'mkdir':
         return makeDirectory(path)
       case 'delete':
