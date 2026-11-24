@@ -1,0 +1,5 @@
+GeneratedProcessEntries: type GeneratedProcessEntries = { readonly kind: 'entries'; readonly state: ProcessState; } | RefusedRun;
+ProcessGeneration: interface ProcessGeneration { readonly runs: readonly ProcessRun[]; }
+ProcessRun: interface ProcessRun { readonly invocation: InvocationJson; readonly location: Location; }
+RefusedRun: type RefusedRun = (NonEmptyDirectory | DuplicatePath | LocationRefusal) & { readonly run: number; };
+generateProcessEntries: const generateProcessEntries: (call: ProcessGeneration, ports: { readonly process: Process; }) => Promise<GeneratedProcessEntries>

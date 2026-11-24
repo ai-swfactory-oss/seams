@@ -1,0 +1,3 @@
+PackageDescription: interface PackageDescription { readonly name: string; }
+SeamsHost: interface SeamsHost { readonly describe: () => PackageDescription; }
+createSeamsHost: const createSeamsHost: () => SeamsHost

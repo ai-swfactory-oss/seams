@@ -94,6 +94,9 @@ export const stepOf = (volume: Volume, change: Change): Step => {
       if (existing?.kind === 'directory') return { volume }
       if (existing !== undefined) return { failure: 'exists' }
       return place(volume, { path, kind: 'directory' })
+    case 'pipe':
+      if (existing !== undefined) return { failure: 'exists' }
+      return place(volume, { path, kind: 'pipe' })
     case 'delete':
       if (existing === undefined) return { failure: 'not-found' }
       return { volume: without(volume, path) }

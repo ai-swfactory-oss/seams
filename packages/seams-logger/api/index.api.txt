@@ -1,0 +1,3 @@
+PackageDescription: interface PackageDescription { readonly name: string; }
+SeamsLogger: interface SeamsLogger { readonly describe: () => PackageDescription; }
+createSeamsLogger: const createSeamsLogger: () => SeamsLogger

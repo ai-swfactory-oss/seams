@@ -1,0 +1,2 @@
+MemoryRandom: interface MemoryRandom extends Random { readonly state: () => RandomState; }
+createMemoryRandom: const createMemoryRandom: (initial: RandomState) => MemoryRandom

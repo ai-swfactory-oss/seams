@@ -19,6 +19,7 @@ const changeOf = (at: string, entry: TreeEntry): Change => {
   const path = joinPath(at, entry.path)
   if (entry.kind === 'file') return { kind: 'write', path, content: entry.content, executable: entry.executable }
   if (entry.kind === 'symlink') return { kind: 'symlink', path, target: entry.target }
+  if (entry.kind === 'pipe') return { kind: 'pipe', path }
   return { kind: 'mkdir', path }
 }
 

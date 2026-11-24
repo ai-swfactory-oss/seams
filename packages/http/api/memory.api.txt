@@ -1,0 +1,3 @@
+MemoryHttp: interface MemoryHttp extends Http { readonly state: () => HttpState; }
+UnmatchedHttpRequestError: class UnmatchedHttpRequestError extends Error { readonly request: HttpRequestJson; readonly expected: HttpRequestJson | undefined; constructor(request: HttpRequestJson, expected: HttpRequestJson | undefined); }
+createMemoryHttp: const createMemoryHttp: (initial: HttpState) => MemoryHttp

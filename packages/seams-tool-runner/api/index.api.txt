@@ -1,0 +1,3 @@
+PackageDescription: interface PackageDescription { readonly name: string; }
+SeamsToolRunner: interface SeamsToolRunner { readonly describe: () => PackageDescription; }
+createSeamsToolRunner: const createSeamsToolRunner: () => SeamsToolRunner

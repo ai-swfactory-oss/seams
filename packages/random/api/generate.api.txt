@@ -1,0 +1,3 @@
+RandomGeneration: interface RandomGeneration { readonly drawn: number; }
+RandomPorts: interface RandomPorts { readonly random: Random; }
+generateRandomState: const generateRandomState: (call: RandomGeneration, ports: RandomPorts) => RandomState | undefined

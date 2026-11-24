@@ -1,0 +1,2 @@
+HttpGeneration: interface HttpGeneration { readonly requests: readonly HttpRequestJson[]; }
+generateHttpExchanges: const generateHttpExchanges: (call: HttpGeneration, { ports }: { readonly ports: { readonly http: Http; }; }) => Promise<HttpState>

@@ -1,0 +1,1 @@
+createFakeSeamsNodeRuntime: const createFakeSeamsNodeRuntime: (description: PackageDescription) => SeamsNodeRuntime

@@ -1,0 +1,1 @@
+createFakeSeamsLogger: const createFakeSeamsLogger: (description: PackageDescription) => SeamsLogger

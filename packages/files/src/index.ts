@@ -14,10 +14,12 @@ export type {
   FileEntry,
   Files,
   NonEmptyDirectory,
+  PipeEntry,
   Selection,
   SymlinkEntry,
   Tree,
   TreeEntry,
   TreeEntryJson,
   TreeJson,
+  WriteLineOutcome,
 } from './types'

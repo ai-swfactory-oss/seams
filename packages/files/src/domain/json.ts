@@ -35,7 +35,7 @@ const entryJsonOf = (value: unknown): TreeEntryJson | undefined => {
   if (typeof value !== 'object' || value === null || !('path' in value) || !('kind' in value)) return undefined
   const { path, kind } = value
   if (typeof path !== 'string' || normalisePath(path) !== path || path === '') return undefined
-  if (kind === 'directory') return { path, kind }
+  if (kind === 'directory' || kind === 'pipe') return { path, kind }
   if (kind === 'symlink') {
     if (!('target' in value) || typeof value.target !== 'string') return undefined
     return { path, kind, target: value.target }
@@ -63,6 +63,8 @@ const changeJsonOf = (value: unknown): ChangeJson | undefined => {
       return path === undefined ? undefined : { kind: 'delete', path }
     case 'mkdir':
       return path === undefined ? undefined : { kind: 'mkdir', path }
+    case 'pipe':
+      return path === undefined ? undefined : { kind: 'pipe', path }
     case 'symlink': {
       const target = text('target')
       return path === undefined || target === undefined ? undefined : { kind: 'symlink', path, target }

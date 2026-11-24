@@ -1,0 +1,1 @@
+createFakeSeamsProcess: const createFakeSeamsProcess: (description: PackageDescription) => SeamsProcess

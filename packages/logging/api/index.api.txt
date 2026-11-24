@@ -1,0 +1,11 @@
+LineStyle: interface LineStyle { readonly colour: boolean; }
+LogFieldValue: type LogFieldValue = string | number | boolean | null;
+LogFields: type LogFields = Readonly<Record<string, LogFieldValue>>;
+LogLevel: type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+LogRecord: interface LogRecord { readonly level: LogLevel; readonly message: string; readonly fields?: LogFields; }
+Logging: interface Logging { readonly log: (record: LogRecord) => Promise<WriteOutcome>; }
+LoggingData: interface LoggingData { readonly facts: Pick<HostFacts, 'env' | 'tty'>; }
+LoggingPorts: interface LoggingPorts { readonly terminal: Terminal; }
+createLoggingSdk: const createLoggingSdk: (data: LoggingData, { terminal }: LoggingPorts) => Logging
+formatRecord: const formatRecord: (record: LogRecord, style: LineStyle) => string
+lineStyleOf: const lineStyleOf: (facts: LoggingData["facts"]) => LineStyle

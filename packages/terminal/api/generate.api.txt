@@ -1,0 +1,2 @@
+TerminalProbe: interface TerminalProbe { readonly writes: readonly TerminalWrite[]; }
+generateTerminalState: const generateTerminalState: (probe: TerminalProbe, ports: { readonly terminal: Terminal; }) => Promise<TerminalState>

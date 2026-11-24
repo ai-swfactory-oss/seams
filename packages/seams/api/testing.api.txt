@@ -1,0 +1,1 @@
+createFakeSeams: const createFakeSeams: (description: PackageDescription) => Seams

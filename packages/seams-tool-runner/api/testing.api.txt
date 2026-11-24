@@ -1,0 +1,1 @@
+createFakeSeamsToolRunner: const createFakeSeamsToolRunner: (description: PackageDescription) => SeamsToolRunner

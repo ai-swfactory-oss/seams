@@ -16,7 +16,12 @@ export interface DirectoryEntry {
   readonly kind: 'directory'
 }
 
-export type TreeEntry = FileEntry | SymlinkEntry | DirectoryEntry
+export interface PipeEntry {
+  readonly path: string
+  readonly kind: 'pipe'
+}
+
+export type TreeEntry = FileEntry | SymlinkEntry | DirectoryEntry | PipeEntry
 
 export interface Tree {
   readonly entries: readonly TreeEntry[]
@@ -46,6 +51,7 @@ export type Change =
   | { readonly kind: 'delete'; readonly path: string }
   | { readonly kind: 'move'; readonly from: string; readonly to: string }
   | { readonly kind: 'mkdir'; readonly path: string }
+  | { readonly kind: 'pipe'; readonly path: string }
 
 export type ChangeFailure = 'invalid-path' | 'not-found' | 'not-a-directory' | 'is-a-directory' | 'exists' | 'permission-denied'
 
@@ -54,15 +60,23 @@ export type ChangeOutcome =
   | { readonly kind: 'failed'; readonly reason: ChangeFailure }
   | { readonly kind: 'skipped' }
 
+export type WriteLineOutcome =
+  | { readonly kind: 'written' }
+  | { readonly kind: 'no-reader' }
+  | { readonly kind: 'failed'; readonly reason: 'not-a-pipe' }
+
 export interface Files {
   readonly snapshot: (selection: Selection) => Promise<Tree>
   readonly apply: (changes: readonly Change[]) => Promise<readonly ChangeOutcome[]>
+  readonly readLines: (path: string, options: { readonly signal: AbortSignal }) => AsyncIterable<string>
+  readonly writeLine: (path: string, line: string) => Promise<WriteLineOutcome>
 }
 
 export type TreeEntryJson =
   | { readonly path: string; readonly kind: 'file'; readonly content: string; readonly executable: boolean }
   | SymlinkEntry
   | DirectoryEntry
+  | PipeEntry
 
 export interface TreeJson {
   readonly entries: readonly TreeEntryJson[]

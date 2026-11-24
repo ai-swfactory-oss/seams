@@ -1,0 +1,32 @@
+Change: type Change = { readonly kind: 'write'; readonly path: string; readonly content: Uint8Array; readonly executable: boolean; } | { readonly kind: 'symlink'; readonly path: string; readonly target: string; } | { readonly kind: 'delete'; readonly path: string; } | { readonly kind: 'move'; readonly from: string; readonly to: string; } | { readonly kind: 'mkdir'; readonly path: string; } | { readonly kind: 'pipe'; readonly path: string; };
+ChangeFailure: type ChangeFailure = 'invalid-path' | 'not-found' | 'not-a-directory' | 'is-a-directory' | 'exists' | 'permission-denied';
+ChangeJson: type ChangeJson = { readonly kind: 'write'; readonly path: string; readonly content: string; readonly executable: boolean; } | Exclude<Change, { readonly kind: 'write'; }>;
+ChangeOutcome: type ChangeOutcome = { readonly kind: 'applied'; } | { readonly kind: 'failed'; readonly reason: ChangeFailure; } | { readonly kind: 'skipped'; };
+CheckedTree: type CheckedTree = { readonly kind: 'tree'; readonly tree: Tree; } | NonEmptyDirectory | DuplicatePath;
+DirectoryEntry: interface DirectoryEntry { readonly path: string; readonly kind: 'directory'; }
+DuplicatePath: interface DuplicatePath { readonly kind: 'duplicate-path'; readonly path: string; }
+FileEntry: interface FileEntry { readonly path: string; readonly kind: 'file'; readonly content: Uint8Array; readonly executable: boolean; }
+Files: interface Files { readonly snapshot: (selection: Selection) => Promise<Tree>; readonly apply: (changes: readonly Change[]) => Promise<readonly ChangeOutcome[]>; readonly readLines: (path: string, options: { readonly signal: AbortSignal; }) => AsyncIterable<string>; readonly writeLine: (path: string, line: string) => Promise<WriteLineOutcome>; }
+NonEmptyDirectory: interface NonEmptyDirectory { readonly kind: 'non-empty-directory'; readonly path: string; }
+PipeEntry: interface PipeEntry { readonly path: string; readonly kind: 'pipe'; }
+Selection: interface Selection { readonly root: string; readonly include: readonly string[]; readonly exclude: readonly string[]; }
+SymlinkEntry: interface SymlinkEntry { readonly path: string; readonly kind: 'symlink'; readonly target: string; }
+Tree: interface Tree { readonly entries: readonly TreeEntry[]; }
+TreeEntry: type TreeEntry = FileEntry | SymlinkEntry | DirectoryEntry | PipeEntry;
+TreeEntryJson: type TreeEntryJson = { readonly path: string; readonly kind: 'file'; readonly content: string; readonly executable: boolean; } | SymlinkEntry | DirectoryEntry | PipeEntry;
+TreeJson: interface TreeJson { readonly entries: readonly TreeEntryJson[]; }
+TreeOfEntries: type TreeOfEntries = CheckedTree | { readonly kind: 'not-a-directory'; readonly path: string; };
+WriteLineOutcome: type WriteLineOutcome = { readonly kind: 'written'; } | { readonly kind: 'no-reader'; } | { readonly kind: 'failed'; readonly reason: 'not-a-pipe'; };
+changesFromJson: const changesFromJson: (json: readonly ChangeJson[]) => Change[]
+changesToJson: const changesToJson: (changes: readonly Change[]) => ChangeJson[]
+comparePaths: const comparePaths: (a: string, b: string) => number
+contentIntegrity: const contentIntegrity: (content: Uint8Array) => Promise<string>
+escapeGlob: const escapeGlob: (path: string) => string
+joinPath: const joinPath: (directory: string, name: string) => string
+normalisePath: const normalisePath: (path: string) => string | undefined
+parseChangesJson: const parseChangesJson: (value: unknown) => ChangeJson[] | undefined
+parseTreeJson: const parseTreeJson: (value: unknown) => TreeJson | undefined
+treeDigest: const treeDigest: (tree: Tree) => Promise<string>
+treeFromJson: const treeFromJson: (json: TreeJson) => CheckedTree
+treeOfEntries: const treeOfEntries: (entries: Iterable<TreeEntry>) => TreeOfEntries
+treeToJson: const treeToJson: (tree: Tree) => TreeJson

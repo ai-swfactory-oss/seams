@@ -11,6 +11,7 @@ export const contentIntegrity = async (content: Uint8Array): Promise<string> =>
 const lineOf = async (entry: TreeEntry): Promise<string> => {
   if (entry.kind === 'symlink') return `${entry.path}\0symlink\0${entry.target}\0l\n`
   if (entry.kind === 'directory') return `${entry.path}\0directory\0d\n`
+  if (entry.kind === 'pipe') return `${entry.path}\0pipe\0p\n`
   return `${entry.path}\0${await contentIntegrity(entry.content)}\0${entry.executable ? 'x' : '-'}\n`
 }
 

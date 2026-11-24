@@ -1,0 +1,2 @@
+ClockPorts: interface ClockPorts { readonly clock: Clock; }
+generateClockState: const generateClockState: ({ ports }: { readonly ports: ClockPorts; }) => ClockState

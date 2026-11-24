@@ -1,0 +1,1 @@
+createNodeTerminal: const createNodeTerminal: () => Terminal

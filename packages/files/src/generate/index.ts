@@ -1,5 +1,16 @@
 import { changesFromJson, treeFromJson, treeToJson } from '../domain/json'
-import type { Change, ChangeJson, ChangeOutcome, DuplicatePath, Files, NonEmptyDirectory, Selection, Tree, TreeJson } from '../types'
+import type {
+  Change,
+  ChangeJson,
+  ChangeOutcome,
+  DuplicatePath,
+  Files,
+  NonEmptyDirectory,
+  Selection,
+  Tree,
+  TreeEntry,
+  TreeJson,
+} from '../types'
 
 export interface FilesGeneration {
   readonly setup: TreeJson
@@ -16,14 +27,20 @@ export interface FilesResults {
 
 export type GeneratedFilesResults = { readonly kind: 'results'; readonly results: FilesResults } | NonEmptyDirectory | DuplicatePath
 
-const writesOf = (tree: Tree): Change[] =>
-  tree.entries.map(entry =>
-    entry.kind === 'file'
-      ? { kind: 'write', path: entry.path, content: entry.content, executable: entry.executable }
-      : entry.kind === 'symlink'
-        ? { kind: 'symlink', path: entry.path, target: entry.target }
-        : { kind: 'mkdir', path: entry.path },
-  )
+const writeOf = (entry: TreeEntry): Change => {
+  switch (entry.kind) {
+    case 'file':
+      return { kind: 'write', path: entry.path, content: entry.content, executable: entry.executable }
+    case 'symlink':
+      return { kind: 'symlink', path: entry.path, target: entry.target }
+    case 'pipe':
+      return { kind: 'pipe', path: entry.path }
+    case 'directory':
+      return { kind: 'mkdir', path: entry.path }
+  }
+}
+
+const writesOf = (tree: Tree): Change[] => tree.entries.map(writeOf)
 
 export const generateFilesResults = async (call: FilesGeneration, ports: { readonly files: Files }): Promise<GeneratedFilesResults> => {
   const checked = treeFromJson(call.setup)

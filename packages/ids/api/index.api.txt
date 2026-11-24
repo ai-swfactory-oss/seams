@@ -1,0 +1,4 @@
+Ids: interface Ids { readonly uuid: () => string; }
+IdsData: type IdsData = Readonly<Record<never, never>>;
+IdsPorts: interface IdsPorts { readonly random: Random; }
+createIdsSdk: const createIdsSdk: (_data: IdsData, { random }: IdsPorts) => Ids

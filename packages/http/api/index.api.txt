@@ -1,0 +1,18 @@
+Http: interface Http { readonly send: (request: HttpRequest) => Promise<HttpOutcome>; }
+HttpExchangeJson: interface HttpExchangeJson { readonly request: HttpRequestJson; readonly outcome: HttpOutcomeJson; }
+HttpFailure: interface HttpFailure { readonly kind: 'failure'; readonly reason: HttpFailureReason; readonly message: string; }
+HttpFailureReason: type HttpFailureReason = 'dns' | 'refused' | 'reset' | 'tls' | 'timed-out' | 'other' | 'missing-body' | 'missing-time-limit';
+HttpHeaders: type HttpHeaders = readonly (readonly [ name: string, value: string ])[];
+HttpOutcome: type HttpOutcome = HttpResponse | HttpFailure;
+HttpOutcomeJson: type HttpOutcomeJson = (Omit<HttpResponse, 'body'> & { readonly body: string; }) | HttpFailure;
+HttpRequest: interface HttpRequest { readonly method: string; readonly url: string; readonly headers: HttpHeaders; readonly body: Uint8Array; readonly timeLimitMs: number; }
+HttpRequestFields: interface HttpRequestFields { readonly body?: unknown; readonly timeLimitMs?: unknown; }
+HttpRequestJson: interface HttpRequestJson { readonly method: string; readonly url: string; readonly headers: HttpHeaders; readonly body: string; readonly timeLimitMs: number; }
+HttpResponse: interface HttpResponse { readonly kind: 'response'; readonly status: number; readonly headers: HttpHeaders; readonly body: Uint8Array; }
+HttpState: interface HttpState { readonly exchanges: readonly HttpExchangeJson[]; }
+missingRequestFieldOf: const missingRequestFieldOf: (request: HttpRequestFields) => HttpFailure | undefined
+outcomeFromJson: const outcomeFromJson: (json: HttpOutcomeJson) => HttpOutcome
+outcomeToJson: const outcomeToJson: (outcome: HttpOutcome) => HttpOutcomeJson
+parseHttpState: const parseHttpState: (value: unknown) => HttpState | undefined
+requestFromJson: const requestFromJson: (json: HttpRequestJson) => HttpRequest
+requestToJson: const requestToJson: (request: HttpRequest) => HttpRequestJson

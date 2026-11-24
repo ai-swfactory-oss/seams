@@ -1,0 +1,3 @@
+InvalidDurationError: class InvalidDurationError extends Error { readonly duration: number; readonly name = "InvalidDurationError"; constructor(duration: number); }
+MemoryClock: interface MemoryClock extends Clock { readonly state: () => ClockState; }
+createMemoryClock: const createMemoryClock: (initial: ClockState) => MemoryClock

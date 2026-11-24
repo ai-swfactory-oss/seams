@@ -1,0 +1,3 @@
+PackageDescription: interface PackageDescription { readonly name: string; }
+SeamsLintKit: interface SeamsLintKit { readonly describe: () => PackageDescription; }
+createSeamsLintKit: const createSeamsLintKit: () => SeamsLintKit

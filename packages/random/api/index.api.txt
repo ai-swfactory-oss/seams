@@ -1,0 +1,3 @@
+Random: interface Random { readonly bytes: (count: number) => Uint8Array; }
+RandomState: interface RandomState { readonly seed: number; readonly drawn: number; }
+parseRandomState: const parseRandomState: (value: unknown) => RandomState | undefined

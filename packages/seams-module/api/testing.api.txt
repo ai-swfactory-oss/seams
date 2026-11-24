@@ -1,0 +1,1 @@
+createFakeSeamsModule: const createFakeSeamsModule: (description: PackageDescription) => SeamsModule

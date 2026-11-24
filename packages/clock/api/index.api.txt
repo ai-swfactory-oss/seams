@@ -1,0 +1,5 @@
+Clock: interface Clock { readonly now: () => Instant; readonly wait: (duration: Duration) => Promise<void>; }
+ClockState: interface ClockState { readonly now: Instant; }
+Duration: type Duration = number;
+Instant: type Instant = number;
+parseClockState: const parseClockState: (value: unknown) => ClockState | undefined

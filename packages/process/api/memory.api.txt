@@ -1,0 +1,7 @@
+DuplicateInvocationError: class DuplicateInvocationError extends Error { readonly invocation: InvocationJson; constructor(invocation: InvocationJson); }
+InvalidProcessStateError: class InvalidProcessStateError extends Error { constructor(); }
+MemoryProcess: interface MemoryProcess extends Process { readonly state: () => ProcessState; }
+PathProgramIdentityError: class PathProgramIdentityError extends Error { readonly invocation: InvocationJson; constructor(invocation: InvocationJson); }
+RepeatedInputPathError: class RepeatedInputPathError extends Error { readonly invocation: InvocationJson; readonly path: string; constructor(invocation: InvocationJson, path: string); }
+UnknownInvocationError: class UnknownInvocationError extends Error { readonly invocation: InvocationJson; constructor(invocation: InvocationJson); }
+createMemoryProcess: const createMemoryProcess: (state: ProcessState) => MemoryProcess
