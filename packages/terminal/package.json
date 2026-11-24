@@ -1,7 +1,6 @@
 {
   "name": "@ai-swfactory-oss/terminal",
   "description": "The terminal port: write(stream, text), readLine() and readAll(), with a broken pipe as data. Its memory adapter replays scripted input and collects output, its Node adapter uses the process's standard streams, and its generator records a memory state from a real adapter.",
-  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "repository": {

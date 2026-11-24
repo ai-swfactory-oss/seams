@@ -27,7 +27,6 @@
     "@ai-swfactory-oss/seams-http-server": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-tool-runner": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-node-runtime": { "kind": "sdk" },
-    "@ai-swfactory-oss/seams-retry": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-lint-kit": { "kind": "sdk" },
     "@ai-swfactory-oss/seams-archive": { "kind": "sdk" },
     "@ai-swfactory-oss/bytes": { "kind": "sdk" },
@@ -40,7 +39,6 @@
     "@ai-swfactory-oss/terminal": { "kind": "port" },
     "@ai-swfactory-oss/logging": { "kind": "sdk" },
     "@ai-swfactory-oss/process": { "kind": "port" },
-    "@ai-swfactory-oss/retry": { "kind": "sdk" },
     "@ai-swfactory-oss/content-store": { "kind": "sdk" }
   }
 }

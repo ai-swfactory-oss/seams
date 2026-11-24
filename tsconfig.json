@@ -70,9 +70,6 @@
       "path": "./packages/random"
     },
     {
-      "path": "./packages/retry"
-    },
-    {
       "path": "./packages/seams"
     },
     {
@@ -98,9 +95,6 @@
     },
     {
       "path": "./packages/seams-process"
-    },
-    {
-      "path": "./packages/seams-retry"
     },
     {
       "path": "./packages/seams-tool-runner"

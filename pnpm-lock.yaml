@@ -70,15 +70,6 @@ importers:
 
   packages/random: {}
 
-  packages/retry:
-    dependencies:
-      '@ai-swfactory-oss/clock':
-        specifier: workspace:*
-        version: link:../clock
-      '@ai-swfactory-oss/sdk-vocabulary':
-        specifier: 1.0.0
-        version: 1.0.0
-
   packages/seams:
     devDependencies:
       '@types/node':
@@ -133,12 +124,6 @@ importers:
         specifier: ^24.0.0
         version: 24.19.2
 
-  packages/seams-retry:
-    devDependencies:
-      '@types/node':
-        specifier: ^24.0.0
-        version: 24.19.2
-
   packages/seams-tool-runner:
     devDependencies:
       '@types/node':
@@ -153,9 +138,6 @@ importers:
 
 packages:
 
-  '@ai-swfactory-oss/sdk-vocabulary@1.0.0':
-    resolution: {integrity: sha512-YOg/b8DoYk/sLjUNw1EvLERxlQnfYFZEK2ABQH8DBd7ci/QiMw7SkaojYpRD/Jv3bDAzHqS7Ife7G3l2L1anYA==, tarball: https://npm.pkg.github.com/download/@ai-swfactory-oss/sdk-vocabulary/1.0.0/9d8f1ce143116a19489d9615150125a4d033e485}
-
   '@types/node@24.19.2':
     resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
 
@@ -163,8 +145,6 @@ packages:
     resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
 
 snapshots:
-
-  '@ai-swfactory-oss/sdk-vocabulary@1.0.0': {}
 
   '@types/node@24.19.2':
     dependencies:
