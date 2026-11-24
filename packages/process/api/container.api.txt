@@ -1,0 +1,5 @@
+ContainerEngine: interface ContainerEngine { readonly program: ProgramIdentity; readonly location: Location; }
+ContainerImage: interface ContainerImage { readonly image: string; readonly location: string; }
+ContainerProcessData: interface ContainerProcessData { readonly root: string; readonly engine: ContainerEngine; readonly images: Readonly<Record<string, ContainerImage>>; }
+createContainerProcess: const createContainerProcess: (data: ContainerProcessData, ports: { readonly process: Process; }) => Process
+imageKeyOf: const imageKeyOf: (program: ProgramIdentity) => string

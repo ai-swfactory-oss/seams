@@ -30,6 +30,11 @@
       "types": "./dist/generate/index.d.ts",
       "import": "./dist/generate/index.js"
     },
+    "./container": {
+      "source": "./src/container/index.ts",
+      "types": "./dist/container/index.d.ts",
+      "import": "./dist/container/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -38,6 +43,7 @@
     "!dist/**/*.tgz"
   ],
   "dependencies": {
+    "@ai-swfactory-oss/archive": "workspace:*",
     "@ai-swfactory-oss/bytes": "workspace:*",
     "@ai-swfactory-oss/files": "workspace:*"
   },

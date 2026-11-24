@@ -14,7 +14,7 @@ LocationRefusal: type LocationRefusal = Exclude<CheckedLocation, { readonly kind
 ModuleEntryLocation: interface ModuleEntryLocation { readonly anchor: string; readonly module: string; }
 NativeTargetsLocation: interface NativeTargetsLocation { readonly anchor: string; readonly targets: Readonly<Record<string, string>>; readonly env: Readonly<Record<string, string>>; }
 NotStarted: interface NotStarted { readonly kind: 'not-started'; readonly reason: NotStartedReason; readonly message: string; }
-NotStartedReason: type NotStartedReason = 'not-found' | 'permission-denied' | 'other';
+NotStartedReason: type NotStartedReason = 'not-found' | 'permission-denied' | 'unsupported-host' | 'other';
 OverlayChange: type OverlayChange = Change | { readonly kind: 'stat'; readonly path: string; readonly executable: boolean; };
 Process: interface Process { readonly execute: (invocation: Invocation) => Promise<Execution>; }
 ProcessEntryJson: interface ProcessEntryJson { readonly invocation: InvocationJson; readonly execution: ExecutionJson; }

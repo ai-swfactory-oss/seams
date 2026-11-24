@@ -57,6 +57,9 @@
   },
   "references": [
     {
+      "path": "../archive"
+    },
+    {
       "path": "../bytes"
     },
     {

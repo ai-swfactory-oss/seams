@@ -157,7 +157,7 @@ const invocationJsonOf = (value: unknown): InvocationJson | undefined => {
   }
 }
 
-const NOT_STARTED_REASONS: readonly NotStartedReason[] = ['not-found', 'permission-denied', 'other']
+const NOT_STARTED_REASONS: readonly NotStartedReason[] = ['not-found', 'permission-denied', 'unsupported-host', 'other']
 
 const executionJsonOf = (value: unknown): ExecutionJson | undefined => {
   if (typeof value !== 'object' || value === null || !('kind' in value)) return undefined

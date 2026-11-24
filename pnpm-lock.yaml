@@ -66,6 +66,9 @@ importers:
 
   packages/process:
     dependencies:
+      '@ai-swfactory-oss/archive':
+        specifier: workspace:*
+        version: link:../archive
       '@ai-swfactory-oss/bytes':
         specifier: workspace:*
         version: link:../bytes

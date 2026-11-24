@@ -54,7 +54,7 @@ export interface NotStarted {
 
 export type Execution = (Ending & Streams & { readonly changes: readonly Change[] }) | NotStarted
 
-export type NotStartedReason = 'not-found' | 'permission-denied' | 'other'
+export type NotStartedReason = 'not-found' | 'permission-denied' | 'unsupported-host' | 'other'
 
 export interface Process {
   readonly execute: (invocation: Invocation) => Promise<Execution>
