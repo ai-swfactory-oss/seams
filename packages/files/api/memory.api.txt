@@ -1,3 +1,3 @@
-CreatedMemoryFiles: type CreatedMemoryFiles = { readonly kind: 'files'; readonly files: MemoryFiles; } | NonEmptyDirectory | DuplicatePath;
+CreatedMemoryFiles: type CreatedMemoryFiles = { readonly files: MemoryFiles; readonly kind: 'files'; } | NonEmptyDirectory | DuplicatePath;
 MemoryFiles: interface MemoryFiles extends Files { readonly state: () => TreeJson; }
 createMemoryFiles: const createMemoryFiles: (initial: TreeJson) => CreatedMemoryFiles

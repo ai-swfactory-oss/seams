@@ -1,10 +1,10 @@
 ApplyStep: type ApplyStep = OverlayChange | { readonly kind: 'move-from-upper'; readonly path: string; };
 CaptureMode: type CaptureMode = 'in-place' | 'overlay';
-CheckedInvocation: type CheckedInvocation = { readonly kind: 'invocation'; readonly invocation: Invocation; } | NonEmptyDirectory | DuplicatePath | LocationRefusal;
+CheckedInvocation: type CheckedInvocation = { readonly invocation: Invocation; readonly kind: 'invocation'; } | NonEmptyDirectory | DuplicatePath | LocationRefusal;
 CheckedLocation: type CheckedLocation = { readonly kind: 'location'; readonly location: Location; } | { readonly kind: 'unknown-location'; readonly location: string; } | { readonly kind: 'unknown-target'; readonly target: string; };
-Ending: type Ending = { readonly kind: 'exited'; readonly exitCode: number; } | { readonly kind: 'timed-out'; } | { readonly kind: 'signalled'; readonly signal: string; };
+Ending: type Ending = { readonly exitCode: number; readonly kind: 'exited'; } | { readonly kind: 'timed-out'; } | { readonly kind: 'signalled'; readonly signal: string; };
 Execution: type Execution = (Ending & Streams & { readonly changes: readonly Change[]; }) | NotStarted;
-ExecutionJson: type ExecutionJson = (Ending & { readonly stdout: string; readonly stderr: string; readonly changes: readonly ChangeJson[]; }) | NotStarted;
+ExecutionJson: type ExecutionJson = (Ending & { readonly changes: readonly ChangeJson[]; readonly stderr: string; readonly stdout: string; }) | NotStarted;
 HostFacts: interface HostFacts { readonly os: string; readonly arch: string; }
 Invocation: interface Invocation { readonly program: ProgramIdentity; readonly location: Location; readonly args: readonly string[]; readonly cwd: string; readonly env: Readonly<Record<string, string>>; readonly input: Tree; readonly stdin?: Uint8Array; readonly timeLimitMs?: number; }
 InvocationJson: interface InvocationJson { readonly program: ProgramIdentity; readonly args: readonly string[]; readonly cwd: string; readonly env: Readonly<Record<string, string>>; readonly input: TreeJson; readonly stdin?: string; readonly timeLimitMs?: number; }
@@ -15,13 +15,13 @@ ModuleEntryLocation: interface ModuleEntryLocation { readonly anchor: string; re
 NativeTargetsLocation: interface NativeTargetsLocation { readonly anchor: string; readonly targets: Readonly<Record<string, string>>; readonly env: Readonly<Record<string, string>>; }
 NotStarted: interface NotStarted { readonly kind: 'not-started'; readonly reason: NotStartedReason; readonly message: string; }
 NotStartedReason: type NotStartedReason = 'not-found' | 'permission-denied' | 'unsupported-host' | 'other';
-OverlayChange: type OverlayChange = Change | { readonly kind: 'stat'; readonly path: string; readonly executable: boolean; };
+OverlayChange: type OverlayChange = Change | { readonly executable: boolean; readonly kind: 'stat'; readonly path: string; };
 Process: interface Process { readonly execute: (invocation: Invocation) => Promise<Execution>; }
 ProcessEntryJson: interface ProcessEntryJson { readonly invocation: InvocationJson; readonly execution: ExecutionJson; }
 ProcessState: interface ProcessState { readonly entries: readonly ProcessEntryJson[]; }
 ProgramIdentity: interface ProgramIdentity { readonly package: string; readonly version: string; }
 Streams: interface Streams { readonly stdout: Uint8Array; readonly stderr: Uint8Array; }
-UpperEntry: type UpperEntry = { readonly path: string; readonly kind: 'file'; readonly content: Uint8Array; readonly executable: boolean; } | { readonly path: string; readonly kind: 'symlink'; readonly target: string; } | { readonly path: string; readonly kind: 'directory'; readonly opaque: boolean; } | { readonly path: string; readonly kind: 'whiteout'; };
+UpperEntry: type UpperEntry = { readonly content: Uint8Array; readonly executable: boolean; readonly kind: 'file'; readonly path: string; } | { readonly kind: 'symlink'; readonly path: string; readonly target: string; } | { readonly kind: 'directory'; readonly opaque: boolean; readonly path: string; } | { readonly kind: 'whiteout'; readonly path: string; };
 UserNamespacesUnavailableError: class UserNamespacesUnavailableError extends Error { readonly detail: string; constructor(detail: string); }
 applyBackPlan: const applyBackPlan: (upper: readonly UpperEntry[], lower: Tree) => ApplyStep[]
 captureFor: const captureFor: (facts: HostFacts) => CaptureMode

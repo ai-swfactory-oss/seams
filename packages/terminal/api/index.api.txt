@@ -1,5 +1,5 @@
 Terminal: interface Terminal { readonly write: (stream: TerminalStream, text: string) => Promise<WriteOutcome>; readonly readLine: () => Promise<string | undefined>; readonly readAll: () => Promise<string>; }
-TerminalState: interface TerminalState { readonly input: string; readonly output: readonly TerminalWrite[]; readonly closed: readonly TerminalStream[]; }
+TerminalState: interface TerminalState { readonly input: string; readonly output: readonly TerminalWrite[]; readonly closed: readonly TerminalStream[]; readonly holdWrites?: boolean; readonly pending?: readonly TerminalWrite[]; }
 TerminalStream: type TerminalStream = 'stdout' | 'stderr';
 TerminalWrite: interface TerminalWrite { readonly stream: TerminalStream; readonly text: string; }
 WriteOutcome: type WriteOutcome = { readonly kind: 'written'; } | { readonly kind: 'closed'; };

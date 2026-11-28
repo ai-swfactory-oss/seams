@@ -2,7 +2,7 @@ ContentStore: interface ContentStore { readonly put: (tree: Tree) => Promise<Put
 ContentStoreData: interface ContentStoreData { readonly root: string; }
 ContentStorePorts: interface ContentStorePorts { readonly files: Files; }
 Got: type Got = { readonly kind: 'tree'; readonly tree: Tree; } | { readonly kind: 'missing'; } | FailedChange;
-Put: type Put = { readonly kind: 'stored'; readonly digest: string; } | FailedChange | Refused;
+Put: type Put = { readonly digest: string; readonly kind: 'stored'; } | FailedChange | Refused;
 Refused: interface Refused { readonly kind: 'refused'; readonly reason: 'path-not-normal' | 'duplicate-path' | 'out-of-order' | 'non-empty-directory' | 'not-a-directory'; readonly path: string; }
 RootRefused: interface RootRefused { readonly kind: 'refused'; readonly reason: 'invalid-root'; readonly root: string; }
 createContentStoreSdk: const createContentStoreSdk: (data: ContentStoreData, { files }: ContentStorePorts) => ContentStore | RootRefused

@@ -1,8 +1,8 @@
-Extracted: type Extracted = { readonly kind: 'changes'; readonly changes: readonly Change[]; } | MalformedTar;
+Extracted: type Extracted = { readonly changes: readonly Change[]; readonly kind: 'changes'; } | MalformedTar;
 GzipFailure: type GzipFailure = 'not-gzip' | 'bad-header' | 'truncated' | 'bad-deflate' | 'bad-crc' | 'bad-size';
-Inflated: type Inflated = { readonly kind: 'bytes'; readonly bytes: Uint8Array; } | MalformedGzip | TooLarge;
+Inflated: type Inflated = { readonly bytes: Uint8Array; readonly kind: 'bytes'; } | MalformedGzip | TooLarge;
 ListedEntry: interface ListedEntry { readonly path: string; readonly kind: 'file' | 'symlink' | 'directory' | 'pipe'; readonly size: number; }
-Listing: type Listing = { readonly kind: 'entries'; readonly entries: readonly ListedEntry[]; } | MalformedTar | MalformedGzip | TooLarge | TooManyEntries;
+Listing: type Listing = { readonly entries: readonly ListedEntry[]; readonly kind: 'entries'; } | MalformedTar | MalformedGzip | TooLarge | TooManyEntries;
 ListingLimits: interface ListingLimits { readonly maxBytes: number; readonly maxEntries: number; }
 MalformedGzip: interface MalformedGzip { readonly kind: 'malformed'; readonly reason: GzipFailure; }
 MalformedTar: interface MalformedTar { readonly kind: 'malformed'; readonly reason: TarFailure; readonly offset: number; }

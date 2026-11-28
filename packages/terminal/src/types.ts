@@ -19,4 +19,6 @@ export interface TerminalState {
   readonly input: string
   readonly output: readonly TerminalWrite[]
   readonly closed: readonly TerminalStream[]
+  readonly holdWrites?: boolean
+  readonly pending?: readonly TerminalWrite[]
 }

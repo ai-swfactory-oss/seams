@@ -1,2 +1,2 @@
-MemoryTerminal: interface MemoryTerminal extends Terminal { readonly state: () => TerminalState; }
+MemoryTerminal: interface MemoryTerminal extends Terminal { readonly state: () => TerminalState; readonly release: () => void; }
 createMemoryTerminal: const createMemoryTerminal: (initial: TerminalState) => MemoryTerminal

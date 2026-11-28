@@ -27,5 +27,15 @@ export const parseTerminalState = (value: unknown): TerminalState | undefined =>
   const output = listOf(value.output, writeOf)
   const closed = listOf(value.closed, streamOf)
   if (typeof input !== 'string' || output === undefined || closed === undefined) return undefined
-  return { input, output, closed }
+  const holdWrites = 'holdWrites' in value ? value.holdWrites : undefined
+  const pending = 'pending' in value ? listOf(value.pending, writeOf) : undefined
+  if (holdWrites !== undefined && typeof holdWrites !== 'boolean') return undefined
+  if ('pending' in value && pending === undefined) return undefined
+  return {
+    input,
+    output,
+    closed,
+    ...(typeof holdWrites === 'boolean' ? { holdWrites } : {}),
+    ...(pending === undefined ? {} : { pending }),
+  }
 }

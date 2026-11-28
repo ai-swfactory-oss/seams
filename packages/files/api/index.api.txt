@@ -1,11 +1,11 @@
-Change: type Change = { readonly kind: 'write'; readonly path: string; readonly content: Uint8Array; readonly executable: boolean; } | { readonly kind: 'symlink'; readonly path: string; readonly target: string; } | { readonly kind: 'delete'; readonly path: string; } | { readonly kind: 'move'; readonly from: string; readonly to: string; } | { readonly kind: 'link'; readonly from: string; readonly to: string; } | { readonly kind: 'mkdir'; readonly path: string; } | { readonly kind: 'pipe'; readonly path: string; };
+Change: type Change = { readonly content: Uint8Array; readonly executable: boolean; readonly kind: 'write'; readonly path: string; } | { readonly kind: 'symlink'; readonly path: string; readonly target: string; } | { readonly kind: 'delete'; readonly path: string; } | { readonly from: string; readonly kind: 'move'; readonly to: string; } | { readonly from: string; readonly kind: 'link'; readonly to: string; } | { readonly kind: 'mkdir'; readonly path: string; } | { readonly kind: 'pipe'; readonly path: string; };
 ChangeFailure: type ChangeFailure = KnownChangeFailure | 'unrecognised';
-ChangeJson: type ChangeJson = { readonly kind: 'write'; readonly path: string; readonly content: string; readonly executable: boolean; } | Exclude<Change, { readonly kind: 'write'; }>;
+ChangeJson: type ChangeJson = { readonly content: string; readonly executable: boolean; readonly kind: 'write'; readonly path: string; } | Exclude<Change, { readonly kind: 'write'; }>;
 ChangeOutcome: type ChangeOutcome = { readonly kind: 'applied'; } | FailedChange | { readonly kind: 'skipped'; };
 CheckedTree: type CheckedTree = { readonly kind: 'tree'; readonly tree: Tree; } | NonEmptyDirectory | DuplicatePath;
 DirectoryEntry: interface DirectoryEntry { readonly path: string; readonly kind: 'directory'; }
 DuplicatePath: interface DuplicatePath { readonly kind: 'duplicate-path'; readonly path: string; }
-FailedChange: type FailedChange = { readonly kind: 'failed'; readonly reason: KnownChangeFailure; } | { readonly kind: 'failed'; readonly reason: 'unrecognised'; readonly code: string; };
+FailedChange: type FailedChange = { readonly kind: 'failed'; readonly reason: KnownChangeFailure; } | { readonly code: string; readonly kind: 'failed'; readonly reason: 'unrecognised'; };
 FileEntry: interface FileEntry { readonly path: string; readonly kind: 'file'; readonly content: Uint8Array; readonly executable: boolean; readonly links?: number; }
 Files: interface Files { readonly snapshot: (selection: Selection) => Promise<Snapshot>; readonly apply: (changes: readonly Change[]) => Promise<readonly ChangeOutcome[]>; readonly readLines: (path: string, options: { readonly signal: AbortSignal; }) => AsyncIterable<string>; readonly writeLine: (path: string, line: string) => Promise<WriteLineOutcome>; }
 KnownChangeFailure: type KnownChangeFailure = 'invalid-path' | 'not-found' | 'not-a-directory' | 'is-a-directory' | 'exists' | 'permission-denied' | 'unsupported';
@@ -16,7 +16,7 @@ Snapshot: type Snapshot = { readonly kind: 'snapshot'; readonly tree: Tree; } | 
 SymlinkEntry: interface SymlinkEntry { readonly path: string; readonly kind: 'symlink'; readonly target: string; }
 Tree: interface Tree { readonly entries: readonly TreeEntry[]; }
 TreeEntry: type TreeEntry = FileEntry | SymlinkEntry | DirectoryEntry | PipeEntry;
-TreeEntryJson: type TreeEntryJson = { readonly path: string; readonly kind: 'file'; readonly content: string; readonly executable: boolean; readonly links?: number; } | SymlinkEntry | DirectoryEntry | PipeEntry;
+TreeEntryJson: type TreeEntryJson = { readonly content: string; readonly executable: boolean; readonly kind: 'file'; readonly links?: number; readonly path: string; } | SymlinkEntry | DirectoryEntry | PipeEntry;
 TreeJson: interface TreeJson { readonly entries: readonly TreeEntryJson[]; }
 TreeOfEntries: type TreeOfEntries = CheckedTree | { readonly kind: 'not-a-directory'; readonly path: string; };
 WriteLineOutcome: type WriteLineOutcome = { readonly kind: 'written'; } | { readonly kind: 'no-reader'; } | { readonly kind: 'failed'; readonly reason: 'not-a-pipe'; };
